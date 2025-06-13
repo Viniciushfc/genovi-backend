@@ -15,7 +15,7 @@ public class Aplicacao {
     @ManyToOne
     private Ovino ovino;
     @ManyToOne
-    private Vacina vacina;
+    private Medicamento medicamento;
     private boolean temProximaDose;
     private LocalDateTime proximaDose;
     @ManyToOne
