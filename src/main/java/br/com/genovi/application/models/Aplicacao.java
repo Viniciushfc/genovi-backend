@@ -25,11 +25,11 @@ public class Aplicacao {
     public Aplicacao() {
     }
 
-    public Aplicacao(Long id, LocalDateTime dataAplicacao, Ovino ovino, Vacina vacina, boolean temProximaDose, LocalDateTime proximaDose, Usuario responsavel, String observacoes) {
+    public Aplicacao(Long id, LocalDateTime dataAplicacao, Ovino ovino, Medicamento medicamento, boolean temProximaDose, LocalDateTime proximaDose, Usuario responsavel, String observacoes) {
         this.id = id;
         this.dataAplicacao = dataAplicacao;
         this.ovino = ovino;
-        this.vacina = vacina;
+        this.medicamento = medicamento;
         this.temProximaDose = temProximaDose;
         this.proximaDose = proximaDose;
         this.responsavel = responsavel;
@@ -60,12 +60,12 @@ public class Aplicacao {
         this.ovino = ovino;
     }
 
-    public Vacina getVacina() {
-        return vacina;
+    public Medicamento getMedicamento() {
+        return medicamento;
     }
 
-    public void setVacina(Vacina vacina) {
-        this.vacina = vacina;
+    public void setMedicamento(Medicamento medicamento) {
+        this.medicamento = medicamento;
     }
 
     public boolean isTemProximaDose() {
