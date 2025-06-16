@@ -13,10 +13,12 @@ public class OcorrenciaDoenca {
     private Long id;
     @ManyToOne
     private Ovino ovino;
+    @ManyToOne
     private Doenca doenca;
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
     private boolean curada;
+    @ManyToOne
     private Usuario responsavel;
 
     public OcorrenciaDoenca() {

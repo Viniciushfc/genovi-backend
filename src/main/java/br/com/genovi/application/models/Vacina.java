@@ -13,6 +13,7 @@ public class Vacina {
     private Long id;
     private String nome;
     private String fabricante;
+    @OneToMany
     private List<Doenca> doencas;
     private boolean doseUnica;
     private String descricao;

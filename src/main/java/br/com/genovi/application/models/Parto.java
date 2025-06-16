@@ -21,6 +21,7 @@ public class Parto {
     private int numeroCrias;
     private String observacoes;
     private boolean rejeicaoMaterna;
+    @OneToOne
     private Reproducao reproducaos;
 
     public Parto() {

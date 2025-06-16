@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface OvinoRepository extends JpaRepository<Ovino, Long> {
 
-    Optional<Ovino> findByRFID(Long rfid);
+    Optional<Ovino> findByRfid(Long rfid);
 }
