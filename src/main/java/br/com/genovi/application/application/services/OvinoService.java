@@ -28,7 +28,6 @@ public class OvinoService {
         this.ovinoMapper = ovinoMapper;
     }
 
-
     private Ovino findOvinoEntityById(Long id) {
         return ovinoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ovino não encontrado"));
@@ -84,5 +83,6 @@ public class OvinoService {
     public void disable(Long id) {
         Ovino ovino = findOvinoEntityById(id);
         ovino.setAtivo(false);
+        ovinoRepository.save(ovino);
     }
 }

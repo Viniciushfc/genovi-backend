@@ -41,13 +41,13 @@ public class OvinoMapper {
                 ovino.getRaca(),
                 ovino.getFbb(),
                 ovino.getDataNascimento(),
-                ovino.getCriador() != null ? ovino.getCriador().getId() : null,
+                ovino.getCriador(),
                 ovino.getTempoFazendo(),
                 ovino.getTypeGrauPureza(),
                 ovino.getSexo(),
                 ovino.getPeso(),
                 ovino.getComportamento(),
-                ovino.getAscendencia() != null ? ovino.getAscendencia().getId() : null,
+                ovino.getAscendencia() ,
                 ovino.getStatus()
         );
     }
