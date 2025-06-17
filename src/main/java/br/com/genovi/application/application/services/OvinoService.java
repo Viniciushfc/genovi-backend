@@ -1,4 +1,4 @@
-package br.com.genovi.application.services;
+package br.com.genovi.application.application.services;
 
 import br.com.genovi.application.domain.models.Ascendencia;
 import br.com.genovi.application.domain.models.Criador;
@@ -28,17 +28,16 @@ public class OvinoService {
         this.ovinoMapper = ovinoMapper;
     }
 
-    public OvinoMapper getOvinoMapper() {
-        return ovinoMapper;
-    }
 
     private Ovino findOvinoEntityById(Long id) {
         return ovinoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ovino não encontrado"));
     }
 
-    public List<Ovino> findAll() {
-        return ovinoRepository.findAll();
+    public List<OvinoDTO> findAll() {
+        return ovinoRepository.findAll().stream()
+                .map(ovinoMapper::toDTO)
+                .toList();
     }
 
     public OvinoDTO findById(Long id) {

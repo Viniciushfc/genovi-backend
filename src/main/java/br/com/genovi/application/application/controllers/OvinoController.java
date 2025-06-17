@@ -1,8 +1,8 @@
-package br.com.genovi.application.controllers;
+package br.com.genovi.application.application.controllers;
 
 import br.com.genovi.application.dtos.CreateOvinoDTO;
 import br.com.genovi.application.dtos.OvinoDTO;
-import br.com.genovi.application.services.OvinoService;
+import br.com.genovi.application.application.services.OvinoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +19,9 @@ public class OvinoController {
         this.ovinoService = ovinoService;
     }
 
-
     @GetMapping
     public ResponseEntity<List<OvinoDTO>> findAll() {
-        List<OvinoDTO> ovinos = ovinoService.findAll().stream()
-                .map(ovinoService.getOvinoMapper()::toDTO)
-                .toList();
-        return ResponseEntity.ok(ovinos);
+        return ResponseEntity.ok(ovinoService.findAll());
     }
 
     @GetMapping("/{id}")
