@@ -4,7 +4,7 @@ import br.com.genovi.application.domain.models.Ovino;
 
 import java.time.LocalDateTime;
 
-public record AmamantacaoDTO(Ovino ovelhaMae,
+public record AmamentacaoDTO(Ovino ovelhaMae,
                              Ovino cordeiroMamando,
                              LocalDateTime dataInicio,
                              LocalDateTime dataFim,
