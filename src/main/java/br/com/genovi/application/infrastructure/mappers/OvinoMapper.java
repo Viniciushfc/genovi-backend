@@ -1,11 +1,7 @@
 package br.com.genovi.application.infrastructure.mappers;
 
-import br.com.genovi.application.domain.enums.TypeGrauPureza;
-import br.com.genovi.application.domain.enums.TypeSexo;
 import br.com.genovi.application.dtos.CreateOvinoDTO;
 import br.com.genovi.application.dtos.OvinoDTO;
-import br.com.genovi.application.domain.models.Ascendencia;
-import br.com.genovi.application.domain.models.Criador;
 import br.com.genovi.application.domain.models.Ovino;
 import org.springframework.stereotype.Component;
 
