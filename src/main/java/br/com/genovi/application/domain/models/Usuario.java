@@ -10,6 +10,7 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    private Boolean ativo;
     private String nome;
     private String email;
     private String senha;
@@ -20,8 +21,9 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Long id, String nome, String email, String senha, TypeUsuario perfil, Boolean autenticacao2fa) {
+    public Usuario(Long id, Boolean ativo, String nome, String email, String senha, TypeUsuario perfil, Boolean autenticacao2fa) {
         this.id = id;
+        this.ativo = ativo;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -35,6 +37,14 @@ public class Usuario {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public String getNome() {
