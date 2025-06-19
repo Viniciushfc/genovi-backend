@@ -40,9 +40,7 @@ public class OvinoService {
     }
 
     public OvinoDTO findById(Long id) {
-        Ovino ovino = ovinoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ovino não encontrado"));
-        return ovinoMapper.toDTO(ovino);
+        return ovinoMapper.toDTO(findOvinoEntityById(id));
     }
 
     public OvinoDTO save(CreateOvinoDTO dto) {

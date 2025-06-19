@@ -19,7 +19,7 @@ public class CriadorService {
         this.criadorMapper = criadorMapper;
     }
 
-    public Criador findCriadorEntityById(Long id) {
+    private Criador findCriadorEntityById(Long id) {
         return criadorRepository.findById(id).orElseThrow(() -> new RuntimeException("Criador não encontrado"));
     }
 
@@ -28,8 +28,7 @@ public class CriadorService {
     }
 
     public CriadorDTO findById(Long id) {
-        Criador criador = criadorRepository.findById(id).orElseThrow(() -> new RuntimeException("Criador não encontrado"));
-        return criadorMapper.toDTO(criador);
+        return criadorMapper.toDTO(findCriadorEntityById(id));
     }
 
     public CriadorDTO save(CriadorDTO dto) {

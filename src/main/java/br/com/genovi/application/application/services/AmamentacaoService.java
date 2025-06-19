@@ -24,7 +24,7 @@ public class AmamentacaoService {
         this.amamentacaoMapper = amamentacaoMapper;
     }
 
-    public Amamentacao findAmamentacaoEntityById(Long id) {
+    private Amamentacao findAmamentacaoEntityById(Long id) {
         return amamentacaoRepository.findById(id).orElseThrow(() -> new RuntimeException("Amamentação não encontrada"));
     }
 
@@ -33,8 +33,7 @@ public class AmamentacaoService {
     }
 
     public AmamentacaoDTO findById(Long id) {
-        Amamentacao amamentacao = amamentacaoRepository.findById(id).orElseThrow(() -> new RuntimeException("Amamentação não encontrada"));
-        return amamentacaoMapper.toDTO(amamentacao);
+        return amamentacaoMapper.toDTO(findAmamentacaoEntityById(id));
     }
 
     public AmamentacaoDTO save(CreateAmamentacaoDTO dto) {

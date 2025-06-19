@@ -28,8 +28,7 @@ public class DoencaService {
     }
 
     public DoencaDTO findById(Long id) {
-        Doenca doenca = doencaRepository.findById(id).orElseThrow(() -> new RuntimeException("Doença não encontrada"));
-        return doencaMapper.toDTO(doenca);
+        return doencaMapper.toDTO(findDoencaEntityById(id));
     }
 
     public DoencaDTO save(DoencaDTO dto) {

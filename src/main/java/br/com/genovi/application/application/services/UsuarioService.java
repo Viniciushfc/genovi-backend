@@ -28,8 +28,7 @@ public class UsuarioService {
     }
 
     public UsuarioDTO findById(Long id) {
-        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
-        return usuarioMapper.toDTO(usuario);
+        return usuarioMapper.toDTO(findUsuarioById(id));
     }
 
     public UsuarioDTO save(UsuarioDTO dto) {

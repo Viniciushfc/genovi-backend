@@ -25,7 +25,7 @@ public class AscendenciaService {
         this.ascendenciaMapper = ascendenciaMapper;
     }
 
-    public Ascendencia findAscendenciaEntityById(Long id) {
+    private Ascendencia findAscendenciaEntityById(Long id) {
         return ascendenciaRepository.findById(id).orElseThrow(() -> new RuntimeException("Ascendencia não encontrada"));
     }
 
@@ -34,8 +34,7 @@ public class AscendenciaService {
     }
 
     public AscendenciaDTO findById(Long id) {
-        Ascendencia ascedencia = ascendenciaRepository.findById(id).orElseThrow(() -> new RuntimeException("Ascendencia não encontrada"));
-        return ascendenciaMapper.toDTO(ascedencia);
+        return ascendenciaMapper.toDTO(findAscendenciaEntityById(id));
     }
 
     public AscendenciaDTO save(CreateAscendenciaDTO dto) {
