@@ -4,7 +4,6 @@ import br.com.genovi.application.domain.models.Doenca;
 import br.com.genovi.application.domain.models.Medicamento;
 import br.com.genovi.application.dtos.CreateMedicamentoDTO;
 import br.com.genovi.application.dtos.MedicamentoDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
