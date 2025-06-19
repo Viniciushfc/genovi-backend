@@ -2,7 +2,9 @@ package br.com.genovi.application.infrastructure.mappers;
 
 import br.com.genovi.application.domain.models.Doenca;
 import br.com.genovi.application.dtos.DoencaDTO;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DoencaMapper {
 
     public Doenca toEntity(DoencaDTO dto) {
@@ -13,7 +15,7 @@ public class DoencaMapper {
         );
     }
 
-    public DoencaDTO toDto(Doenca entity) {
+    public DoencaDTO toDTO(Doenca entity) {
         return new DoencaDTO(
                 entity.getNome(),
                 entity.getDescricao()
