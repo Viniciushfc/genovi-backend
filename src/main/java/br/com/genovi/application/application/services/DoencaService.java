@@ -25,22 +25,22 @@ public class DoencaService {
     }
 
     public List<DoencaDTO> findAll() {
-        return doencaRepository.findAll().stream().map(doencaMapper::toDto).toList();
+        return doencaRepository.findAll().stream().map(doencaMapper::toDTO).toList();
     }
 
     public DoencaDTO findById(Long id) {
-        return doencaMapper.toDto(doencaRepository.findById(id).orElseThrow(() -> new RuntimeException("Doença não encontrada")));
+        return doencaMapper.toDTO(doencaRepository.findById(id).orElseThrow(() -> new RuntimeException("Doença não encontrada")));
     }
 
     public DoencaDTO save(DoencaDTO dto) {
         Doenca doenca = doencaMapper.toEntity(dto);
-        return doencaMapper.toDto(doencaRepository.save(doenca));
+        return doencaMapper.toDTO(doencaRepository.save(doenca));
     }
 
     public DoencaDTO update(Long id, DoencaDTO dto) {
         Doenca doenca = findDoencaEntityById(id);
-        doencaMapper.updateEntityFromDto(dto, doenca);
-        return doencaMapper.toDto(doencaRepository.save(doenca));
+        doencaMapper.updateEntityFromDTO(dto, doenca);
+        return doencaMapper.toDTO(doencaRepository.save(doenca));
     }
 
     public void delete(Long id) {
