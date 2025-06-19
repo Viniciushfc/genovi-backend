@@ -1,6 +1,5 @@
 package br.com.genovi.application.application.services;
 
-import br.com.genovi.application.domain.models.Criador;
 import br.com.genovi.application.domain.models.Doenca;
 import br.com.genovi.application.dtos.DoencaDTO;
 import br.com.genovi.application.infrastructure.mappers.DoencaMapper;
@@ -29,7 +28,8 @@ public class DoencaService {
     }
 
     public DoencaDTO findById(Long id) {
-        return doencaMapper.toDTO(doencaRepository.findById(id).orElseThrow(() -> new RuntimeException("Doença não encontrada")));
+        Doenca doenca = doencaRepository.findById(id).orElseThrow(() -> new RuntimeException("Doença não encontrada"));
+        return doencaMapper.toDTO(doenca);
     }
 
     public DoencaDTO save(DoencaDTO dto) {
