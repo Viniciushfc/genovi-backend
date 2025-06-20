@@ -29,6 +29,10 @@ public class AscendenciaService {
     }
 
     private Ovino findOvinoEntityById(Long id) {
+        if (id == null) {
+            return null;
+        }
+
         return ovinoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ovino não encontrado para Ascendencia"));
     }
