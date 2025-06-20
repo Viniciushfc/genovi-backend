@@ -2,7 +2,9 @@ package br.com.genovi.application.infrastructure.mappers;
 
 import br.com.genovi.application.domain.models.Usuario;
 import br.com.genovi.application.dtos.UsuarioDTO;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UsuarioMapper {
 
     public Usuario toEntity(UsuarioDTO dto) {

@@ -36,17 +36,17 @@ public class OcorrenciaDoencaService {
         return ocorrenciaDoencaRepository.findById(id).orElseThrow(() -> new RuntimeException("OcorrenciaDoenca não encontrado"));
     }
 
-    private Ovino getOvino(Long id) {
+    private Ovino findOvinoEntityById(Long id) {
         return ovinoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ovino não encontrado para Ocorrencia Doença"));
     }
 
-    private Doenca getDoenca(Long id) {
+    private Doenca findDoencaEntityById(Long id) {
         return doencaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Doença não encontrada para Ocorrencia Doença"));
     }
 
-    private Usuario getUsuario(Long id) {
+    private Usuario findUsuarioById(Long id) {
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado para Ocorrencia Doença"));
     }
@@ -60,9 +60,9 @@ public class OcorrenciaDoencaService {
     }
 
     public OcorrenciaDoencaDTO save(CreateOcorrenciaDoencaDTO dto) {
-        Ovino ovino = getOvino(dto.ovinoId());
-        Doenca doenca = getDoenca(dto.doencaId());
-        Usuario usuario = getUsuario(dto.responsavelId());
+        Ovino ovino = findOvinoEntityById(dto.ovinoId());
+        Doenca doenca = findDoencaEntityById(dto.doencaId());
+        Usuario usuario = findUsuarioById(dto.responsavelId());
 
         OcorrenciaDoenca ocorrenciaDoenca = ocorrenciaDoencaMapper.toEntity(dto, ovino, doenca, usuario);
 
@@ -72,9 +72,9 @@ public class OcorrenciaDoencaService {
     }
 
     public OcorrenciaDoencaDTO update(Long id, CreateOcorrenciaDoencaDTO dto) {
-        Ovino ovino = getOvino(dto.ovinoId());
-        Doenca doenca = getDoenca(dto.doencaId());
-        Usuario usuario = getUsuario(dto.responsavelId());
+        Ovino ovino = findOvinoEntityById(dto.ovinoId());
+        Doenca doenca = findDoencaEntityById(dto.doencaId());
+        Usuario usuario = findUsuarioById(dto.responsavelId());
 
         OcorrenciaDoenca ocorrenciaDoenca = findOcorrenciaDoencaById(id);
         ocorrenciaDoencaMapper.updateEntityFromDTO(dto, ocorrenciaDoenca, ovino, doenca, usuario);

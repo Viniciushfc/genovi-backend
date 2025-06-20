@@ -28,6 +28,11 @@ public class CicloCioService {
         return cicloCioRepository.findById(id).orElseThrow(() -> new RuntimeException("Ciclo e cio não encontrado"));
     }
 
+    private Ovino findOvinoEntityById(Long id) {
+        return ovinoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ovino não encontrado para CicloCio"));
+    }
+
     public List<CicloCioDTO> findAll() {
         return cicloCioRepository.findAll().stream().map(cicloCioMapper::toDTO).toList();
     }
@@ -37,7 +42,7 @@ public class CicloCioService {
     }
 
     public CicloCioDTO save(CreateCicloCioDTO dto) {
-        Ovino ovino = ovinoRepository.findById(dto.ovelhaId()).orElseThrow(() -> new RuntimeException("Ovelha não encontrada para ciclo e cio"));
+        Ovino ovino = findOvinoEntityById(dto.ovelhaId());
 
         CicloCio cicloCio = cicloCioMapper.toEntity(dto);
         cicloCio.setOvelha(ovino);
@@ -48,7 +53,7 @@ public class CicloCioService {
 
     public CicloCioDTO update(Long id, CreateCicloCioDTO dto) {
         CicloCio cicloCio = findCicloCioById(id);
-        Ovino ovino = ovinoRepository.findById(dto.ovelhaId()).orElseThrow(() -> new RuntimeException("Ovelha não encontrada para ciclo e cio"));
+        Ovino ovino = findOvinoEntityById(dto.ovelhaId());
 
         cicloCioMapper.updateEntityFromDTO(dto, cicloCio);
         cicloCio.setOvelha(ovino);

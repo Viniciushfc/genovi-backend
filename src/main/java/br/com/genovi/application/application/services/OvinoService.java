@@ -33,6 +33,16 @@ public class OvinoService {
                 .orElseThrow(() -> new RuntimeException("Ovino não encontrado"));
     }
 
+    private Ascendencia findAscendenciaEntityById(Long id) {
+        return ascendenciaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ascendência não encontrada"));
+    }
+
+    private Criador findCriadorEntityById(Long id) {
+        return criadorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Criador não encontrado"));
+    }
+
     public List<OvinoDTO> findAll() {
         return ovinoRepository.findAll().stream()
                 .map(ovinoMapper::toDTO)
@@ -44,11 +54,8 @@ public class OvinoService {
     }
 
     public OvinoDTO save(CreateOvinoDTO dto) {
-        Ascendencia ascendencia = ascendenciaRepository.findById(dto.ascendenciaId())
-                .orElseThrow(() -> new RuntimeException("Ascendencia não encontrado"));
-
-        Criador criador = criadorRepository.findById(dto.criadorId())
-                .orElseThrow(() -> new RuntimeException("Criador não encontrado"));
+        Ascendencia ascendencia = findAscendenciaEntityById(dto.ascendenciaId());
+        Criador criador = findCriadorEntityById(dto.criadorId());
 
         Ovino ovino = ovinoMapper.toEntity(dto);
         ovino.setAtivo(true);
@@ -62,12 +69,8 @@ public class OvinoService {
 
     public OvinoDTO update(Long id, CreateOvinoDTO dto) {
         Ovino ovino = findOvinoEntityById(id);
-
-        Ascendencia ascendencia = ascendenciaRepository.findById(dto.ascendenciaId())
-                .orElseThrow(() -> new RuntimeException("Ascendência não encontrada"));
-
-        Criador criador = criadorRepository.findById(dto.criadorId())
-                .orElseThrow(() -> new RuntimeException("Criador não encontrado"));
+        Ascendencia ascendencia = findAscendenciaEntityById(dto.ascendenciaId());
+        Criador criador = findCriadorEntityById(dto.criadorId());
 
         ovinoMapper.updateEntityFromDTO(dto, ovino);
         ovino.setAscendencia(ascendencia);

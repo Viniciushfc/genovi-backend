@@ -28,6 +28,11 @@ public class ReproducaoService {
         return reproducaoRepository.findById(id).orElseThrow(() -> new RuntimeException("Reproducao não encontrado"));
     }
 
+    private Ovino findOvinoEntityById(Long id) {
+        return ovinoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ovino não encontrado"));
+    }
+
     public List<ReproducaoDTO> findAll() {
         return reproducaoRepository.findAll().stream().map(reproducaoMapper::toDTO).toList();
     }
@@ -37,8 +42,8 @@ public class ReproducaoService {
     }
 
     public ReproducaoDTO save(CreateReproducaoDTO dto) {
-        Ovino carneiro = ovinoRepository.findById(dto.carneiroId()).orElseThrow(() -> new RuntimeException("Carneiro não encontrado para Reprodução"));
-        Ovino ovino = ovinoRepository.findById(dto.ovelhaId()).orElseThrow(() -> new RuntimeException("Ovelha não encontrado para Reprodução"));
+        Ovino carneiro = findOvinoEntityById(dto.carneiroId());
+        Ovino ovino = findOvinoEntityById(dto.ovelhaId());
 
         Reproducao reproducao = reproducaoMapper.toEntity(dto);
         reproducao.setCarneiroPai(carneiro);
@@ -51,8 +56,8 @@ public class ReproducaoService {
 
     public ReproducaoDTO update(Long id, CreateReproducaoDTO dto) {
         Reproducao reproducao = findReproducaoById(id);
-        Ovino carneiro = ovinoRepository.findById(dto.carneiroId()).orElseThrow(() -> new RuntimeException("Carneiro não encontrado para Reprodução"));
-        Ovino ovino = ovinoRepository.findById(dto.ovelhaId()).orElseThrow(() -> new RuntimeException("Ovelha não encontrado para Reprodução"));
+        Ovino carneiro = findOvinoEntityById(dto.carneiroId());
+        Ovino ovino = findOvinoEntityById(dto.ovelhaId());
 
         reproducaoMapper.updateEntetyFromDTO(dto, reproducao);
         reproducao.setCarneiroPai(carneiro);

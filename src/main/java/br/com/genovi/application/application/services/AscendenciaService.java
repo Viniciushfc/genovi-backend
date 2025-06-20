@@ -1,6 +1,5 @@
 package br.com.genovi.application.application.services;
 
-import br.com.genovi.application.domain.models.Amamentacao;
 import br.com.genovi.application.domain.models.Ascendencia;
 import br.com.genovi.application.domain.models.Ovino;
 import br.com.genovi.application.dtos.AscendenciaDTO;
@@ -29,6 +28,11 @@ public class AscendenciaService {
         return ascendenciaRepository.findById(id).orElseThrow(() -> new RuntimeException("Ascendencia não encontrada"));
     }
 
+    private Ovino findOvinoEntityById(Long id) {
+        return ovinoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ovino não encontrado para Ascendencia"));
+    }
+
     public List<AscendenciaDTO> findAll() {
         return ascendenciaRepository.findAll().stream().map(ascendenciaMapper::toDTO).toList();
     }
@@ -38,8 +42,8 @@ public class AscendenciaService {
     }
 
     public AscendenciaDTO save(CreateAscendenciaDTO dto) {
-        Ovino ovinoPai = ovinoRepository.findById(dto.idOvinoPai()).orElseThrow(() -> new RuntimeException("Ovino Pai não encontrado"));
-        Ovino ovinoMae = ovinoRepository.findById(dto.idOvinoMae()).orElseThrow(() -> new RuntimeException("Ovino Mae não encontrado"));
+        Ovino ovinoPai = findOvinoEntityById(dto.idOvinoPai());
+        Ovino ovinoMae = findOvinoEntityById(dto.idOvinoMae());
 
         Ascendencia ascendencia = ascendenciaMapper.toEntity(dto);
         ascendencia.setPai(ovinoPai);
@@ -51,8 +55,8 @@ public class AscendenciaService {
 
     public AscendenciaDTO update(Long id, CreateAscendenciaDTO dto) {
         Ascendencia ascendencia = findAscendenciaEntityById(id);
-        Ovino ovinoPai = ovinoRepository.findById(dto.idOvinoPai()).orElseThrow(() -> new RuntimeException("Ovino Pai não encontrado"));
-        Ovino ovinoMae = ovinoRepository.findById(dto.idOvinoMae()).orElseThrow(() -> new RuntimeException("Ovino Mae não encontrado"));
+        Ovino ovinoPai = findOvinoEntityById(dto.idOvinoPai());
+        Ovino ovinoMae = findOvinoEntityById(dto.idOvinoMae());
 
         ascendencia.setPai(ovinoPai);
         ascendencia.setMae(ovinoMae);

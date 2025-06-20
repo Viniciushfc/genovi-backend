@@ -28,6 +28,11 @@ public class AmamentacaoService {
         return amamentacaoRepository.findById(id).orElseThrow(() -> new RuntimeException("Amamentação não encontrada"));
     }
 
+    private Ovino findOvinoEntityById(Long id) {
+        return ovinoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ovino não encontrado"));
+    }
+
     public List<AmamentacaoDTO> findAll() {
         return amamentacaoRepository.findAll().stream().map(amamentacaoMapper::toDTO).toList();
     }
@@ -37,8 +42,8 @@ public class AmamentacaoService {
     }
 
     public AmamentacaoDTO save(CreateAmamentacaoDTO dto) {
-        Ovino ovinoMae = ovinoRepository.findById(dto.ovelhaMaeId()).orElseThrow(() -> new RuntimeException("Ovelha Mãe não encontrada"));
-        Ovino cordeiro = ovinoRepository.findById(dto.cordeiroMamandoId()).orElseThrow(() -> new RuntimeException("Ovelha Mãe não encontrada"));
+        Ovino ovinoMae = findOvinoEntityById(dto.ovelhaMaeId());
+        Ovino cordeiro = findOvinoEntityById(dto.cordeiroMamandoId());
 
         Amamentacao amamentacao = amamentacaoMapper.toEntity(dto);
         amamentacao.setOvelhaMae(ovinoMae);
@@ -50,8 +55,8 @@ public class AmamentacaoService {
 
     public AmamentacaoDTO update(Long id, CreateAmamentacaoDTO dto) {
         Amamentacao amamentacao = findAmamentacaoEntityById(id);
-        Ovino ovinoMae = ovinoRepository.findById(dto.ovelhaMaeId()).orElseThrow(() -> new RuntimeException("Ovelha Mãe não encontrada"));
-        Ovino cordeiro = ovinoRepository.findById(dto.cordeiroMamandoId()).orElseThrow(() -> new RuntimeException("Ovelha Mãe não encontrada"));
+        Ovino ovinoMae = findOvinoEntityById(dto.ovelhaMaeId());
+        Ovino cordeiro = findOvinoEntityById(dto.cordeiroMamandoId());
 
         amamentacaoMapper.updateEntityFromDTO(dto, amamentacao);
         amamentacao.setOvelhaMae(ovinoMae);
