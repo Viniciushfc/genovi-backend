@@ -17,7 +17,7 @@ public class Aplicacao {
     @ManyToOne
     private Medicamento medicamento;
     private boolean temProximaDose;
-    private LocalDateTime proximaDose;
+    private LocalDateTime dataProximaDose;
     @ManyToOne
     private Usuario responsavel;
     private String observacoes;
@@ -25,13 +25,13 @@ public class Aplicacao {
     public Aplicacao() {
     }
 
-    public Aplicacao(Long id, LocalDateTime dataAplicacao, Ovino ovino, Medicamento medicamento, boolean temProximaDose, LocalDateTime proximaDose, Usuario responsavel, String observacoes) {
+    public Aplicacao(Long id, LocalDateTime dataAplicacao, Ovino ovino, Medicamento medicamento, boolean temProximaDose, LocalDateTime dataProximaDose, Usuario responsavel, String observacoes) {
         this.id = id;
         this.dataAplicacao = dataAplicacao;
         this.ovino = ovino;
         this.medicamento = medicamento;
         this.temProximaDose = temProximaDose;
-        this.proximaDose = proximaDose;
+        this.dataProximaDose = dataProximaDose;
         this.responsavel = responsavel;
         this.observacoes = observacoes;
     }
@@ -76,12 +76,12 @@ public class Aplicacao {
         this.temProximaDose = temProximaDose;
     }
 
-    public LocalDateTime getProximaDose() {
-        return proximaDose;
+    public LocalDateTime getDataProximaDose() {
+        return dataProximaDose;
     }
 
-    public void setProximaDose(LocalDateTime proximaDose) {
-        this.proximaDose = proximaDose;
+    public void setDataProximaDose(LocalDateTime dataProximaDose) {
+        this.dataProximaDose = dataProximaDose;
     }
 
     public Usuario getResponsavel() {
