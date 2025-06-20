@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UsuarioMapper {
 
-    public Usuario toEntity(UsuarioDTO dto) {
+    public Usuario toEntity(UsuarioDTO dto, Boolean ativo) {
         return new Usuario(
                 null,
-                null,
+                ativo,
                 dto.nome(),
                 dto.email(),
                 dto.senha(),
@@ -29,7 +29,8 @@ public class UsuarioMapper {
         );
     }
 
-    public void updateEntityFromDTO(UsuarioDTO dto, Usuario entity) {
+    public void updateEntityFromDTO(UsuarioDTO dto, Usuario entity, Boolean ativo) {
+        entity.setAtivo(ativo);
         entity.setNome(dto.nome());
         entity.setEmail(dto.email());
         entity.setSenha(dto.senha());

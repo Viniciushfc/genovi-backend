@@ -37,9 +37,10 @@ public class Ovino {
 
     }
 
-    public Ovino(Long id, Long rfid, String nome, String raca, String fbb, LocalDateTime dataNascimento, Criador criador, int tempoFazendo, TypeGrauPureza typeGrauPureza, TypeSexo sexo, Float peso, String comportamento, Ascendencia ascendencia, TypeStatus status) {
+    public Ovino(Long id, Long rfid, boolean ativo, String nome, String raca, String fbb, LocalDateTime dataNascimento, Criador criador, int tempoFazendo, TypeGrauPureza typeGrauPureza, TypeSexo sexo, Float peso, String comportamento, Ascendencia ascendencia, TypeStatus status) {
         this.id = id;
         this.rfid = rfid;
+        this.ativo = ativo;
         this.nome = nome;
         this.raca = raca;
         this.fbb = fbb;

@@ -45,9 +45,7 @@ public class AscendenciaService {
         Ovino ovinoPai = findOvinoEntityById(dto.idOvinoPai());
         Ovino ovinoMae = findOvinoEntityById(dto.idOvinoMae());
 
-        Ascendencia ascendencia = ascendenciaMapper.toEntity(dto);
-        ascendencia.setPai(ovinoPai);
-        ascendencia.setMae(ovinoMae);
+        Ascendencia ascendencia = ascendenciaMapper.toEntity(dto, ovinoPai, ovinoMae);
 
         ascendenciaRepository.save(ascendencia);
         return ascendenciaMapper.toDTO(ascendencia);
@@ -58,8 +56,7 @@ public class AscendenciaService {
         Ovino ovinoPai = findOvinoEntityById(dto.idOvinoPai());
         Ovino ovinoMae = findOvinoEntityById(dto.idOvinoMae());
 
-        ascendencia.setPai(ovinoPai);
-        ascendencia.setMae(ovinoMae);
+        ascendenciaMapper.updateEntityFromDTO(ascendencia, ovinoPai, ovinoMae);
 
         ascendenciaRepository.save(ascendencia);
         return ascendenciaMapper.toDTO(ascendencia);

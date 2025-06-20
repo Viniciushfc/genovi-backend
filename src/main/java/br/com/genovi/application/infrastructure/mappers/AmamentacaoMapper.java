@@ -1,6 +1,7 @@
 package br.com.genovi.application.infrastructure.mappers;
 
 import br.com.genovi.application.domain.models.Amamentacao;
+import br.com.genovi.application.domain.models.Ovino;
 import br.com.genovi.application.dtos.AmamentacaoDTO;
 import br.com.genovi.application.dtos.CreateAmamentacaoDTO;
 import org.springframework.stereotype.Component;
@@ -9,11 +10,11 @@ import org.springframework.stereotype.Component;
 public class AmamentacaoMapper {
 
     //Converter DTO para Entidade
-    public Amamentacao toEntity(CreateAmamentacaoDTO dto) {
+    public Amamentacao toEntity(CreateAmamentacaoDTO dto, Ovino ovelhaMae, Ovino carneiro) {
         return new Amamentacao(
                 null,
-                null, //sera setado na service
-                null, //sera setado na service
+                ovelhaMae,
+                carneiro,
                 dto.dataInicio(),
                 dto.dataFim(),
                 dto.observacoes()
@@ -32,7 +33,9 @@ public class AmamentacaoMapper {
     }
 
     //Atualizar uma entidade existente a partir do DTO
-    public void updateEntityFromDTO(CreateAmamentacaoDTO dto, Amamentacao entity) {
+    public void updateEntityFromDTO(CreateAmamentacaoDTO dto, Amamentacao entity, Ovino ovelhaMae, Ovino carneiro) {
+        entity.setOvelhaMae(ovelhaMae);
+        entity.setCordeiroMamando(carneiro);
         entity.setDataInicio(dto.dataInicio());
         entity.setDataFim(dto.dataFim());
         entity.setObservacoes(dto.observacoes());

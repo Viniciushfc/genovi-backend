@@ -43,11 +43,9 @@ public class ReproducaoService {
 
     public ReproducaoDTO save(CreateReproducaoDTO dto) {
         Ovino carneiro = findOvinoEntityById(dto.carneiroId());
-        Ovino ovino = findOvinoEntityById(dto.ovelhaId());
+        Ovino ovelha = findOvinoEntityById(dto.ovelhaId());
 
-        Reproducao reproducao = reproducaoMapper.toEntity(dto);
-        reproducao.setCarneiroPai(carneiro);
-        reproducao.setOvelhaMae(ovino);
+        Reproducao reproducao = reproducaoMapper.toEntity(dto, carneiro, ovelha);
 
         reproducao = reproducaoRepository.save(reproducao);
 
@@ -57,11 +55,9 @@ public class ReproducaoService {
     public ReproducaoDTO update(Long id, CreateReproducaoDTO dto) {
         Reproducao reproducao = findReproducaoById(id);
         Ovino carneiro = findOvinoEntityById(dto.carneiroId());
-        Ovino ovino = findOvinoEntityById(dto.ovelhaId());
+        Ovino ovelha = findOvinoEntityById(dto.ovelhaId());
 
-        reproducaoMapper.updateEntetyFromDTO(dto, reproducao);
-        reproducao.setCarneiroPai(carneiro);
-        reproducao.setOvelhaMae(ovino);
+        reproducaoMapper.updateEntetyFromDTO(dto, reproducao, carneiro, ovelha);
 
         reproducao = reproducaoRepository.save(reproducao);
 

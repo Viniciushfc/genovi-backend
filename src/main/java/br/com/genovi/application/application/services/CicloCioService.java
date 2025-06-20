@@ -44,8 +44,7 @@ public class CicloCioService {
     public CicloCioDTO save(CreateCicloCioDTO dto) {
         Ovino ovino = findOvinoEntityById(dto.ovelhaId());
 
-        CicloCio cicloCio = cicloCioMapper.toEntity(dto);
-        cicloCio.setOvelha(ovino);
+        CicloCio cicloCio = cicloCioMapper.toEntity(dto, ovino);
 
         cicloCioRepository.save(cicloCio);
         return cicloCioMapper.toDTO(cicloCio);
@@ -55,7 +54,7 @@ public class CicloCioService {
         CicloCio cicloCio = findCicloCioById(id);
         Ovino ovino = findOvinoEntityById(dto.ovelhaId());
 
-        cicloCioMapper.updateEntityFromDTO(dto, cicloCio);
+        cicloCioMapper.updateEntityFromDTO(dto, cicloCio, ovino);
         cicloCio.setOvelha(ovino);
 
         cicloCioRepository.save(cicloCio);

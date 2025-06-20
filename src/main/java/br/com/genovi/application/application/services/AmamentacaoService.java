@@ -45,9 +45,8 @@ public class AmamentacaoService {
         Ovino ovinoMae = findOvinoEntityById(dto.ovelhaMaeId());
         Ovino cordeiro = findOvinoEntityById(dto.cordeiroMamandoId());
 
-        Amamentacao amamentacao = amamentacaoMapper.toEntity(dto);
-        amamentacao.setOvelhaMae(ovinoMae);
-        amamentacao.setCordeiroMamando(cordeiro);
+        Amamentacao amamentacao = amamentacaoMapper.toEntity(dto, ovinoMae, cordeiro);
+        
         amamentacaoRepository.save(amamentacao);
 
         return amamentacaoMapper.toDTO(amamentacao);
@@ -58,9 +57,7 @@ public class AmamentacaoService {
         Ovino ovinoMae = findOvinoEntityById(dto.ovelhaMaeId());
         Ovino cordeiro = findOvinoEntityById(dto.cordeiroMamandoId());
 
-        amamentacaoMapper.updateEntityFromDTO(dto, amamentacao);
-        amamentacao.setOvelhaMae(ovinoMae);
-        amamentacao.setCordeiroMamando(cordeiro);
+        amamentacaoMapper.updateEntityFromDTO(dto, amamentacao, ovinoMae, cordeiro);
 
         amamentacaoRepository.save(amamentacao);
         return amamentacaoMapper.toDTO(amamentacao);

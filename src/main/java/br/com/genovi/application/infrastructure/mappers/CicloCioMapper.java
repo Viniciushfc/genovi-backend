@@ -1,6 +1,7 @@
 package br.com.genovi.application.infrastructure.mappers;
 
 import br.com.genovi.application.domain.models.CicloCio;
+import br.com.genovi.application.domain.models.Ovino;
 import br.com.genovi.application.dtos.CicloCioDTO;
 import br.com.genovi.application.dtos.CreateCicloCioDTO;
 import org.springframework.stereotype.Component;
@@ -8,10 +9,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class CicloCioMapper {
 
-    public CicloCio toEntity(CreateCicloCioDTO dto) {
+    public CicloCio toEntity(CreateCicloCioDTO dto, Ovino ovelha) {
         return new CicloCio(
                 null,
-                null,
+                ovelha,
                 dto.dataInicio(),
                 dto.dataFim(),
                 dto.observacoes()
@@ -27,7 +28,8 @@ public class CicloCioMapper {
         );
     }
 
-    public void updateEntityFromDTO(CreateCicloCioDTO dto, CicloCio entity) {
+    public void updateEntityFromDTO(CreateCicloCioDTO dto, CicloCio entity, Ovino ovelha) {
+        entity.setOvelha(ovelha);
         entity.setDataInicio(dto.dataInicio());
         entity.setDataFim(dto.dataFim());
         entity.setObservacoes(dto.observacoes());

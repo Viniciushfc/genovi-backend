@@ -32,16 +32,18 @@ public class UsuarioService {
     }
 
     public UsuarioDTO save(UsuarioDTO dto) {
-        Usuario usuario = usuarioMapper.toEntity(dto);
-        usuario.setAtivo(true);
+        Usuario usuario = usuarioMapper.toEntity(dto, true);
+
         usuarioRepository.save(usuario);
+
         return usuarioMapper.toDTO(usuario);
     }
 
     public UsuarioDTO update(Long id, UsuarioDTO dto) {
         Usuario usuario = findUsuarioById(id);
-        usuarioMapper.updateEntityFromDTO(dto, usuario);
-        usuarioRepository.save(usuario);
+
+        usuarioMapper.updateEntityFromDTO(dto, usuario, true);
+
         return usuarioMapper.toDTO(usuario);
     }
 
