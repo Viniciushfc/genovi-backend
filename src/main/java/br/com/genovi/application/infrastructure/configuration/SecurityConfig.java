@@ -12,15 +12,17 @@ public class SecurityConfig {
 
     //Bean apenas para facilitar os testes via requisição API
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable() // Desativa proteção CSRF (opcional para API REST)
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // 🔥 Libera todos os endpoints
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.sameOrigin())
                 )
-                .formLogin().disable() // Desativa tela de login
-                .httpBasic().disable(); // Desativa autenticação básica
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll()
+                )
+                .csrf(csrf -> csrf.disable());
 
         return http.build();
     }
 }
+
