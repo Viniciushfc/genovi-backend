@@ -29,7 +29,7 @@ public class Ovino {
     private TypeSexo sexo;
     private Float peso;
     private String comportamento;
-    @OneToOne(optional = true)
+    @ManyToOne(optional = true)
     private Ascendencia ascendencia;
     private TypeStatus status;
 
