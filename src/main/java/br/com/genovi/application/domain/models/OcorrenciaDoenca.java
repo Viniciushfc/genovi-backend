@@ -16,7 +16,7 @@ public class OcorrenciaDoenca {
     @ManyToOne
     private Doenca doenca;
     private LocalDateTime dataInicio;
-    private LocalDateTime dataFim;
+    private LocalDateTime dataFinal;
     private boolean curada;
     @ManyToOne
     private Usuario responsavel;
@@ -29,7 +29,7 @@ public class OcorrenciaDoenca {
         this.ovino = ovino;
         this.doenca = doenca;
         this.dataInicio = dataInicio;
-        this.dataFim = dataFim;
+        this.dataFinal = dataFim;
         this.curada = curada;
         this.responsavel = responsavel;
     }
@@ -66,12 +66,12 @@ public class OcorrenciaDoenca {
         this.dataInicio = dataInicio;
     }
 
-    public LocalDateTime getDataFim() {
-        return dataFim;
+    public LocalDateTime getDataFinal() {
+        return dataFinal;
     }
 
-    public void setDataFim(LocalDateTime dataFim) {
-        this.dataFim = dataFim;
+    public void setDataFinal(LocalDateTime dataFinal) {
+        this.dataFinal = dataFinal;
     }
 
     public boolean isCurada() {
