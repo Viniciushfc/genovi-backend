@@ -50,5 +50,6 @@ public class UsuarioService {
     public void disable(Long id) {
         Usuario usuario = findUsuarioById(id);
         usuario.setAtivo(false);
+        usuarioRepository.save(usuario);
     }
 }
