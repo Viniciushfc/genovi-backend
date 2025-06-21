@@ -12,7 +12,7 @@ public class CicloCio {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @ManyToOne
-    private Ovino Ovelha;
+    private Ovino ovelha;
     private LocalDateTime dataInicio;
     private LocalDateTime dataFim;
     private String observacoes;
@@ -22,7 +22,7 @@ public class CicloCio {
 
     public CicloCio(Long id, Ovino ovelha, LocalDateTime dataInicio, LocalDateTime dataFim, String observacoes) {
         this.id = id;
-        Ovelha = ovelha;
+        this.ovelha = ovelha;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.observacoes = observacoes;
@@ -37,11 +37,11 @@ public class CicloCio {
     }
 
     public Ovino getOvelha() {
-        return Ovelha;
+        return ovelha;
     }
 
     public void setOvelha(Ovino ovelha) {
-        Ovelha = ovelha;
+        this.ovelha = ovelha;
     }
 
     public LocalDateTime getDataInicio() {
