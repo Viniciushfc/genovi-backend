@@ -71,8 +71,8 @@ public class MedicamentoService {
     }
 
     public void delete(Long id) {
-        Medicamento medicamento = findMedicamentoById(id);
-        medicamentoRepository.delete(medicamento);
+        findMedicamentoById(id);
+        medicamentoRepository.deleteById(id);
     }
 }
 

@@ -65,7 +65,7 @@ public class ReproducaoService {
     }
 
     public void delete(Long id) {
-        Reproducao reproducao = findReproducaoById(id);
+        findReproducaoById(id);
         reproducaoRepository.deleteById(id);
     }
 }

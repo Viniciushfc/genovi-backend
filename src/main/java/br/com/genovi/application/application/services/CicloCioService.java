@@ -63,7 +63,7 @@ public class CicloCioService {
     }
 
     public void delete(Long id) {
-        CicloCio cicloCio = findCicloCioById(id);
+        findCicloCioById(id);
         cicloCioRepository.deleteById(id);
     }
 }

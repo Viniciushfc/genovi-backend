@@ -67,7 +67,7 @@ public class AscendenciaService {
     }
 
     public void delete(Long id) {
-        Ascendencia ascendencia = findAscendenciaEntityById(id);
+        findAscendenciaEntityById(id);
         ascendenciaRepository.deleteById(id);
     }
 }
