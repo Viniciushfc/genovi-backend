@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/ciclos-cio")
+@RequestMapping("/api/public/ciclos-cio")
 public class CicloCioController {
 
     private final CicloCioService cicloCioService;

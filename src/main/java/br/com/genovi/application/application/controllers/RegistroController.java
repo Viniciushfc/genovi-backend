@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/registros")
+@RequestMapping("/api/public/registros")
 public class RegistroController {
 
     private final RegistroService registroService;

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/ocorrencias-doencas")
+@RequestMapping("/api/public/ocorrencias-doencas")
 public class OcorrenciaDoencaController {
 
     private final OcorrenciaDoencaService ocorrenciaDoencaService;
