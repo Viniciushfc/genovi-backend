@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/public/ovinos")
+@RequestMapping("/api/user/ovinos")
 public class OvinoController {
 
     private final OvinoService ovinoService;

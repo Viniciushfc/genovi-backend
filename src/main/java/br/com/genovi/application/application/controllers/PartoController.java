@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/public/partos")
+@RequestMapping("/api/user/partos")
 public class PartoController {
 
     private final PartoService partoService;
