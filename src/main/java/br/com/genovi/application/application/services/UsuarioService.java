@@ -1,12 +1,16 @@
 package br.com.genovi.application.application.services;
 
+
 import br.com.genovi.application.domain.models.Usuario;
 import br.com.genovi.application.dtos.UsuarioDTO;
 import br.com.genovi.application.infrastructure.mappers.UsuarioMapper;
 import br.com.genovi.application.infrastructure.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+
+import static br.com.genovi.application.domain.enums.Role.ROLE_USER;
 
 @Service
 public class UsuarioService {
@@ -43,6 +47,7 @@ public class UsuarioService {
         Usuario usuario = findUsuarioById(id);
 
         usuarioMapper.updateEntityFromDTO(dto, usuario, true);
+        usuario.setRoles(Collections.singleton(ROLE_USER));
 
         return usuarioMapper.toDTO(usuario);
     }
