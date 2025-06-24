@@ -1,7 +1,10 @@
 package br.com.genovi.application.domain.models;
 
+import br.com.genovi.application.domain.enums.Role;
 import br.com.genovi.application.domain.enums.TypeUsuario;
 import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "Usuario")
@@ -11,24 +14,28 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private Boolean ativo;
-    private String nome;
+    private String username;
     private String email;
     private String senha;
     private TypeUsuario perfil;
     //A autenticacao2fa precisa ser "Boolean" devido a possibilidade de ser null
     private Boolean autenticacao2fa;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 
     public Usuario() {
     }
 
-    public Usuario(Long id, Boolean ativo, String nome, String email, String senha, TypeUsuario perfil, Boolean autenticacao2fa) {
+    public Usuario(Long id, Boolean ativo, String username, String email, String senha, TypeUsuario perfil, Boolean autenticacao2fa, Set<Role> roles) {
         this.id = id;
         this.ativo = ativo;
-        this.nome = nome;
+        this.username = username;
         this.email = email;
         this.senha = senha;
         this.perfil = perfil;
         this.autenticacao2fa = autenticacao2fa;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -47,12 +54,12 @@ public class Usuario {
         this.ativo = ativo;
     }
 
-    public String getNome() {
-        return nome;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -85,5 +92,21 @@ public class Usuario {
 
     public void setAutenticacao2fa(Boolean autenticacao2fa) {
         this.autenticacao2fa = autenticacao2fa;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
