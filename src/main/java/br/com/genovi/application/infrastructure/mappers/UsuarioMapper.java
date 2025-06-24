@@ -11,17 +11,18 @@ public class UsuarioMapper {
         return new Usuario(
                 null,
                 ativo,
-                dto.nome(),
+                dto.username(),
                 dto.email(),
                 dto.senha(),
                 dto.perfil(),
-                dto.autenticacao2fa()
+                dto.autenticacao2fa(),
+                null
         );
     }
 
     public UsuarioDTO toDTO(Usuario entity) {
         return new UsuarioDTO(
-                entity.getNome(),
+                entity.getUsername(),
                 entity.getEmail(),
                 entity.getSenha(),
                 entity.getPerfil(),
@@ -31,7 +32,7 @@ public class UsuarioMapper {
 
     public void updateEntityFromDTO(UsuarioDTO dto, Usuario entity, Boolean ativo) {
         entity.setAtivo(ativo);
-        entity.setNome(dto.nome());
+        entity.setUsername(dto.username());
         entity.setEmail(dto.email());
         entity.setSenha(dto.senha());
         entity.setPerfil(dto.perfil());
