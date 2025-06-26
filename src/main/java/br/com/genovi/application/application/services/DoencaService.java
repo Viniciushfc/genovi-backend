@@ -5,10 +5,11 @@ import br.com.genovi.application.dtos.DoencaDTO;
 import br.com.genovi.application.infrastructure.mappers.DoencaMapper;
 import br.com.genovi.application.infrastructure.repositories.DoencaRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class DoencaService {
 
     private final DoencaRepository doencaRepository;
