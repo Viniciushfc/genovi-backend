@@ -1,5 +1,6 @@
-package br.com.genovi.application.application.services;
+package br.com.genovi.application.application;
 
+import br.com.genovi.application.application.services.MedicamentoService;
 import br.com.genovi.application.domain.models.Doenca;
 import br.com.genovi.application.domain.models.Medicamento;
 import br.com.genovi.application.dtos.CreateMedicamentoDTO;
