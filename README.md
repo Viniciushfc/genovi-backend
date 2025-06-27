@@ -1,15 +1,12 @@
-# 🐑 Genovi - Backend
+# Genovi - Backend
 
 Sistema de Gestão e Monitoramento de Ovinos desenvolvido como parte de um Trabalho de Conclusão de Curso (TCC). O objetivo é fornecer uma solução tecnológica eficiente para auxiliar criadores na gestão, rastreio e melhoria genética do rebanho ovino.
 
 ---
-# 📊 Status
-
-🚧 Em desenvolvimento 🚧
-
+# Status: Em desenvolvimento 
 ---
 
-## 🚀 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - **Java 17**
 - **Spring Boot**
@@ -27,13 +24,13 @@ Sistema de Gestão e Monitoramento de Ovinos desenvolvido como parte de um Traba
 
 ---
 
-## 🐏 Sobre o Projeto
+## Sobre o Projeto
 
 O **Genovi** é um sistema de monitoramento e gestão de ovinos que integra tecnologia para otimizar o controle do rebanho. Seu principal diferencial é o foco específico nas necessidades dos criadores de ovinos, oferecendo funcionalidades geralmente encontradas apenas em sistemas para bovinos.
 
 ---
 
-## 🗂️ Arquitetura
+## Arquitetura
 
 O projeto segue os princípios da **Arquitetura Limpa**, promovendo:
 
@@ -43,7 +40,7 @@ O projeto segue os princípios da **Arquitetura Limpa**, promovendo:
 
 ---
 
-## 🔒 Segurança
+## Segurança
 
 - Implementação de autenticação e autorização utilizando **JWT (JSON Web Token)**.
 - Controle de acesso baseado em roles (papéis), garantindo segurança nas operações sensíveis do sistema.
