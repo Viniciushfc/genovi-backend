@@ -8,7 +8,7 @@ Sistema de Gestão e Monitoramento de Ovinos desenvolvido como parte de um Traba
 
 ## Tecnologias Utilizadas
 
-- **Java 17**
+- **Java 21**
 - **Spring Boot**
   - Spring Web
   - Spring Data JPA
