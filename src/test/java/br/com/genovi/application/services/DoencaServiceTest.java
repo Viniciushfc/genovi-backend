@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,23 +27,28 @@ class DoencaServiceTest {
     @Mock
     private DoencaMapper doencaMapper;
 
+    @Mock
+    private Doenca doenca;
+
+    @Mock
+    private DoencaDTO doencaDTO;
+
     @InjectMocks
     private DoencaService doencaService;
-
-    private Doenca doenca;
-    private DoencaDTO doencaDTO;
 
     @BeforeEach
     void setUp() {
         doenca = new Doenca();
         doenca.setId(1L);
 
-        doencaDTO = new DoencaDTO("Nome teste", "Descrição Teste");
+        doencaDTO = new DoencaDTO(
+                "Nome teste",
+                "Descrição Teste");
     }
 
     @Test
     void testFindAllSuccess() {
-        when(doencaRepository.findAll()).thenReturn(Arrays.asList(doenca));
+        when(doencaRepository.findAll()).thenReturn(Collections.singletonList(doenca));
         when(doencaMapper.toDTO(doenca)).thenReturn(doencaDTO);
 
         List<DoencaDTO> result = doencaService.findAll();

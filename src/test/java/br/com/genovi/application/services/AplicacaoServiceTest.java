@@ -55,7 +55,6 @@ class AplicacaoServiceTest {
     @Mock
     private UsuarioMapper usuarioMapper;
 
-
     @InjectMocks
     private AplicacaoService aplicacaoService;
 

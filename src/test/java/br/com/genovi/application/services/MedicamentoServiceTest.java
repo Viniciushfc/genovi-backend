@@ -33,12 +33,17 @@ class MedicamentoServiceTest {
     @Mock
     private MedicamentoMapper medicamentoMapper;
 
+    @Mock
+    private Medicamento medicamento;
+
+    @Mock
+    private Doenca doenca;
+
+    @Mock
+    private CreateMedicamentoDTO createMedicamentoDTO;
+
     @InjectMocks
     private MedicamentoService medicamentoService;
-
-    private Medicamento medicamento;
-    private Doenca doenca;
-    private CreateMedicamentoDTO createMedicamentoDTO;
 
     @BeforeEach
     void setUp() {
@@ -50,7 +55,11 @@ class MedicamentoServiceTest {
         medicamento.setNome("Remédio Teste");
 
         createMedicamentoDTO = new CreateMedicamentoDTO(
-                "Remédio Teste", "Fabricante Teste", List.of(1L), true, "Descrição Teste"
+                "Remédio Teste",
+                "Fabricante Teste",
+                List.of(1L),
+                true,
+                "Descrição Teste"
         );
     }
 

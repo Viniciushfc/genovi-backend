@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,23 +27,30 @@ class CriadorServiceTest {
     @Mock
     private CriadorMapper criadorMapper;
 
+    @Mock
+    private Criador criador;
+
+    @Mock
+    private CriadorDTO criadorDTO;
+
     @InjectMocks
     private CriadorService criadorService;
-
-    private Criador criador;
-    private CriadorDTO criadorDTO;
 
     @BeforeEach
     void setUp() {
         criador = new Criador();
         criador.setId(1L);
 
-        criadorDTO = new CriadorDTO("Nome Teste", "99999999999", "endereco teste", "99999999999");
+        criadorDTO = new CriadorDTO(
+                "Nome Teste",
+                "99999999999",
+                "endereco teste",
+                "99999999999");
     }
 
     @Test
     void testFindAll() {
-        when(criadorRepository.findAll()).thenReturn(Arrays.asList(criador));
+        when(criadorRepository.findAll()).thenReturn(Collections.singletonList(criador));
         when(criadorMapper.toDTO(criador)).thenReturn(criadorDTO);
 
         List<CriadorDTO> result = criadorService.findAll();

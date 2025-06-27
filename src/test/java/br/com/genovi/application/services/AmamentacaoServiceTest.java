@@ -34,14 +34,23 @@ class AmamentacaoServiceTest {
     @Mock
     private AmamentacaoMapper amamentacaoMapper;
 
+    @Mock
+    private Ovino ovelhaMae;
+
+    @Mock
+    private Ovino cordeiro;
+
+    @Mock
+    private Amamentacao amamentacao;
+
+    @Mock
+    private AmamentacaoDTO amamentacaoDTO;
+
+    @Mock
+    private CreateAmamentacaoDTO createDto;
+
     @InjectMocks
     private AmamentacaoService amamentacaoService;
-
-    private Ovino ovelhaMae;
-    private Ovino cordeiro;
-    private Amamentacao amamentacao;
-    private AmamentacaoDTO amamentacaoDTO;
-    private CreateAmamentacaoDTO createDto;
 
     @BeforeEach
     void setUp() {
@@ -54,7 +63,7 @@ class AmamentacaoServiceTest {
         LocalDateTime dataTeste = LocalDateTime.of(2024, 1, 1, 14, 30);
 
         amamentacao = new Amamentacao();
-        amamentacaoDTO = new AmamentacaoDTO(ovelhaMae, cordeiro,  dataTeste, dataTeste.plusHours(10), "Observações testes");
+        amamentacaoDTO = new AmamentacaoDTO(ovelhaMae, cordeiro, dataTeste, dataTeste.plusHours(10), "Observações testes");
 
         createDto = new CreateAmamentacaoDTO(1L, 2L, dataTeste, dataTeste.plusHours(10), "Observações testes");
     }

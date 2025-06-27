@@ -29,18 +29,35 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class OvinoServiceTest {
 
-    @Mock private OvinoRepository ovinoRepository;
-    @Mock private AscendenciaRepository ascendenciaRepository;
-    @Mock private CriadorRepository criadorRepository;
-    @Mock private OvinoMapper ovinoMapper;
+    @Mock
+    private OvinoRepository ovinoRepository;
 
-    @InjectMocks private OvinoService ovinoService;
+    @Mock
+    private AscendenciaRepository ascendenciaRepository;
 
+    @Mock
+    private CriadorRepository criadorRepository;
+
+    @Mock
+    private OvinoMapper ovinoMapper;
+
+    @Mock
     private Ovino ovino;
+
+    @Mock
     private Criador criador;
+
+    @Mock
     private Ascendencia ascendencia;
+
+    @Mock
     private CreateOvinoDTO dto;
+
+    @Mock
     private OvinoDTO ovinoDTO;
+
+    @InjectMocks
+    private OvinoService ovinoService;
 
     @BeforeEach
     void setup() {
@@ -54,8 +71,36 @@ class OvinoServiceTest {
         ovino.setId(1L);
         ovino.setAtivo(true);
 
-        dto = new CreateOvinoDTO(1111L,"Nome", "Raca", "FBB", LocalDateTime.now(),1L, 2, TypeGrauPureza.PURO_ORIGEM, TypeSexo.MACHO, 40.00F,"Comportamento", 1L, TypeStatus.ATIVO);
-        ovinoDTO = new OvinoDTO(1111L,true,"Nome", "Raca", "FBB", LocalDateTime.now(),criador, 2, TypeGrauPureza.PURO_ORIGEM, TypeSexo.MACHO, 40.00F,"Comportamento", ascendencia, TypeStatus.ATIVO);
+        ovinoDTO = new OvinoDTO(
+                1111L,
+                true,
+                "Nome",
+                "Raca",
+                "FBB",
+                LocalDateTime.now(),
+                criador,
+                2,
+                TypeGrauPureza.PURO_ORIGEM,
+                TypeSexo.MACHO,
+                40.00F,
+                "Comportamento",
+                ascendencia,
+                TypeStatus.ATIVO);
+
+        dto = new CreateOvinoDTO(
+                1111L,
+                "Nome",
+                "Raca",
+                "FBB",
+                LocalDateTime.now(),
+                1L,
+                2,
+                TypeGrauPureza.PURO_ORIGEM,
+                TypeSexo.MACHO,
+                40.00F,
+                "Comportamento",
+                1L,
+                TypeStatus.ATIVO);
     }
 
     @Test

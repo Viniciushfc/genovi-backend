@@ -30,38 +30,73 @@ class OcorrenciaDoencaServiceTest {
 
     @Mock
     private OcorrenciaDoencaRepository ocorrenciaDoencaRepository;
+
     @Mock
     private OvinoRepository ovinoRepository;
+
     @Mock
     private DoencaRepository doencaRepository;
+
     @Mock
     private UsuarioRepository usuarioRepository;
+
     @Mock
     private OcorrenciaDoencaMapper ocorrenciaDoencaMapper;
+
+    @Mock
+    private Ovino ovino;
+
+    @Mock
+    private Doenca doenca;
+
+    @Mock
+    private Usuario usuario;
+
+    @Mock
+    private OcorrenciaDoenca ocorrencia;
+
+    @Mock
+    private CreateOcorrenciaDoencaDTO dto;
+
+    @Mock
+    private OcorrenciaDoencaDTO ocorrenciaDTO;
 
     @InjectMocks
     private OcorrenciaDoencaService service;
 
-    private Ovino ovino;
-    private Doenca doenca;
-    private Usuario usuario;
-    private OcorrenciaDoenca ocorrencia;
-    private CreateOcorrenciaDoencaDTO dto;
-    private OcorrenciaDoencaDTO ocorrenciaDTO;
-
     @BeforeEach
     void setUp() {
-        ovino = new Ovino(); ovino.setId(1L);
-        doenca = new Doenca(); doenca.setId(2L);
-        usuario = new Usuario(); usuario.setId(3L);
+        ovino = new Ovino();
+        ovino.setId(1L);
 
-        dto = new CreateOcorrenciaDoencaDTO(1L, 2L, LocalDateTime.now(), LocalDateTime.now().plusDays(5), true, 3L);
-        ocorrencia = new OcorrenciaDoenca(10L, ovino, doenca, dto.dataInicio(), dto.dataFinal(), dto.curado(), usuario);
-        ocorrenciaDTO = mock(OcorrenciaDoencaDTO.class);
+        doenca = new Doenca();
+        doenca.setId(2L);
+
+        usuario = new Usuario();
+        usuario.setId(3L);
+
+        dto = new CreateOcorrenciaDoencaDTO(
+                1L,
+                2L,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusDays(5),
+                true,
+                3L
+        );
+
+        ocorrencia = new OcorrenciaDoenca(
+                10L,
+                ovino,
+                doenca,
+                dto.dataInicio(),
+                dto.dataFinal(),
+                dto.curado(),
+                usuario
+        );
     }
 
     @Test
-    void save_DeveSalvarOcorrenciaComSucesso() {
+    void shouldSaveOccurrenceSuccessfully() {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino));
         when(doencaRepository.findById(2L)).thenReturn(Optional.of(doenca));
         when(usuarioRepository.findById(3L)).thenReturn(Optional.of(usuario));
@@ -75,7 +110,7 @@ class OcorrenciaDoencaServiceTest {
     }
 
     @Test
-    void save_DeveLancarExcecao_QuandoOvinoNaoEncontrado() {
+    void shouldThrowExceptionWhenOvinoNotFound() {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.empty());
 
         Throwable exception = catchThrowable(() -> service.save(dto));
@@ -85,7 +120,7 @@ class OcorrenciaDoencaServiceTest {
     }
 
     @Test
-    void findById_DeveRetornarDTO_QuandoEncontrado() {
+    void shouldReturnDTOWhenFindById() {
         when(ocorrenciaDoencaRepository.findById(10L)).thenReturn(Optional.of(ocorrencia));
         when(ocorrenciaDoencaMapper.toDTO(ocorrencia)).thenReturn(ocorrenciaDTO);
 
@@ -95,7 +130,7 @@ class OcorrenciaDoencaServiceTest {
     }
 
     @Test
-    void findById_DeveLancarExcecao_QuandoNaoEncontrado() {
+    void shouldThrowExceptionWhenOccurrenceNotFoundById() {
         when(ocorrenciaDoencaRepository.findById(10L)).thenReturn(Optional.empty());
 
         Throwable exception = catchThrowable(() -> service.findById(10L));
@@ -105,7 +140,7 @@ class OcorrenciaDoencaServiceTest {
     }
 
     @Test
-    void delete_DeveRemoverOcorrencia_QuandoExiste() {
+    void shouldDeleteOccurrenceWhenExists() {
         when(ocorrenciaDoencaRepository.findById(10L)).thenReturn(Optional.of(ocorrencia));
 
         service.delete(10L);
@@ -114,7 +149,7 @@ class OcorrenciaDoencaServiceTest {
     }
 
     @Test
-    void delete_DeveLancarExcecao_QuandoNaoExiste() {
+    void shouldThrowExceptionWhenDeletingNonExistingOccurrence() {
         when(ocorrenciaDoencaRepository.findById(10L)).thenReturn(Optional.empty());
 
         Throwable exception = catchThrowable(() -> service.delete(10L));
@@ -124,7 +159,7 @@ class OcorrenciaDoencaServiceTest {
     }
 
     @Test
-    void findAll_DeveRetornarListaDeDTOs() {
+    void shouldReturnListOfOccurrenceDTOs() {
         when(ocorrenciaDoencaRepository.findAll()).thenReturn(List.of(ocorrencia));
         when(ocorrenciaDoencaMapper.toDTO(ocorrencia)).thenReturn(ocorrenciaDTO);
 
@@ -133,4 +168,5 @@ class OcorrenciaDoencaServiceTest {
         assertThat(result).hasSize(1);
         assertThat(result).contains(ocorrenciaDTO);
     }
+
 }

@@ -7,11 +7,9 @@ import br.com.genovi.dtos.ciclo_cio.CreateCicloCioDTO;
 import br.com.genovi.infrastructure.mappers.CicloCioMapper;
 import br.com.genovi.infrastructure.repositories.CicloCioRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -35,13 +33,20 @@ class CicloCioServiceTest {
     @Mock
     private CicloCioMapper cicloCioMapper;
 
+    @Mock
+    private Ovino ovelha;
+
+    @Mock
+    private CicloCio cicloCio;
+
+    @Mock
+    private CicloCioDTO cicloCioDTO;
+
+    @Mock
+    private CreateCicloCioDTO createDto;
+
     @InjectMocks
     private CicloCioService cicloCioService;
-
-    private Ovino ovelha;
-    private CicloCio cicloCio;
-    private CicloCioDTO cicloCioDTO;
-    private CreateCicloCioDTO createDto;
 
     @BeforeEach
     void setUp() {
@@ -51,8 +56,16 @@ class CicloCioServiceTest {
         cicloCio = new CicloCio();
         cicloCio.setId(1L);
 
-        cicloCioDTO = new CicloCioDTO(ovelha, LocalDateTime.of(2024, 1, 1, 10, 0), LocalDateTime.of(2024, 1, 2, 10, 0), "OBS TESTE");
-        createDto = new CreateCicloCioDTO(1L, LocalDateTime.of(2024, 1, 1, 10, 0), LocalDateTime.of(2024, 2, 1, 10, 0), "OBS TESTE");
+        cicloCioDTO = new CicloCioDTO(
+                ovelha,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusHours(5),
+                "OBS TESTE");
+        createDto = new CreateCicloCioDTO(
+                1L,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusHours(5),
+                "OBS TESTE");
     }
 
     @Test

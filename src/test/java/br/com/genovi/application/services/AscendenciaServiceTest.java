@@ -32,14 +32,24 @@ class AscendenciaServiceTest {
     @Mock
     private AscendenciaMapper ascendenciaMapper;
 
+    @Mock
+    private Ascendencia ascendencia;
+
+    @Mock
+    private Ovino pai;
+
+    @Mock
+    private Ovino mae;
+
+    @Mock
+    private AscendenciaDTO ascendenciaDTO;
+
+    @Mock
+    private CreateAscendenciaDTO createDto;
+
     @InjectMocks
     private AscendenciaService ascendenciaService;
 
-    private Ascendencia ascendencia;
-    private Ovino pai;
-    private Ovino mae;
-    private AscendenciaDTO ascendenciaDTO;
-    private CreateAscendenciaDTO createDto;
 
     @BeforeEach
     void setUp() {
@@ -54,8 +64,12 @@ class AscendenciaServiceTest {
         ascendencia.setPai(pai);
         ascendencia.setMae(mae);
 
-        ascendenciaDTO = new AscendenciaDTO(pai, mae);
-        createDto = new CreateAscendenciaDTO(1L, 2L);
+        ascendenciaDTO = new AscendenciaDTO(
+                pai,
+                mae);
+        createDto = new CreateAscendenciaDTO(
+                1L, 2L
+        );
     }
 
     @Test
