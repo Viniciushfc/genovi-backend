@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.genovi</groupId>
-	<artifactId>application</artifactId>
+	<artifactId>genovi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>application</name>
+	<name>genovi</name>
 	<description>Aplicação voltada a gestão de ovinos.</description>
 	<url/>
 	<licenses>
