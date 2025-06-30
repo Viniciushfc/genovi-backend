@@ -43,6 +43,10 @@ public class CriadorService {
     }
 
     public CriadorDTO update(Long id, CriadorDTO dto) {
+        if (!CpfCnpjUtils.isCpfOrCnpjValido(dto.cpfCnpj())) {
+            throw new IllegalArgumentException("CPF ou CNPJ inválido");
+        }
+
         Criador criador = findCriadorEntityById(id);
         criadorMapper.updateEntityFromDTO(dto, criador);
         criadorRepository.save(criador);
