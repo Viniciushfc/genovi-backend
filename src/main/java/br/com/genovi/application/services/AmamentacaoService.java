@@ -2,6 +2,7 @@ package br.com.genovi.application.services;
 
 import br.com.genovi.domain.models.Amamentacao;
 import br.com.genovi.domain.models.Ovino;
+import br.com.genovi.domain.utils.DateValidationUtils;
 import br.com.genovi.dtos.amamentacao.AmamentacaoDTO;
 import br.com.genovi.dtos.amamentacao.CreateAmamentacaoDTO;
 import br.com.genovi.infrastructure.mappers.AmamentacaoMapper;
@@ -42,17 +43,19 @@ public class AmamentacaoService {
     }
 
     public AmamentacaoDTO save(CreateAmamentacaoDTO dto) {
+        DateValidationUtils.validarPeriodo(dto.dataInicio(), dto.dataFim());
         Ovino ovinoMae = findOvinoEntityById(dto.ovelhaMaeId());
         Ovino cordeiro = findOvinoEntityById(dto.cordeiroMamandoId());
 
         Amamentacao amamentacao = amamentacaoMapper.toEntity(dto, ovinoMae, cordeiro);
-        
+
         amamentacaoRepository.save(amamentacao);
 
         return amamentacaoMapper.toDTO(amamentacao);
     }
 
     public AmamentacaoDTO update(Long id, CreateAmamentacaoDTO dto) {
+        DateValidationUtils.validarPeriodo(dto.dataInicio(), dto.dataFim());
         Amamentacao amamentacao = findAmamentacaoEntityById(id);
         Ovino ovinoMae = findOvinoEntityById(dto.ovelhaMaeId());
         Ovino cordeiro = findOvinoEntityById(dto.cordeiroMamandoId());
