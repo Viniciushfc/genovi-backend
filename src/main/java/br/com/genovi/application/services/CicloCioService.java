@@ -2,6 +2,7 @@ package br.com.genovi.application.services;
 
 import br.com.genovi.domain.models.CicloCio;
 import br.com.genovi.domain.models.Ovino;
+import br.com.genovi.domain.utils.DateValidationUtils;
 import br.com.genovi.dtos.ciclo_cio.CicloCioDTO;
 import br.com.genovi.dtos.ciclo_cio.CreateCicloCioDTO;
 import br.com.genovi.infrastructure.mappers.CicloCioMapper;
@@ -42,6 +43,8 @@ public class CicloCioService {
     }
 
     public CicloCioDTO save(CreateCicloCioDTO dto) {
+        DateValidationUtils.validarPeriodo(dto.dataInicio(), dto.dataFim());
+
         Ovino ovino = findOvinoEntityById(dto.ovelhaId());
 
         CicloCio cicloCio = cicloCioMapper.toEntity(dto, ovino);
@@ -51,11 +54,12 @@ public class CicloCioService {
     }
 
     public CicloCioDTO update(Long id, CreateCicloCioDTO dto) {
+        DateValidationUtils.validarPeriodo(dto.dataInicio(), dto.dataFim());
+
         CicloCio cicloCio = findCicloCioById(id);
         Ovino ovino = findOvinoEntityById(dto.ovelhaId());
 
         cicloCioMapper.updateEntityFromDTO(dto, cicloCio, ovino);
-        cicloCio.setOvelha(ovino);
 
         cicloCioRepository.save(cicloCio);
 
