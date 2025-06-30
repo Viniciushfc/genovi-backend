@@ -1,6 +1,7 @@
 package br.com.genovi.application.services;
 
 import br.com.genovi.domain.models.Criador;
+import br.com.genovi.domain.utils.CpfCnpjUtils;
 import br.com.genovi.dtos.criador.CriadorDTO;
 import br.com.genovi.infrastructure.mappers.CriadorMapper;
 import br.com.genovi.infrastructure.repositories.CriadorRepository;
@@ -32,6 +33,10 @@ public class CriadorService {
     }
 
     public CriadorDTO save(CriadorDTO dto) {
+        if (!CpfCnpjUtils.isCpfOrCnpjValido(dto.cpfCnpj())) {
+            throw new IllegalArgumentException("CPF ou CNPJ inválido");
+        }
+
         Criador criador = criadorMapper.toEntity(dto);
         criadorRepository.save(criador);
         return criadorMapper.toDTO(criador);
