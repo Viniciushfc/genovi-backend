@@ -4,6 +4,7 @@ import br.com.genovi.domain.models.Aplicacao;
 import br.com.genovi.domain.models.Medicamento;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Usuario;
+import br.com.genovi.domain.utils.DateValidationUtils;
 import br.com.genovi.dtos.aplicacao.AplicacaoDTO;
 import br.com.genovi.dtos.aplicacao.CreateAplicacaoDTO;
 import br.com.genovi.infrastructure.mappers.AplicacaoMapper;
@@ -60,11 +61,28 @@ public class AplicacaoService {
     }
 
     public AplicacaoDTO save(CreateAplicacaoDTO dto) {
+        DateValidationUtils.validarPeriodo(dto.dataAplicacao(), dto.dataProximaDose());
+
         Ovino ovino = findOvinoById(dto.ovinoId());
         Medicamento medicamento = findMedicamentoById(dto.medicamentoId());
         Usuario usuario = findUsuarioById(dto.responsavelId());
 
         Aplicacao aplicacao = aplicacaoMapper.toEntity(dto, ovino, medicamento, usuario);
+
+        aplicacaoRepository.save(aplicacao);
+
+        return aplicacaoMapper.toDTO(aplicacao);
+    }
+
+    public AplicacaoDTO update(Long id, CreateAplicacaoDTO dto) {
+        DateValidationUtils.validarPeriodo(dto.dataAplicacao(), dto.dataProximaDose());
+        
+        Aplicacao aplicacao = findAplicacaoById(id);
+        Ovino ovino = findOvinoById(dto.ovinoId());
+        Medicamento medicamento = findMedicamentoById(dto.medicamentoId());
+        Usuario usuario = findUsuarioById(dto.responsavelId());
+
+        aplicacaoMapper.updateEntityFromDTO(dto, aplicacao, ovino, medicamento, usuario);
 
         aplicacaoRepository.save(aplicacao);
 
