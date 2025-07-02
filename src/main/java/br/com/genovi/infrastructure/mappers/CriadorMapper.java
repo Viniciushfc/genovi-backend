@@ -1,7 +1,7 @@
 package br.com.genovi.infrastructure.mappers;
 
 import br.com.genovi.domain.models.Criador;
-import br.com.genovi.dtos.criador.CriadorDTO;
+import br.com.genovi.dtos.CriadorDTO;
 import org.springframework.stereotype.Component;
 
 @Component

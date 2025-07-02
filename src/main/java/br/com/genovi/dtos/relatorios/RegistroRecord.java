@@ -1,5 +1,7 @@
-package br.com.genovi.domain.models;
+package br.com.genovi.dtos.relatorios;
 
+
+import br.com.genovi.domain.models.*;
 
 import java.util.List;
 

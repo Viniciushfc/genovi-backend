@@ -1,4 +1,4 @@
-package br.com.genovi.dtos.usuario;
+package br.com.genovi.dtos;
 
 import br.com.genovi.domain.enums.TypeUsuario;
 

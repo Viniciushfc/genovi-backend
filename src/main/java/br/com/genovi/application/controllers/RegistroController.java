@@ -1,7 +1,7 @@
 package br.com.genovi.application.controllers;
 
 import br.com.genovi.application.services.RegistroService;
-import br.com.genovi.dtos.registro.RegistroDTO;
+import br.com.genovi.dtos.RegistroDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +15,5 @@ public class RegistroController {
         this.registroService = registroService;
     }
 
-    @GetMapping("/{ovinoId}")
-    public ResponseEntity<RegistroDTO> gerarRegistroPorOvino(@PathVariable Long ovinoId) {
-        RegistroDTO registroDTO = registroService.gerarRegistroPorOvinoById(ovinoId);
-        return ResponseEntity.ok(registroDTO);
-    }
+    //endpoint para utilização do relatorio do jasper aqui.
 }

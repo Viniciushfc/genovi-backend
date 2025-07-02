@@ -3,7 +3,7 @@ package br.com.genovi.application.services;
 import br.com.genovi.domain.models.Doenca;
 import br.com.genovi.domain.models.Medicamento;
 import br.com.genovi.dtos.medicamento.CreateMedicamentoDTO;
-import br.com.genovi.dtos.doenca.DoencaDTO;
+import br.com.genovi.dtos.DoencaDTO;
 import br.com.genovi.dtos.medicamento.MedicamentoDTO;
 import br.com.genovi.infrastructure.mappers.MedicamentoMapper;
 import br.com.genovi.infrastructure.repositories.DoencaRepository;

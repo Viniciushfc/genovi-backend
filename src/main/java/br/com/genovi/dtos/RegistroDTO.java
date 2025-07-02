@@ -1,4 +1,4 @@
-package br.com.genovi.dtos.registro;
+package br.com.genovi.dtos;
 
 import br.com.genovi.dtos.amamentacao.AmamentacaoDTO;
 import br.com.genovi.dtos.aplicacao.AplicacaoDTO;

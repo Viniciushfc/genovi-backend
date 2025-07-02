@@ -2,7 +2,7 @@ package br.com.genovi.application.services;
 
 import br.com.genovi.domain.models.Criador;
 import br.com.genovi.domain.utils.CpfCnpjUtils;
-import br.com.genovi.dtos.criador.CriadorDTO;
+import br.com.genovi.dtos.CriadorDTO;
 import br.com.genovi.infrastructure.mappers.CriadorMapper;
 import br.com.genovi.infrastructure.repositories.CriadorRepository;
 import org.springframework.stereotype.Service;

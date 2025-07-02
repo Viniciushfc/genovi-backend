@@ -2,7 +2,8 @@ package br.com.genovi.application;
 
 import br.com.genovi.application.services.RegistroService;
 import br.com.genovi.domain.models.*;
-import br.com.genovi.dtos.registro.RegistroDTO;
+import br.com.genovi.dtos.RegistroDTO;
+import br.com.genovi.dtos.relatorios.RegistroRecord;
 import br.com.genovi.infrastructure.mappers.OvinoMapper;
 import br.com.genovi.infrastructure.mappers.RegistroMapper;
 import br.com.genovi.infrastructure.repositories.*;
@@ -14,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -2,7 +2,7 @@ package br.com.genovi.application.services;
 
 import br.com.genovi.domain.enums.TypeUsuario;
 import br.com.genovi.domain.models.Usuario;
-import br.com.genovi.dtos.usuario.UsuarioDTO;
+import br.com.genovi.dtos.UsuarioDTO;
 import br.com.genovi.infrastructure.mappers.UsuarioMapper;
 import br.com.genovi.infrastructure.repositories.UsuarioRepository;
 import org.junit.jupiter.api.BeforeEach;

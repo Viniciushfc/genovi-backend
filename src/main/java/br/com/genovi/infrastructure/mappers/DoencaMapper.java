@@ -1,7 +1,7 @@
 package br.com.genovi.infrastructure.mappers;
 
 import br.com.genovi.domain.models.Doenca;
-import br.com.genovi.dtos.doenca.DoencaDTO;
+import br.com.genovi.dtos.DoencaDTO;
 import org.springframework.stereotype.Component;
 
 @Component

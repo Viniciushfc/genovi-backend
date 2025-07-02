@@ -1,7 +1,7 @@
 package br.com.genovi.application.services;
 
 import br.com.genovi.domain.models.Doenca;
-import br.com.genovi.dtos.doenca.DoencaDTO;
+import br.com.genovi.dtos.DoencaDTO;
 import br.com.genovi.infrastructure.mappers.DoencaMapper;
 import br.com.genovi.infrastructure.repositories.DoencaRepository;
 import org.springframework.stereotype.Service;

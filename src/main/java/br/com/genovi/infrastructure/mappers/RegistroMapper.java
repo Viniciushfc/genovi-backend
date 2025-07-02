@@ -1,7 +1,8 @@
 package br.com.genovi.infrastructure.mappers;
 
 import br.com.genovi.domain.models.*;
-import br.com.genovi.dtos.registro.RegistroDTO;
+import br.com.genovi.dtos.RegistroDTO;
+import br.com.genovi.dtos.relatorios.RegistroRecord;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

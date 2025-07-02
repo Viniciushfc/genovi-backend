@@ -1,7 +1,7 @@
 package br.com.genovi.infrastructure.mappers;
 
 import br.com.genovi.domain.models.Usuario;
-import br.com.genovi.dtos.usuario.UsuarioDTO;
+import br.com.genovi.dtos.UsuarioDTO;
 import org.springframework.stereotype.Component;
 
 @Component

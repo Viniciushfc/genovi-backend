@@ -1,6 +1,6 @@
 package br.com.genovi.application.controllers;
 
-import br.com.genovi.dtos.doenca.DoencaDTO;
+import br.com.genovi.dtos.DoencaDTO;
 import br.com.genovi.application.services.DoencaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

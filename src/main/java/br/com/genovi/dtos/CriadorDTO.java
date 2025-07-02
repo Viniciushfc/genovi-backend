@@ -1,4 +1,4 @@
-package br.com.genovi.dtos.criador;
+package br.com.genovi.dtos;
 
 public record CriadorDTO(String nome,
                          String cpfCnpj,

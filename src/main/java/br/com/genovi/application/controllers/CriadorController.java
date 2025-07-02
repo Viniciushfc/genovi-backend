@@ -1,6 +1,6 @@
 package br.com.genovi.application.controllers;
 
-import br.com.genovi.dtos.criador.CriadorDTO;
+import br.com.genovi.dtos.CriadorDTO;
 import br.com.genovi.application.services.CriadorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
