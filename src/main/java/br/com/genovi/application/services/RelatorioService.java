@@ -21,7 +21,8 @@ public class RelatorioService {
 
     public byte[] gerarRelatorioRegistro(Long id) throws Exception {
         OvinoDTO ovino = ovinoService.findById(id);
-
+        ovinoService.familyTree(ovino);
+        
         //le o arquivo .jrxml
         InputStream inputStream = new ClassPathResource("reports/relatorio-registro.jrxml").getInputStream();
 
@@ -40,10 +41,10 @@ public class RelatorioService {
         parametros.put("rfid", ovino.rfid() != null ? String.valueOf(ovino.rfid()) : "N/A");
         parametros.put("pureza", ovino.typeGrauPureza() != null ? ovino.typeGrauPureza().name() : "N/A");
         parametros.put("raca", ovino.raca() != null ? ovino.raca() : "N/A");
-        parametros.put("criador_nome", ovino.criador().getNome() != null ? ovino.criador().getNome() : "N/A");
-        parametros.put("criador_cpfCnpj", ovino.criador().getCpfCnpj() != null ? ovino.criador().getCpfCnpj() : "N/A");
-        parametros.put("criador_endereco", ovino.criador().getEndereco() != null ? ovino.criador().getEndereco() : "N/A");
-        parametros.put("criador_telefone", ovino.criador().getTelefone() != null ? ovino.criador().getTelefone(): "N/A");
+        parametros.put("criador_nome", ovino.criador().nome() != null ? ovino.criador().nome() : "N/A");
+        parametros.put("criador_cpfCnpj", ovino.criador().cpfCnpj() != null ? ovino.criador().cpfCnpj() : "N/A");
+        parametros.put("criador_endereco", ovino.criador().endereco() != null ? ovino.criador().endereco() : "N/A");
+        parametros.put("criador_telefone", ovino.criador().telefone() != null ? ovino.criador().telefone() : "N/A");
 
         //Preenche o relatorio
         JasperPrint print = JasperFillManager.fillReport(report, parametros, new JREmptyDataSource());
