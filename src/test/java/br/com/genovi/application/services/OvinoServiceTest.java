@@ -8,6 +8,8 @@ import br.com.genovi.domain.models.Criador;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.ovino.CreateOvinoDTO;
 import br.com.genovi.dtos.ovino.OvinoDTO;
+import br.com.genovi.infrastructure.mappers.AscendenciaMapper;
+import br.com.genovi.infrastructure.mappers.CriadorMapper;
 import br.com.genovi.infrastructure.mappers.OvinoMapper;
 import br.com.genovi.infrastructure.repositories.AscendenciaRepository;
 import br.com.genovi.infrastructure.repositories.CriadorRepository;
@@ -56,6 +58,12 @@ class OvinoServiceTest {
     @Mock
     private OvinoDTO ovinoDTO;
 
+    @Mock
+    private AscendenciaMapper ascendenciaMapper;
+
+    @Mock
+    private CriadorMapper criadorMapper;
+
     @InjectMocks
     private OvinoService ovinoService;
 
@@ -78,13 +86,13 @@ class OvinoServiceTest {
                 "Raca",
                 "FBB",
                 LocalDateTime.now(),
-                criador,
+                criadorMapper.toDTO(criador),
                 2,
                 TypeGrauPureza.PURO_ORIGEM,
                 TypeSexo.MACHO,
                 40.00F,
                 "Comportamento",
-                ascendencia,
+                ascendenciaMapper.toDTO(ascendencia),
                 TypeStatus.ATIVO);
 
         dto = new CreateOvinoDTO(
