@@ -3,8 +3,9 @@ package br.com.genovi.dtos.ovino;
 import br.com.genovi.domain.enums.TypeGrauPureza;
 import br.com.genovi.domain.enums.TypeSexo;
 import br.com.genovi.domain.enums.TypeStatus;
-import br.com.genovi.domain.models.Ascendencia;
 import br.com.genovi.domain.models.Criador;
+import br.com.genovi.dtos.CriadorDTO;
+import br.com.genovi.dtos.ascendencia.AscendenciaDTO;
 
 import java.time.LocalDateTime;
 
@@ -15,13 +16,13 @@ public record OvinoDTO(
         String raca,
         String fbb,
         LocalDateTime dataNascimento,
-        Criador criador,
+        CriadorDTO criador,
         int tempoFazendo,
         TypeGrauPureza typeGrauPureza,
         TypeSexo sexo,
         Float peso,
         String comportamento,
-        Ascendencia ascendencia,
+        AscendenciaDTO ascendencia,
         TypeStatus status
 ) {
 }
