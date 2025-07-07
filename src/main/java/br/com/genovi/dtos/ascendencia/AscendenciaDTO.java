@@ -1,7 +1,7 @@
 package br.com.genovi.dtos.ascendencia;
 
-import br.com.genovi.domain.models.Ovino;
+import br.com.genovi.dtos.ovino.OvinoDTO;
 
-public record AscendenciaDTO(Ovino ovinoPai,
-                             Ovino ovinoMae) {
+public record AscendenciaDTO(OvinoDTO ovinoPai,
+                             OvinoDTO ovinoMae) {
 }
