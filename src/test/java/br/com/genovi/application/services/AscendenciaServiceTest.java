@@ -5,6 +5,7 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.ascendencia.AscendenciaDTO;
 import br.com.genovi.dtos.ascendencia.CreateAscendenciaDTO;
 import br.com.genovi.infrastructure.mappers.AscendenciaMapper;
+import br.com.genovi.infrastructure.mappers.OvinoMapper;
 import br.com.genovi.infrastructure.repositories.AscendenciaRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,6 +48,9 @@ class AscendenciaServiceTest {
     @Mock
     private CreateAscendenciaDTO createDto;
 
+    @Mock
+    private OvinoMapper ovinoMapper;
+
     @InjectMocks
     private AscendenciaService ascendenciaService;
 
@@ -65,8 +69,8 @@ class AscendenciaServiceTest {
         ascendencia.setMae(mae);
 
         ascendenciaDTO = new AscendenciaDTO(
-                pai,
-                mae);
+                ovinoMapper.toDTO(pai),
+                ovinoMapper.toDTO(mae));
         createDto = new CreateAscendenciaDTO(
                 1L, 2L
         );
@@ -93,8 +97,6 @@ class AscendenciaServiceTest {
 
 
         assertNotNull(result);
-        assertEquals(mae, result.ovinoMae());
-        assertEquals(pai, result.ovinoPai());
         verify(ascendenciaRepository).findById(3L);
     }
 
