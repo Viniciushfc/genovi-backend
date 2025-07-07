@@ -5,6 +5,7 @@ import br.com.genovi.domain.models.Criador;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.ovino.CreateOvinoDTO;
 import br.com.genovi.dtos.ovino.OvinoDTO;
+import br.com.genovi.dtos.relatorios.GenealogiaDTO;
 import br.com.genovi.infrastructure.mappers.OvinoMapper;
 import br.com.genovi.infrastructure.repositories.AscendenciaRepository;
 import br.com.genovi.infrastructure.repositories.CriadorRepository;
@@ -81,4 +82,20 @@ public class OvinoService {
         ovino.setAtivo(false);
         ovinoRepository.save(ovino);
     }
+
+    public GenealogiaDTO familyTree(OvinoDTO ovino) {
+        if (ovino == null || ovino.ascendencia() == null) {
+            return new GenealogiaDTO(ovino, null, null);
+        }
+
+        OvinoDTO pai = ovino.ascendencia().ovinoPai();
+        OvinoDTO mae = ovino.ascendencia().ovinoMae();
+
+        // Recursão controlada
+        GenealogiaDTO genealogiaPai = familyTree(pai);
+        GenealogiaDTO genealogiaMae = familyTree(mae);
+
+        return new GenealogiaDTO(ovino, genealogiaPai, genealogiaMae);
+    }
+
 }
