@@ -9,9 +9,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OvinoMapper {
+    private final CriadorMapper criadorMapper;
+    private final AscendenciaMapper ascendenciaMapper;
+
+    public OvinoMapper(CriadorMapper criadorMapper, AscendenciaMapper ascendenciaMapper) {
+        this.criadorMapper = criadorMapper;
+        this.ascendenciaMapper = ascendenciaMapper;
+    }
 
     //Converter DTO para Entidade (para criação)
-    public Ovino toEntity(CreateOvinoDTO dto,boolean ativo ,Criador criador, Ascendencia ascendencia) {
+    public Ovino toEntity(CreateOvinoDTO dto, boolean ativo, Criador criador, Ascendencia ascendencia) {
         return new Ovino(
                 null,
                 dto.rfid(),
@@ -40,19 +47,19 @@ public class OvinoMapper {
                 ovino.getRaca(),
                 ovino.getFbb(),
                 ovino.getDataNascimento(),
-                ovino.getCriador(),
+                criadorMapper.toDTO(ovino.getCriador()),
                 ovino.getTempoFazendo(),
                 ovino.getTypeGrauPureza(),
                 ovino.getSexo(),
                 ovino.getPeso(),
                 ovino.getComportamento(),
-                ovino.getAscendencia(),
+                ascendenciaMapper.toDTO(ovino.getAscendencia()),
                 ovino.getStatus()
         );
     }
 
     //Atualizar uma entidade existente a partir do DTO
-    public void updateEntityFromDTO(CreateOvinoDTO dto,boolean ativo ,Ovino entity, Criador criador, Ascendencia ascendencia) {
+    public void updateEntityFromDTO(CreateOvinoDTO dto, boolean ativo, Ovino entity, Criador criador, Ascendencia ascendencia) {
         entity.setRfid(dto.rfid());
         entity.setAtivo(ativo);
         entity.setNome(dto.nome());
