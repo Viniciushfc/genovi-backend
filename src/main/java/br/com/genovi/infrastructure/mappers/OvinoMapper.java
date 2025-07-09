@@ -40,6 +40,9 @@ public class OvinoMapper {
 
     //Converter Entidade para DTO (para retorno)
     public OvinoDTO toDTO(Ovino ovino) {
+        if (ovino == null) {
+            return null;
+        }
         return new OvinoDTO(
                 ovino.getRfid(),
                 ovino.isAtivo(),
@@ -47,13 +50,13 @@ public class OvinoMapper {
                 ovino.getRaca(),
                 ovino.getFbb(),
                 ovino.getDataNascimento(),
-                criadorMapper.toDTO(ovino.getCriador()),
+                ovino.getCriador() != null ? criadorMapper.toDTO(ovino.getCriador()) : null,
                 ovino.getTempoFazendo(),
                 ovino.getTypeGrauPureza(),
                 ovino.getSexo(),
                 ovino.getPeso(),
                 ovino.getComportamento(),
-                ascendenciaMapper.toDTO(ovino.getAscendencia()),
+                ovino.getAscendencia() != null ? ascendenciaMapper.toDTO(ovino.getAscendencia()) : null,
                 ovino.getStatus()
         );
     }
