@@ -17,6 +17,7 @@ public record CreateOvinoDTO (Long rfid,
                               TypeSexo sexo,
                               Float peso,
                               String comportamento,
-                              Long ascendenciaId,
+                              Long paiId,
+                              Long maeId,
                               TypeStatus status){
 }
