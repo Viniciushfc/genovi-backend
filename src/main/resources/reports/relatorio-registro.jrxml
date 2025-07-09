@@ -78,13 +78,13 @@
 				<expression><![CDATA["Ovelha: " + $P{ovelha_mae}]]></expression>
 			</element>
 			<element kind="textField" uuid="7e653da8-2185-4a38-b56c-0b67328c225f" x="620" y="30" width="110" height="20" vTextAlign="Bottom">
-				<expression><![CDATA["Carneiro Avô: " + $P{carneiro_avo}]]></expression>
+				<expression><![CDATA["Carneiro Avô: " + $P{carneiro_avo2}]]></expression>
 			</element>
 			<element kind="textField" uuid="35206ef4-d6a3-4e9c-836a-9107c78ac4a3" x="620" y="250" width="110" height="20" vTextAlign="Bottom">
 				<expression><![CDATA["Ovelha Vó: " + $P{ovelha_avo}]]></expression>
 			</element>
 			<element kind="textField" uuid="8200e5e5-cc59-4948-b668-f08cd5c30ba7" x="620" y="190" width="110" height="20" vTextAlign="Bottom">
-				<expression><![CDATA["Carneiro Avô: " + $P{carneiro_avo2}]]></expression>
+				<expression><![CDATA["Carneiro Avô: " + $P{carneiro_avo}]]></expression>
 			</element>
 			<element kind="textField" uuid="161cd708-7d18-4417-a1ef-f3e194247f91" x="620" y="90" width="110" height="20" vTextAlign="Bottom">
 				<expression><![CDATA["Ovelha Vó: " + $P{ovelha_avo2}]]></expression>
