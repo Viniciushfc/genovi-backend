@@ -9,6 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class CicloCioMapper {
 
+    private final OvinoMapper ovinoMapper;
+
+    public CicloCioMapper(OvinoMapper ovinoMapper) {
+        this.ovinoMapper = ovinoMapper;
+    }
+
     public CicloCio toEntity(CreateCicloCioDTO dto, Ovino ovelha) {
         return new CicloCio(
                 null,
@@ -21,7 +27,7 @@ public class CicloCioMapper {
 
     public CicloCioDTO toDTO(CicloCio entity) {
         return new CicloCioDTO(
-                entity.getOvelha(),
+                ovinoMapper.toDTO(entity.getOvelha()),
                 entity.getDataInicio(),
                 entity.getDataFim(),
                 entity.getObservacoes()

@@ -9,6 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class AmamentacaoMapper {
 
+    private final OvinoMapper ovinoMapper;
+
+    public AmamentacaoMapper(OvinoMapper ovinoMapper) {
+        this.ovinoMapper = ovinoMapper;
+    }
+
     //Converter DTO para Entidade
     public Amamentacao toEntity(CreateAmamentacaoDTO dto, Ovino ovelhaMae, Ovino carneiro) {
         return new Amamentacao(
@@ -24,8 +30,8 @@ public class AmamentacaoMapper {
     //Converter Entidade para DTO
     public AmamentacaoDTO toDTO(Amamentacao amamentacao) {
         return new AmamentacaoDTO(
-                amamentacao.getOvelhaMae(),
-                amamentacao.getCordeiroMamando(),
+                ovinoMapper.toDTO(amamentacao.getOvelhaMae()),
+                ovinoMapper.toDTO(amamentacao.getCordeiroMamando()),
                 amamentacao.getDataInicio(),
                 amamentacao.getDataFim(),
                 amamentacao.getObservacoes()

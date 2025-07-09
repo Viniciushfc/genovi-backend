@@ -56,7 +56,14 @@ public class OvinoService {
 
     public OvinoDTO save(CreateOvinoDTO dto) {
         Criador criador = findCriadorEntityById(dto.criadorId());
-        Ascendencia ascendencia = findAscendenciaEntityById(dto.ascendenciaId());
+
+        Ovino pai = dto.paiId() != null ? findOvinoEntityById(dto.paiId()) : null;
+        Ovino mae = dto.maeId() != null ? findOvinoEntityById(dto.maeId()) : null;
+
+        Ascendencia ascendencia = new Ascendencia();
+        ascendencia.setPai(pai);
+        ascendencia.setMae(mae);
+        ascendenciaRepository.save(ascendencia);
 
         Ovino ovino = ovinoMapper.toEntity(dto, true, criador, ascendencia);
 
@@ -68,7 +75,17 @@ public class OvinoService {
     public OvinoDTO update(Long id, CreateOvinoDTO dto) {
         Ovino ovino = findOvinoEntityById(id);
         Criador criador = findCriadorEntityById(dto.criadorId());
-        Ascendencia ascendencia = findAscendenciaEntityById(dto.ascendenciaId());
+
+        Ovino pai = dto.paiId() != null ? findOvinoEntityById(dto.paiId()) : null;
+        Ovino mae = dto.maeId() != null ? findOvinoEntityById(dto.maeId()) : null;
+
+        Ascendencia ascendencia = ovino.getAscendencia();
+        if (ascendencia == null) {
+            ascendencia = new Ascendencia();
+        }
+        ascendencia.setPai(pai);
+        ascendencia.setMae(mae);
+        ascendenciaRepository.save(ascendencia);
 
         ovinoMapper.updateEntityFromDTO(dto, true, ovino, criador, ascendencia);
 

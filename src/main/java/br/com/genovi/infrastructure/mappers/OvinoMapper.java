@@ -50,13 +50,13 @@ public class OvinoMapper {
                 ovino.getRaca(),
                 ovino.getFbb(),
                 ovino.getDataNascimento(),
-                ovino.getCriador() != null ? criadorMapper.toDTO(ovino.getCriador()) : null,
+                criadorMapper.toDTO(ovino.getCriador()),
                 ovino.getTempoFazendo(),
                 ovino.getTypeGrauPureza(),
                 ovino.getSexo(),
                 ovino.getPeso(),
                 ovino.getComportamento(),
-                ovino.getAscendencia() != null ? ascendenciaMapper.toDTO(ovino.getAscendencia()) : null,
+                ascendenciaMapper.toDTO(ovino.getAscendencia()),
                 ovino.getStatus()
         );
     }
