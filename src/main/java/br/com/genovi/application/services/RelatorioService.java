@@ -55,7 +55,6 @@ public class RelatorioService {
             parametros.put("criador_telefone", "N/A");
         }
 
-        // Safe genealogy mapping
         if (genealogiaDTO != null) {
             GenealogiaDTO pai = genealogiaDTO.carneiroPai();
             GenealogiaDTO mae = genealogiaDTO.ovelhaMae();
@@ -64,16 +63,16 @@ public class RelatorioService {
             parametros.put("ovelha_mae", mae != null && mae.ovino() != null ? mae.ovino().nome() : "N/A");
 
             if (pai != null) {
-                parametros.put("carneiro_avo2", pai.carneiroPai());
-                parametros.put("ovelha_avo2", pai.ovelhaMae());
+                parametros.put("carneiro_avo2", pai.carneiroPai() != null && pai.carneiroPai().ovino() != null ? pai.carneiroPai().ovino().nome() : "N/A");
+                parametros.put("ovelha_avo2", pai.ovelhaMae() != null && pai.ovelhaMae().ovino() != null ? pai.ovelhaMae().ovino().nome() : "N/A");
             } else {
                 parametros.put("carneiro_avo2", "N/A");
                 parametros.put("ovelha_avo2", "N/A");
             }
 
             if (mae != null) {
-                parametros.put("carneiro_avo", mae.carneiroPai());
-                parametros.put("ovelha_avo", mae.ovelhaMae());
+                parametros.put("carneiro_avo", mae.carneiroPai() != null && mae.carneiroPai().ovino() != null ? mae.carneiroPai().ovino().nome() : "N/A");
+                parametros.put("ovelha_avo", mae.ovelhaMae() != null && mae.ovelhaMae().ovino() != null ? mae.ovelhaMae().ovino().nome() : "N/A");
             } else {
                 parametros.put("carneiro_avo", "N/A");
                 parametros.put("ovelha_avo", "N/A");
@@ -86,7 +85,6 @@ public class RelatorioService {
             parametros.put("carneiro_avo2", "N/A");
             parametros.put("ovelha_avo2", "N/A");
         }
-
 
         //Preenche o relatorio
         JasperPrint print = JasperFillManager.fillReport(report, parametros, new JREmptyDataSource());
