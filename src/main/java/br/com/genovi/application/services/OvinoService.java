@@ -1,5 +1,6 @@
 package br.com.genovi.application.services;
 
+import br.com.genovi.domain.enums.TypeStatus;
 import br.com.genovi.domain.models.Ascendencia;
 import br.com.genovi.domain.models.Criador;
 import br.com.genovi.domain.models.Ovino;
@@ -65,7 +66,7 @@ public class OvinoService {
         ascendencia.setMae(mae);
         ascendenciaRepository.save(ascendencia);
 
-        Ovino ovino = ovinoMapper.toEntity(dto, true, criador, ascendencia);
+        Ovino ovino = ovinoMapper.toEntity(dto, dto.status(), criador, ascendencia);
 
         ovinoRepository.save(ovino);
 
@@ -87,7 +88,7 @@ public class OvinoService {
         ascendencia.setMae(mae);
         ascendenciaRepository.save(ascendencia);
 
-        ovinoMapper.updateEntityFromDTO(dto, true, ovino, criador, ascendencia);
+        ovinoMapper.updateEntityFromDTO(dto, dto.status(), ovino, criador, ascendencia);
 
         ovinoRepository.save(ovino);
 
@@ -96,7 +97,7 @@ public class OvinoService {
 
     public void disable(Long id) {
         Ovino ovino = findOvinoEntityById(id);
-        ovino.setAtivo(false);
+        ovino.setStatus(TypeStatus.DESATIVADO);
         ovinoRepository.save(ovino);
     }
 
