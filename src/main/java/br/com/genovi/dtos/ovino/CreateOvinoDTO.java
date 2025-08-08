@@ -19,5 +19,5 @@ public record CreateOvinoDTO (Long rfid,
                               String comportamento,
                               Long paiId,
                               Long maeId,
-                              TypeStatus status){
+                              TypeStatus status) {
 }
