@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 
 public record OvinoDTO(
         Long rfid,
-        boolean ativo,
         String nome,
         String raca,
         String fbb,
