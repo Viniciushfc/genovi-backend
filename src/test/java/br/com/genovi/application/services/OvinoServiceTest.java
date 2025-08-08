@@ -77,11 +77,9 @@ class OvinoServiceTest {
 
         ovino = new Ovino();
         ovino.setId(1L);
-        ovino.setAtivo(true);
 
         ovinoDTO = new OvinoDTO(
                 1111L,
-                true,
                 "Nome",
                 "Raca",
                 "FBB",
@@ -107,6 +105,7 @@ class OvinoServiceTest {
                 TypeSexo.MACHO,
                 40.00F,
                 "Comportamento",
+                1L,
                 1L,
                 TypeStatus.ATIVO);
     }
@@ -145,7 +144,7 @@ class OvinoServiceTest {
     void shouldSaveNewOvino() {
         when(criadorRepository.findById(1L)).thenReturn(Optional.of(criador));
         when(ascendenciaRepository.findById(1L)).thenReturn(Optional.of(ascendencia));
-        when(ovinoMapper.toEntity(dto, true, criador, ascendencia)).thenReturn(ovino);
+        when(ovinoMapper.toEntity(dto, TypeStatus.ATIVO, criador, ascendencia)).thenReturn(ovino);
         when(ovinoMapper.toDTO(ovino)).thenReturn(ovinoDTO);
 
         OvinoDTO result = ovinoService.save(dto);
@@ -164,7 +163,7 @@ class OvinoServiceTest {
         OvinoDTO result = ovinoService.update(1L, dto);
 
         assertThat(result).isEqualTo(ovinoDTO);
-        verify(ovinoMapper).updateEntityFromDTO(dto, true, ovino, criador, ascendencia);
+        verify(ovinoMapper).updateEntityFromDTO(dto, TypeStatus.ATIVO, ovino, criador, ascendencia);
         verify(ovinoRepository).save(ovino);
     }
 
@@ -174,7 +173,7 @@ class OvinoServiceTest {
 
         ovinoService.disable(1L);
 
-        assertThat(ovino.isAtivo()).isFalse();
+        assertThat(ovino.getStatus()).isEqualTo(TypeStatus.DESATIVADO);
         verify(ovinoRepository).save(ovino);
     }
 

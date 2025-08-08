@@ -5,6 +5,7 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Reproducao;
 import br.com.genovi.dtos.reproducao.CreateReproducaoDTO;
 import br.com.genovi.dtos.reproducao.ReproducaoDTO;
+import br.com.genovi.infrastructure.mappers.OvinoMapper;
 import br.com.genovi.infrastructure.mappers.ReproducaoMapper;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import br.com.genovi.infrastructure.repositories.ReproducaoRepository;
@@ -47,6 +48,9 @@ class ReproducaoServiceTest {
     @Mock
     private Ovino ovelha;
 
+    @Mock
+    private OvinoMapper ovinoMapper;
+
     @InjectMocks
     private ReproducaoService reproducaoService;
 
@@ -61,7 +65,7 @@ class ReproducaoServiceTest {
         reproducao = new Reproducao();
         reproducao.setId(1L);
 
-        reproducaoDTO = new ReproducaoDTO(LocalDateTime.now(), carneiro, ovelha, TypeReproducao.INSEMINACAO_ARTIFICIAL, "Observacoes Test");
+        reproducaoDTO = new ReproducaoDTO(LocalDateTime.now(), ovinoMapper.toDTO(carneiro), ovinoMapper.toDTO(ovelha), TypeReproducao.INSEMINACAO_ARTIFICIAL, "Observacoes Test");
 
         createReproducaoDTO = new CreateReproducaoDTO(LocalDateTime.now(), 1L, 2L, TypeReproducao.INSEMINACAO_ARTIFICIAL, "Observacoes Test");
     }

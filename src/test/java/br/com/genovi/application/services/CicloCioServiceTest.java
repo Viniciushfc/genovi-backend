@@ -5,6 +5,7 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.ciclo_cio.CicloCioDTO;
 import br.com.genovi.dtos.ciclo_cio.CreateCicloCioDTO;
 import br.com.genovi.infrastructure.mappers.CicloCioMapper;
+import br.com.genovi.infrastructure.mappers.OvinoMapper;
 import br.com.genovi.infrastructure.repositories.CicloCioRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,6 +46,9 @@ class CicloCioServiceTest {
     @Mock
     private CreateCicloCioDTO createDto;
 
+    @Mock
+    private OvinoMapper ovinoMapper;
+
     @InjectMocks
     private CicloCioService cicloCioService;
 
@@ -57,7 +61,7 @@ class CicloCioServiceTest {
         cicloCio.setId(1L);
 
         cicloCioDTO = new CicloCioDTO(
-                ovelha,
+                ovinoMapper.toDTO(ovelha),
                 LocalDateTime.now(),
                 LocalDateTime.now().plusHours(5),
                 "OBS TESTE");

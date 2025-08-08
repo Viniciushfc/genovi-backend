@@ -5,6 +5,7 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.amamentacao.AmamentacaoDTO;
 import br.com.genovi.dtos.amamentacao.CreateAmamentacaoDTO;
 import br.com.genovi.infrastructure.mappers.AmamentacaoMapper;
+import br.com.genovi.infrastructure.mappers.OvinoMapper;
 import br.com.genovi.infrastructure.repositories.AmamentacaoRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,6 +50,9 @@ class AmamentacaoServiceTest {
     @Mock
     private CreateAmamentacaoDTO createDto;
 
+    @Mock
+    private OvinoMapper ovinoMapper;
+
     @InjectMocks
     private AmamentacaoService amamentacaoService;
 
@@ -63,7 +67,7 @@ class AmamentacaoServiceTest {
         LocalDateTime dataTeste = LocalDateTime.of(2024, 1, 1, 14, 30);
 
         amamentacao = new Amamentacao();
-        amamentacaoDTO = new AmamentacaoDTO(ovelhaMae, cordeiro, dataTeste, dataTeste.plusHours(10), "Observações testes");
+        amamentacaoDTO = new AmamentacaoDTO(ovinoMapper.toDTO(ovelhaMae), ovinoMapper.toDTO(cordeiro), dataTeste, dataTeste.plusHours(10), "Observações testes");
 
         createDto = new CreateAmamentacaoDTO(1L, 2L, dataTeste, dataTeste.plusHours(10), "Observações testes");
     }
