@@ -1,5 +1,6 @@
 package br.com.genovi.infrastructure.mappers;
 
+import br.com.genovi.domain.enums.TypeStatus;
 import br.com.genovi.domain.models.Ascendencia;
 import br.com.genovi.domain.models.Criador;
 import br.com.genovi.dtos.ovino.CreateOvinoDTO;
@@ -18,11 +19,10 @@ public class OvinoMapper {
     }
 
     //Converter DTO para Entidade (para criação)
-    public Ovino toEntity(CreateOvinoDTO dto, boolean ativo, Criador criador, Ascendencia ascendencia) {
+    public Ovino toEntity(CreateOvinoDTO dto, TypeStatus status, Criador criador, Ascendencia ascendencia) {
         return new Ovino(
                 null,
                 dto.rfid(),
-                ativo,
                 dto.nome(),
                 dto.raca(),
                 dto.fbb(),
@@ -34,7 +34,7 @@ public class OvinoMapper {
                 dto.peso(),
                 dto.comportamento(),
                 ascendencia,
-                dto.status()
+                status
         );
     }
 
@@ -45,13 +45,12 @@ public class OvinoMapper {
         }
         return new OvinoDTO(
                 ovino.getRfid(),
-                ovino.isAtivo(),
                 ovino.getNome(),
                 ovino.getRaca(),
                 ovino.getFbb(),
                 ovino.getDataNascimento(),
                 criadorMapper.toDTO(ovino.getCriador()),
-                ovino.getTempoFazendo(),
+                ovino.getTempoFazenda(),
                 ovino.getTypeGrauPureza(),
                 ovino.getSexo(),
                 ovino.getPeso(),
@@ -62,21 +61,20 @@ public class OvinoMapper {
     }
 
     //Atualizar uma entidade existente a partir do DTO
-    public void updateEntityFromDTO(CreateOvinoDTO dto, boolean ativo, Ovino entity, Criador criador, Ascendencia ascendencia) {
+    public void updateEntityFromDTO(CreateOvinoDTO dto, TypeStatus status, Ovino entity, Criador criador, Ascendencia ascendencia) {
         entity.setRfid(dto.rfid());
-        entity.setAtivo(ativo);
         entity.setNome(dto.nome());
         entity.setRaca(dto.raca());
         entity.setFbb(dto.fbb());
         entity.setDataNascimento(dto.dataNascimento());
         entity.setCriador(criador);
-        entity.setTempoFazendo(dto.tempoFazendo());
+        entity.setTempoFazenda(dto.tempoFazendo());
         entity.setTypeGrauPureza(dto.typeGrauPureza());
         entity.setSexo(dto.sexo());
         entity.setPeso(dto.peso());
         entity.setComportamento(dto.comportamento());
         entity.setAscendencia(ascendencia);
-        entity.setStatus(dto.status());
+        entity.setStatus(status);
     }
 }
 
