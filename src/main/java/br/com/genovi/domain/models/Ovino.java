@@ -9,58 +9,73 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name = "Ovino")
+@Table(name = "ovino")
 public class Ovino {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @Column(unique = true)
+
+    @Column(unique = true, name = "RFID")
     private Long rfid;
-    private boolean ativo;
+
+    @Column(name = "nome")
     private String nome;
+
+    @Column(name = "raca")
     private String raca;
+
+    @Column(name = "fbb")
     private String fbb;
+
+    @Column(name = "data_nascimento")
     private LocalDateTime dataNascimento;
+
     @ManyToOne(optional = true)
+    @JoinColumn(name = "id_criador")
     private Criador criador;
-    private int tempoFazendo;
+
+    @Column(name = "tempo_fazenda")
+    private int tempoFazenda;
+
+    @Column(name = "grau_pureza")
     private TypeGrauPureza typeGrauPureza;
+
+    @Column(name = "sexo")
     private TypeSexo sexo;
+
+    @Column(name = "peso")
     private Float peso;
+
+    @Column(name = "comportamento")
     private String comportamento;
+
     @ManyToOne(optional = true)
+    @JoinColumn(name = "id_ascendencia")
     private Ascendencia ascendencia;
+
+    @Column(name = "status")
     private TypeStatus status;
 
     public Ovino() {
 
     }
 
-    public Ovino(Long id, Long rfid, boolean ativo, String nome, String raca, String fbb, LocalDateTime dataNascimento, Criador criador, int tempoFazendo, TypeGrauPureza typeGrauPureza, TypeSexo sexo, Float peso, String comportamento, Ascendencia ascendencia, TypeStatus status) {
+    public Ovino(Long id, Long rfid, String nome, String raca, String fbb, LocalDateTime dataNascimento, Criador criador, int tempoFazenda, TypeGrauPureza typeGrauPureza, TypeSexo sexo, Float peso, String comportamento, Ascendencia ascendencia, TypeStatus status) {
         this.id = id;
         this.rfid = rfid;
-        this.ativo = ativo;
         this.nome = nome;
         this.raca = raca;
         this.fbb = fbb;
         this.dataNascimento = dataNascimento;
         this.criador = criador;
-        this.tempoFazendo = tempoFazendo;
+        this.tempoFazenda = tempoFazenda;
         this.typeGrauPureza = typeGrauPureza;
         this.sexo = sexo;
         this.peso = peso;
         this.comportamento = comportamento;
         this.ascendencia = ascendencia;
         this.status = status;
-    }
-
-    public boolean isAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
     }
 
     public Long getId() {
@@ -119,12 +134,12 @@ public class Ovino {
         this.criador = criador;
     }
 
-    public int getTempoFazendo() {
-        return tempoFazendo;
+    public int getTempoFazenda() {
+        return tempoFazenda;
     }
 
-    public void setTempoFazendo(int tempoFazendo) {
-        this.tempoFazendo = tempoFazendo;
+    public void setTempoFazenda(int tempoFazendo) {
+        this.tempoFazenda = tempoFazendo;
     }
 
     public TypeGrauPureza getTypeGrauPureza() {

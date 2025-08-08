@@ -3,15 +3,19 @@ package br.com.genovi.domain.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Ascendencia")
+@Table(name = "ascendencia")
 public class Ascendencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
     @ManyToOne(optional = true)
+    @JoinColumn(name = "id_ovino_pai")
     private Ovino pai;
+
     @ManyToOne(optional = true)
+    @JoinColumn(name = "id_ovino_mae")
     private Ovino mae;
 
     public Ascendencia() {

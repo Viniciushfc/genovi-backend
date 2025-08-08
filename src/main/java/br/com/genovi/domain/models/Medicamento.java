@@ -5,17 +5,31 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Medicamento")
+@Table(name = "medicamento")
 public class Medicamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    @Column(name = "nome")
     private String nome;
+
+    @Column(name = "fabricante")
     private String fabricante;
+
     @ManyToMany
+    @JoinTable(
+            name = "medicamento_doenca",
+            joinColumns = @JoinColumn(name = "medicamento_id"),
+            inverseJoinColumns = @JoinColumn(name = "doenca_id")
+    )
     private List<Doenca> doencas;
+
+    @Column(name = "doce_unica")
     private boolean doceUnica;
+
+    @Column(name = "descricao")
     private String descricao;
 
     public Medicamento() {

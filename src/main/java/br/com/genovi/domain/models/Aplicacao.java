@@ -5,21 +5,35 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Aplicacao")
+@Table(name = "aplicacao")
 public class Aplicacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    @Column(name = "data_aplicacao")
     private LocalDateTime dataAplicacao;
+
     @ManyToOne
+    @JoinColumn(name = "id_ovino")
     private Ovino ovino;
+
     @ManyToOne
+    @JoinColumn(name = "id_medicamento")
     private Medicamento medicamento;
+
+    @Column(name = "tem_proxima_dose")
     private boolean temProximaDose;
+
+    @Column(name = "data_proxima_dose")
     private LocalDateTime dataProximaDose;
+
     @ManyToOne
+    @JoinColumn(name = "id_responsavel")
     private Usuario responsavel;
+
+    @Column(name = "observacoes")
     private String observacoes;
 
     public Aplicacao() {

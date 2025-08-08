@@ -3,13 +3,17 @@ package br.com.genovi.domain.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Doenca")
+@Table(name = "doenca")
 public class Doenca {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    @Column(name = "nome")
     private String nome;
+
+    @Column(name = "descricao")
     private String descricao;
 
     public Doenca() {

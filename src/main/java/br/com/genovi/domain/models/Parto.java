@@ -7,21 +7,35 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "Parto")
+@Table(name = "parto")
 public class Parto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
     @ManyToOne
+    @JoinColumn(name = "id_ovelha_mae")
     private Ovino ovelhaMae;
+
     @OneToMany
+    @JoinColumn(name = "id_parto")
     private List<Ovino> animaisCriados;
+
+    @Column(name = "data_parto")
     private LocalDateTime dataParto;
+
+    @Column(name = "numero_crias")
     private int numeroCrias;
+
+    @Column(name = "observacoes")
     private String observacoes;
+
+    @Column(name = "rejeicao_materna")
     private boolean rejeicaoMaterna;
+
     @OneToOne
+    @JoinColumn(name = "id_reproducaos")
     private Reproducao reproducaos;
 
     public Parto() {

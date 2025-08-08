@@ -5,18 +5,28 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Amamentacao")
+@Table(name = "amamentacao")
 public class Amamentacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
     @ManyToOne
+    @JoinColumn(name = "id ovelha_mae")
     private Ovino ovelhaMae;
+
     @ManyToOne
+    @JoinColumn(name = "id_cordeiro_mamando")
     private Ovino cordeiroMamando;
+
+    @Column(name = "data_inicio")
     private LocalDateTime dataInicio;
+
+    @Column(name = "data_fim")
     private LocalDateTime dataFim;
+
+    @Column(name = "observacoes")
     private String observacoes;
 
     public Amamentacao() {

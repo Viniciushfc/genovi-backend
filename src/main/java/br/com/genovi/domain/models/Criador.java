@@ -3,16 +3,23 @@ package br.com.genovi.domain.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Criador")
+@Table(name = "criador")
 public class Criador {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    @Column(name = "nome")
     private String nome;
-    @Column(unique = true)
+
+    @Column(unique = true, name = "cpf_cnpj")
     private String cpfCnpj;
+
+    @Column(name = "endereco")
     private String endereco;
+
+    @Column(name = "telefone")
     private String telefone;
 
     public Criador() {

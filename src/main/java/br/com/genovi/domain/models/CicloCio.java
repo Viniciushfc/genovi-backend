@@ -5,16 +5,24 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Ciclo_Cio")
+@Table(name = "ciclo_Cio")
 public class CicloCio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
     @ManyToOne
+    @JoinColumn(name = "id_ovelha")
     private Ovino ovelha;
+
+    @Column(name = "data_inicio")
     private LocalDateTime dataInicio;
+
+    @Column(name = "data_fim")
     private LocalDateTime dataFim;
+
+    @Column(name = "observacoes")
     private String observacoes;
 
     public CicloCio() {
