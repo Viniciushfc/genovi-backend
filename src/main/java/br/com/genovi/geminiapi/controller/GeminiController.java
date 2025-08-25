@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/gemini")
+@RequestMapping("/api/user/IA-agent/genovi")
 @CrossOrigin(origins = "*")
 @Validated
 public class GeminiController {
