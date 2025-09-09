@@ -1,7 +1,8 @@
 package br.com.genovi.application.services;
 
 import br.com.genovi.domain.models.Doenca;
-import br.com.genovi.dtos.DoencaDTO;
+import br.com.genovi.dtos.doencas.CreateDoencaDTO;
+import br.com.genovi.dtos.doencas.DoencaDTO;
 import br.com.genovi.infrastructure.mappers.DoencaMapper;
 import br.com.genovi.infrastructure.repositories.DoencaRepository;
 import org.springframework.stereotype.Service;
@@ -31,12 +32,12 @@ public class DoencaService {
         return doencaMapper.toDTO(findDoencaEntityById(id));
     }
 
-    public DoencaDTO save(DoencaDTO dto) {
+    public DoencaDTO save(CreateDoencaDTO dto) {
         Doenca doenca = doencaMapper.toEntity(dto);
         return doencaMapper.toDTO(doencaRepository.save(doenca));
     }
 
-    public DoencaDTO update(Long id, DoencaDTO dto) {
+    public DoencaDTO update(Long id, CreateDoencaDTO dto) {
         Doenca doenca = findDoencaEntityById(id);
         doencaMapper.updateEntityFromDTO(dto, doenca);
         return doencaMapper.toDTO(doencaRepository.save(doenca));

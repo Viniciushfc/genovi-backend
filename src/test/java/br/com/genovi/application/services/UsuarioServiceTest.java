@@ -2,7 +2,8 @@ package br.com.genovi.application.services;
 
 import br.com.genovi.domain.enums.TypeUsuario;
 import br.com.genovi.domain.models.Usuario;
-import br.com.genovi.dtos.UsuarioDTO;
+import br.com.genovi.dtos.usuario.CreateUsuarioDTO;
+import br.com.genovi.dtos.usuario.UsuarioDTO;
 import br.com.genovi.infrastructure.mappers.UsuarioMapper;
 import br.com.genovi.infrastructure.repositories.UsuarioRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,13 +30,12 @@ class UsuarioServiceTest {
     @Mock
     private UsuarioMapper usuarioMapper;
 
-    @Mock
+    @InjectMocks
+    private UsuarioService usuarioService;
+
     private Usuario usuario;
-
-    @Mock
+    private CreateUsuarioDTO createUsuarioDTO;
     private UsuarioDTO usuarioDTO;
-
-    @InjectMocks private UsuarioService usuarioService;
 
     @BeforeEach
     void setup() {
@@ -44,7 +44,22 @@ class UsuarioServiceTest {
         usuario.setAtivo(true);
         usuario.setRoles(Collections.singleton(ROLE_USER));
 
-        usuarioDTO = new UsuarioDTO("Username Test", "e-mail@teste.com", "Senha@Test123", TypeUsuario.TRATADOR, true);
+        createUsuarioDTO = new CreateUsuarioDTO(
+                1L,
+                "Username Test",
+                "e-mail@teste.com",
+                "Senha@Test123",
+                TypeUsuario.TRATADOR,
+                true
+        );
+
+        usuarioDTO = new UsuarioDTO(
+                "Username Test",
+                "e-mail@teste.com",
+                "Senha@Test123",
+                TypeUsuario.TRATADOR,
+                true
+        );
     }
 
     @Test
@@ -79,10 +94,11 @@ class UsuarioServiceTest {
 
     @Test
     void shouldSaveUsuario() {
-        when(usuarioMapper.toEntity(usuarioDTO, true)).thenReturn(usuario);
+        when(usuarioMapper.toEntity(createUsuarioDTO, true)).thenReturn(usuario);
+        when(usuarioRepository.save(usuario)).thenReturn(usuario);
         when(usuarioMapper.toDTO(usuario)).thenReturn(usuarioDTO);
 
-        UsuarioDTO result = usuarioService.save(usuarioDTO);
+        UsuarioDTO result = usuarioService.save(createUsuarioDTO);
 
         assertThat(result).isEqualTo(usuarioDTO);
         verify(usuarioRepository).save(usuario);
@@ -91,12 +107,24 @@ class UsuarioServiceTest {
     @Test
     void shouldUpdateUsuario() {
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
+        doNothing().when(usuarioMapper).updateEntityFromDTO(createUsuarioDTO, usuario, true);
         when(usuarioMapper.toDTO(usuario)).thenReturn(usuarioDTO);
 
-        UsuarioDTO result = usuarioService.update(1L, usuarioDTO);
+        UsuarioDTO result = usuarioService.update(1L, createUsuarioDTO);
 
         assertThat(result).isEqualTo(usuarioDTO);
-        verify(usuarioMapper).updateEntityFromDTO(usuarioDTO, usuario, true);
+        verify(usuarioMapper).updateEntityFromDTO(createUsuarioDTO, usuario, true);
+    }
+
+    @Test
+    void shouldUpdateThrowWhenNotFound() {
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> usuarioService.update(1L, createUsuarioDTO))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Usuario não encontrado");
+
+        verify(usuarioRepository, never()).save(any());
     }
 
     @Test
@@ -107,5 +135,16 @@ class UsuarioServiceTest {
 
         assertThat(usuario.isAtivo()).isFalse();
         verify(usuarioRepository).save(usuario);
+    }
+
+    @Test
+    void shouldThrowWhenDisableUsuarioNotFound() {
+        when(usuarioRepository.findById(99L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> usuarioService.disable(99L))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Usuario não encontrado");
+
+        verify(usuarioRepository, never()).save(any());
     }
 }

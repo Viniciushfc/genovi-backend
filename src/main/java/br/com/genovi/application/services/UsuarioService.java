@@ -2,7 +2,8 @@ package br.com.genovi.application.services;
 
 
 import br.com.genovi.domain.models.Usuario;
-import br.com.genovi.dtos.UsuarioDTO;
+import br.com.genovi.dtos.usuario.CreateUsuarioDTO;
+import br.com.genovi.dtos.usuario.UsuarioDTO;
 import br.com.genovi.infrastructure.mappers.UsuarioMapper;
 import br.com.genovi.infrastructure.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class UsuarioService {
         return usuarioMapper.toDTO(findUsuarioById(id));
     }
 
-    public UsuarioDTO save(UsuarioDTO dto) {
+    public UsuarioDTO save(CreateUsuarioDTO dto) {
         Usuario usuario = usuarioMapper.toEntity(dto, true);
 
         usuarioRepository.save(usuario);
@@ -43,7 +44,7 @@ public class UsuarioService {
         return usuarioMapper.toDTO(usuario);
     }
 
-    public UsuarioDTO update(Long id, UsuarioDTO dto) {
+    public UsuarioDTO update(Long id, CreateUsuarioDTO dto) {
         Usuario usuario = findUsuarioById(id);
 
         usuarioMapper.updateEntityFromDTO(dto, usuario, true);

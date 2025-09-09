@@ -1,6 +1,7 @@
 package br.com.genovi.application.controllers;
 
-import br.com.genovi.dtos.UsuarioDTO;
+import br.com.genovi.dtos.usuario.CreateUsuarioDTO;
+import br.com.genovi.dtos.usuario.UsuarioDTO;
 import br.com.genovi.application.services.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +30,13 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> save(@RequestBody UsuarioDTO dto) {
+    public ResponseEntity<UsuarioDTO> save(@RequestBody CreateUsuarioDTO dto) {
         UsuarioDTO saved = usuarioService.save(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> update(@PathVariable Long id, @RequestBody UsuarioDTO dto) {
+    public ResponseEntity<UsuarioDTO> update(@PathVariable Long id, @RequestBody CreateUsuarioDTO dto) {
         return ResponseEntity.ok(usuarioService.update(id, dto));
     }
 

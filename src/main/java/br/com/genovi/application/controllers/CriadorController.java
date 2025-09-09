@@ -1,7 +1,8 @@
 package br.com.genovi.application.controllers;
 
-import br.com.genovi.dtos.CriadorDTO;
 import br.com.genovi.application.services.CriadorService;
+import br.com.genovi.dtos.criador.CreateCriadorDTO;
+import br.com.genovi.dtos.criador.CriadorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +30,13 @@ public class CriadorController {
     }
 
     @PostMapping
-    public ResponseEntity<CriadorDTO> save(@RequestBody CriadorDTO dto) {
+    public ResponseEntity<CriadorDTO> save(@RequestBody CreateCriadorDTO dto) {
         CriadorDTO saved = criadorService.save(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CriadorDTO> update(@PathVariable Long id, @RequestBody CriadorDTO dto) {
+    public ResponseEntity<CriadorDTO> update(@PathVariable Long id, @RequestBody CreateCriadorDTO dto) {
         return ResponseEntity.ok(criadorService.update(id, dto));
     }
 

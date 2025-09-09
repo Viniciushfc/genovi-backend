@@ -1,6 +1,7 @@
 package br.com.genovi.application.controllers;
 
-import br.com.genovi.dtos.DoencaDTO;
+import br.com.genovi.dtos.doencas.CreateDoencaDTO;
+import br.com.genovi.dtos.doencas.DoencaDTO;
 import br.com.genovi.application.services.DoencaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +30,13 @@ public class DoencaController {
     }
 
     @PostMapping
-    public ResponseEntity<DoencaDTO> save(@RequestBody DoencaDTO dto) {
+    public ResponseEntity<DoencaDTO> save(@RequestBody CreateDoencaDTO dto) {
         DoencaDTO saved = doencaService.save(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DoencaDTO> update(@PathVariable Long id, @RequestBody DoencaDTO dto) {
+    public ResponseEntity<DoencaDTO> update(@PathVariable Long id, @RequestBody CreateDoencaDTO dto) {
         return ResponseEntity.ok(doencaService.update(id, dto));
     }
 

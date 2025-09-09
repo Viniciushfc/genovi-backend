@@ -1,6 +1,7 @@
-package br.com.genovi.dtos;
+package br.com.genovi.dtos.criador;
 
-public record CriadorDTO(String nome,
+public record CriadorDTO(Long id,
+                         String nome,
                          String cpfCnpj,
                          String endereco,
                          String telefone) {

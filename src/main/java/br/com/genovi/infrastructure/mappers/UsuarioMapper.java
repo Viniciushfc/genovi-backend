@@ -1,13 +1,14 @@
 package br.com.genovi.infrastructure.mappers;
 
 import br.com.genovi.domain.models.Usuario;
-import br.com.genovi.dtos.UsuarioDTO;
+import br.com.genovi.dtos.usuario.CreateUsuarioDTO;
+import br.com.genovi.dtos.usuario.UsuarioDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UsuarioMapper {
 
-    public Usuario toEntity(UsuarioDTO dto, Boolean ativo) {
+    public Usuario toEntity(CreateUsuarioDTO dto, Boolean ativo) {
         return new Usuario(
                 null,
                 ativo,
@@ -30,7 +31,7 @@ public class UsuarioMapper {
         );
     }
 
-    public void updateEntityFromDTO(UsuarioDTO dto, Usuario entity, Boolean ativo) {
+    public void updateEntityFromDTO(CreateUsuarioDTO dto, Usuario entity, Boolean ativo) {
         entity.setAtivo(ativo);
         entity.setUsername(dto.username());
         entity.setEmail(dto.email());

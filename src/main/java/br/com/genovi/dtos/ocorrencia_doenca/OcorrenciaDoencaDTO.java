@@ -1,8 +1,8 @@
 package br.com.genovi.dtos.ocorrencia_doenca;
 
-import br.com.genovi.dtos.DoencaDTO;
+import br.com.genovi.dtos.doencas.DoencaDTO;
 import br.com.genovi.dtos.ovino.OvinoDTO;
-import br.com.genovi.dtos.UsuarioDTO;
+import br.com.genovi.dtos.usuario.UsuarioDTO;
 
 import java.time.LocalDateTime;
 

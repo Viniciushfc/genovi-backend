@@ -1,13 +1,14 @@
 package br.com.genovi.infrastructure.mappers;
 
 import br.com.genovi.domain.models.Criador;
-import br.com.genovi.dtos.CriadorDTO;
+import br.com.genovi.dtos.criador.CreateCriadorDTO;
+import br.com.genovi.dtos.criador.CriadorDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CriadorMapper {
 
-    public Criador toEntity(CriadorDTO dto) {
+    public Criador toEntity(CreateCriadorDTO dto) {
         return new Criador(
                 null,
                 dto.nome(),
@@ -19,6 +20,7 @@ public class CriadorMapper {
 
     public CriadorDTO toDTO(Criador entity) {
         return new CriadorDTO(
+                entity.getId(),
                 entity.getNome(),
                 entity.getCpfCnpj(),
                 entity.getEndereco(),
@@ -26,7 +28,7 @@ public class CriadorMapper {
         );
     }
 
-    public void updateEntityFromDTO(CriadorDTO dto, Criador entity) {
+    public void updateEntityFromDTO(CreateCriadorDTO dto, Criador entity) {
         entity.setNome(dto.nome());
         entity.setCpfCnpj(dto.cpfCnpj());
         entity.setEndereco(dto.endereco());
