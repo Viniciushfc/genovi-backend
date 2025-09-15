@@ -41,25 +41,26 @@ class CriadorServiceTest {
         criador = new Criador();
         criador.setId(1L);
         criador.setNome("Nome Teste");
-        criador.setCpfCnpj("99999999999");
+        criador.setCpfCnpj("52998224725");
         criador.setEndereco("endereco teste");
-        criador.setTelefone("99999999999");
+        criador.setTelefone("11999999999");
 
         createCriadorDTO = new CreateCriadorDTO(
                 "Nome Teste",
-                "99999999999",
+                "52998224725",
                 "endereco teste",
-                "99999999999"
+                "11999999999"
         );
 
         criadorDTO = new CriadorDTO(
                 1L,
                 "Nome Teste",
-                "99999999999",
+                "52998224725",
                 "endereco teste",
-                "99999999999"
+                "11999999999"
         );
     }
+
 
     @Test
     void testFindAll() {
@@ -161,9 +162,9 @@ class CriadorServiceTest {
         assertNotNull(result);
         assertEquals(1L, result.id());
         assertEquals("Nome Teste", result.nome());
-        assertEquals("99999999999", result.cpfCnpj());
+        assertEquals("52998224725", result.cpfCnpj());
         assertEquals("endereco teste", result.endereco());
-        assertEquals("99999999999", result.telefone());
+        assertEquals("11999999999", result.telefone());
         verify(criadorMapper, times(1)).toEntity(createCriadorDTO);
         verify(criadorRepository, times(1)).save(criador);
         verify(criadorMapper, times(1)).toDTO(criador);
