@@ -21,9 +21,8 @@ public class GenoviDatabaseService {
         if (ovino != null) {
             JsonObject ovinoData = new JsonObject();
             ovinoData.addProperty("rfid", ovino.getRfid());
-            ovinoData.addProperty("raca", ovino.getRaca());
             ovinoData.addProperty("sexo", ovino.getSexo().toString());
-            ovinoData.addProperty("tempo_de_fazenda", ovino.getTempoFazenda());
+
             return ovinoData;
         } else {
             JsonObject error = new JsonObject();
