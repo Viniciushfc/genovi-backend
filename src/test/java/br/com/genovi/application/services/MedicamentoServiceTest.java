@@ -59,14 +59,15 @@ class MedicamentoServiceTest {
                 "Fabricante Teste",
                 List.of(1L),
                 true,
-                1
+                1,
+                true
         );
     }
 
     @Test
     void testFindAll() {
         MedicamentoDTO medicamentoDTO = new MedicamentoDTO(
-                "Remédio Teste", "Fabricante Teste", List.of(new DoencaDTO(1L,"Nome Doença", "Doença X")), true, 1
+                "Remédio Teste", "Fabricante Teste", List.of(new DoencaDTO(1L,"Nome Doença", "Doença X")), true, 1, true
         );
 
         when(medicamentoRepository.findAll()).thenReturn(List.of(medicamento));
@@ -81,7 +82,7 @@ class MedicamentoServiceTest {
     @Test
     void testFindById() {
         MedicamentoDTO medicamentoDTO = new MedicamentoDTO(
-                "Remédio Teste", "Fabricante Teste", List.of(new DoencaDTO(1L,"Nome Doença", "Doença X")), true, 1
+                "Remédio Teste", "Fabricante Teste", List.of(new DoencaDTO(1L,"Nome Doença", "Doença X")), true, 1, true
         );
 
         when(medicamentoRepository.findById(1L)).thenReturn(Optional.of(medicamento));
@@ -96,7 +97,7 @@ class MedicamentoServiceTest {
     @Test
     void testSave() {
         MedicamentoDTO medicamentoDTO = new MedicamentoDTO(
-                "Remédio Teste", "Fabricante Teste", List.of(new DoencaDTO(1L,"Nome Doença", "Doença X")), true, 1
+                "Remédio Teste", "Fabricante Teste", List.of(new DoencaDTO(1L,"Nome Doença", "Doença X")), true, 1, true
         );
 
         when(doencaRepository.findAllById(List.of(1L))).thenReturn(List.of(doenca));
@@ -124,7 +125,7 @@ class MedicamentoServiceTest {
     @Test
     void testUpdate() {
         MedicamentoDTO medicamentoDTO = new MedicamentoDTO(
-                "Atualizado", "Fabricante A", List.of(new DoencaDTO(1L, "Nome Doença", "Doença X")), true, 1
+                "Atualizado", "Fabricante A", List.of(new DoencaDTO(1L, "Nome Doença", "Doença X")), true, 1, true
         );
 
         when(medicamentoRepository.findById(1L)).thenReturn(Optional.of(medicamento));

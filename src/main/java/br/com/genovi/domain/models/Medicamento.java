@@ -32,16 +32,20 @@ public class Medicamento {
     @Column(name = "quantidade_doses")
     private Integer quantidadeDoses;
 
+    @Column(name = "is_vacina")
+    private boolean isVacina;
+
     public Medicamento() {
     }
 
-    public Medicamento(Long id, String nome, String fabricante, List<Doenca> doencas, boolean doceUnica, Integer quantidadeDoses) {
+    public Medicamento(Long id, String nome, String fabricante, List<Doenca> doencas, boolean doceUnica, Integer quantidadeDoses, boolean isVacina) {
         this.id = id;
         this.nome = nome;
         this.fabricante = fabricante;
         this.doencas = doencas;
         this.doceUnica = doceUnica;
         this.quantidadeDoses = quantidadeDoses;
+        this.isVacina = isVacina;
     }
 
     public Long getId() {
@@ -90,5 +94,13 @@ public class Medicamento {
 
     public void setQuantidadeDoses(Integer quantidadeDoses) {
         this.quantidadeDoses = quantidadeDoses;
+    }
+
+    public boolean isVacina() {
+        return isVacina;
+    }
+
+    public void setVacina(boolean vacina) {
+        isVacina = vacina;
     }
 }

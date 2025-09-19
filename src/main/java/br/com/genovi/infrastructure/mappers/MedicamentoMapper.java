@@ -23,11 +23,13 @@ public class MedicamentoMapper {
                 dto.fabricante(),
                 doencas,
                 dto.doseUnica(),
-                dto.quantidadeDoses()
+                dto.quantidadeDoses(),
+                dto.isVacina()
         );
     }
 
     public MedicamentoDTO toDTO(Medicamento entity) {
+        if (entity == null) return null;
         return new MedicamentoDTO(
                 entity.getNome(),
                 entity.getFabricante(),
@@ -35,7 +37,8 @@ public class MedicamentoMapper {
                         .map(doencaMapper::toDTO)
                         .toList(),
                 entity.isDoceUnica(),
-                entity.getQuantidadeDoses()
+                entity.getQuantidadeDoses(),
+                entity.isVacina()
         );
     }
 
@@ -45,6 +48,7 @@ public class MedicamentoMapper {
         entity.setDoencas(doencas);
         entity.setDoceUnica(dto.doseUnica());
         entity.setQuantidadeDoses(dto.quantidadeDoses());
+        entity.setVacina(dto.isVacina());
     }
 }
 

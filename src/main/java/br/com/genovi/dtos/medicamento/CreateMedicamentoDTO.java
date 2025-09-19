@@ -6,5 +6,6 @@ public record CreateMedicamentoDTO (String nome,
                                     String fabricante,
                                     List<Long> doencasIds,
                                     Boolean doseUnica,
-                                    Integer quantidadeDoses){
+                                    Integer quantidadeDoses,
+                                    boolean isVacina) {
 }
