@@ -31,12 +31,12 @@ public class AuthController {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        authRequest.get("username"),
+                        authRequest.get("email"),
                         authRequest.get("senha")
                 )
         );
 
-        UserDetails user = userDetailsService.loadUserByUsername(authRequest.get("username"));
+        UserDetails user = userDetailsService.loadUserByUsername(authRequest.get("email"));
         String token = jwtService.generateToken(Map.of(), user.getUsername());
 
         return ResponseEntity.ok(Map.of("token", token));

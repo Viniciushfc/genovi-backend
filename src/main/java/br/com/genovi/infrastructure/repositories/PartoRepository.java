@@ -2,10 +2,9 @@ package br.com.genovi.infrastructure.repositories;
 
 import br.com.genovi.domain.models.Parto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
+@Repository
 public interface PartoRepository extends JpaRepository<Parto, Long> {
 
-    List<Parto> findByOvelhaMaeId(Long id);
 }

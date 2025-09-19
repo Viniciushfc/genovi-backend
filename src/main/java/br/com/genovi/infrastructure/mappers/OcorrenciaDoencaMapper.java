@@ -1,9 +1,6 @@
 package br.com.genovi.infrastructure.mappers;
 
-import br.com.genovi.domain.models.Doenca;
-import br.com.genovi.domain.models.OcorrenciaDoenca;
-import br.com.genovi.domain.models.Ovino;
-import br.com.genovi.domain.models.Usuario;
+import br.com.genovi.domain.models.*;
 import br.com.genovi.dtos.ocorrencia_doenca.CreateOcorrenciaDoencaDTO;
 import br.com.genovi.dtos.ocorrencia_doenca.OcorrenciaDoencaDTO;
 import org.springframework.stereotype.Component;
@@ -11,17 +8,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class OcorrenciaDoencaMapper {
 
-    private final UsuarioMapper usuarioMapper;
+    private final FuncionarioMapper funcionarioMapper;
     private final OvinoMapper ovinoMapper;
     private final DoencaMapper doencaMapper;
 
-    public OcorrenciaDoencaMapper(UsuarioMapper usuarioMapper, OvinoMapper ovinoMapper, DoencaMapper doencaMapper) {
-        this.usuarioMapper = usuarioMapper;
+    public OcorrenciaDoencaMapper(FuncionarioMapper funcionarioMapper, OvinoMapper ovinoMapper, DoencaMapper doencaMapper) {
+        this.funcionarioMapper = funcionarioMapper;
         this.ovinoMapper = ovinoMapper;
         this.doencaMapper = doencaMapper;
     }
 
-    public OcorrenciaDoenca toEntity(CreateOcorrenciaDoencaDTO dto, Ovino ovino, Doenca doenca, Usuario usuario) {
+    public OcorrenciaDoenca toEntity(CreateOcorrenciaDoencaDTO dto, Ovino ovino, Doenca doenca, Funcionario funcionario) {
         return new OcorrenciaDoenca(
                 null,
                 ovino,
@@ -29,7 +26,7 @@ public class OcorrenciaDoencaMapper {
                 dto.dataInicio(),
                 dto.dataFinal(),
                 dto.curado(),
-                usuario
+                funcionario
         );
     }
 
@@ -40,15 +37,15 @@ public class OcorrenciaDoencaMapper {
                 entity.getDataInicio(),
                 entity.getDataFinal(),
                 entity.isCurada(),
-                usuarioMapper.toDTO(entity.getResponsavel()));
+                funcionarioMapper.toDTO(entity.getResponsavel()));
     }
 
-    public void updateEntityFromDTO(CreateOcorrenciaDoencaDTO dto, OcorrenciaDoenca entity, Ovino ovino, Doenca doenca, Usuario usuario) {
+    public void updateEntityFromDTO(CreateOcorrenciaDoencaDTO dto, OcorrenciaDoenca entity, Ovino ovino, Doenca doenca, Funcionario funcionario) {
         entity.setOvino(ovino);
         entity.setDoenca(doenca);
         entity.setDataInicio(dto.dataInicio());
         entity.setDataFinal(dto.dataFinal());
         entity.setCurada(dto.curado());
-        entity.setResponsavel(usuario);
+        entity.setResponsavel(funcionario);
     }
 }

@@ -1,18 +1,24 @@
 package br.com.genovi.dtos.relatorios;
 
 
-import br.com.genovi.domain.models.*;
+import br.com.genovi.dtos.aplicacao.AplicacaoDTO;
+import br.com.genovi.dtos.funcionario.FuncionarioDTO;
+import br.com.genovi.dtos.gestacao.GestacaoDTO;
+import br.com.genovi.dtos.ocorrencia_doenca.OcorrenciaDoencaDTO;
+import br.com.genovi.dtos.parto.PartoDTO;
+import br.com.genovi.dtos.reproducao.ReproducaoDTO;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 
-public record RegistroRecord(Ovino ovino,
-                             List<Parto> partos,
-                             List<CicloCio> cicloCios,
-                             List<Amamentacao> amamentacaos,
-                             List<Reproducao> reproducaos,
-                             List<Aplicacao> aplicacaos,
-                             List<OcorrenciaDoenca> ocorrenciaDoencas) {
-
+public record RegistroRecord(
+        Long idRegistro,
+        LocalDateTime dataRegistro,
+        FuncionarioDTO funcionario,
+        ReproducaoDTO reproducao,
+        GestacaoDTO gestacao,
+        PartoDTO parto,
+        AplicacaoDTO aplicacao,
+        OcorrenciaDoencaDTO ocorrenciaDoenca) {
 
 }

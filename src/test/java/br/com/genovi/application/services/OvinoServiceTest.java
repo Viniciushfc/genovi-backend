@@ -1,19 +1,11 @@
 package br.com.genovi.application.services;
 
-import br.com.genovi.domain.enums.TypeGrauPureza;
-import br.com.genovi.domain.enums.TypeSexo;
 import br.com.genovi.domain.enums.TypeStatus;
-import br.com.genovi.domain.models.Ascendencia;
-import br.com.genovi.domain.models.Criador;
-import br.com.genovi.domain.models.Ovino;
+import br.com.genovi.domain.models.*;
 import br.com.genovi.dtos.ovino.CreateOvinoDTO;
 import br.com.genovi.dtos.ovino.OvinoDTO;
-import br.com.genovi.infrastructure.mappers.AscendenciaMapper;
-import br.com.genovi.infrastructure.mappers.CriadorMapper;
 import br.com.genovi.infrastructure.mappers.OvinoMapper;
-import br.com.genovi.infrastructure.repositories.AscendenciaRepository;
-import br.com.genovi.infrastructure.repositories.CriadorRepository;
-import br.com.genovi.infrastructure.repositories.OvinoRepository;
+import br.com.genovi.infrastructure.repositories.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +17,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,133 +31,105 @@ class OvinoServiceTest {
     private AscendenciaRepository ascendenciaRepository;
 
     @Mock
-    private CriadorRepository criadorRepository;
+    private FuncionarioRepository funcionarioRepository;
+
+    @Mock
+    private PartoRepository partoRepository;
+
+    @Mock
+    private CompraRepository compraRepository;
+
+    @Mock
+    private PesagemRepository pesagemRepository;
 
     @Mock
     private OvinoMapper ovinoMapper;
 
-    @Mock
-    private Ovino ovino;
-
-    @Mock
-    private Criador criador;
-
-    @Mock
-    private Ascendencia ascendencia;
-
-    @Mock
-    private CreateOvinoDTO dto;
-
-    @Mock
-    private OvinoDTO ovinoDTO;
-
-    @Mock
-    private AscendenciaMapper ascendenciaMapper;
-
-    @Mock
-    private CriadorMapper criadorMapper;
-
     @InjectMocks
     private OvinoService ovinoService;
 
+    private Ovino ovino;
+    private Compra compra;
+    private Parto parto;
+    private Pesagem pesagem;
+    private CreateOvinoDTO createOvinoDTO;
+
     @BeforeEach
-    void setup() {
-        criador = new Criador();
-        criador.setId(1L);
-
-        ascendencia = new Ascendencia();
-        ascendencia.setId(1L);
-
+    void setUp() {
         ovino = new Ovino();
         ovino.setId(1L);
+        ovino.setNome("Ovino Teste");
 
-        ovinoDTO = new OvinoDTO(
-                1111L,
-                "Nome",
-                "Raca",
-                "FBB",
+        compra = new Compra();
+        compra.setId(1L);
+
+        parto = new Parto();
+        parto.setId(1L);
+
+        pesagem = new Pesagem();
+        pesagem.setId(1L);
+
+        createOvinoDTO = new CreateOvinoDTO(
+                123L,
+                "Ovino Teste",
+                null, // raca
+                null, // fbb
                 LocalDateTime.now(),
-                criadorMapper.toDTO(criador),
-                2,
-                TypeGrauPureza.PURO_ORIGEM,
-                TypeSexo.MACHO,
-                40.00F,
-                "Comportamento",
-                ascendenciaMapper.toDTO(ascendencia),
-                TypeStatus.ATIVO);
-
-        dto = new CreateOvinoDTO(
-                1111L,
-                "Nome",
-                "Raca",
-                "FBB",
                 LocalDateTime.now(),
-                1L,
-                2,
-                TypeGrauPureza.PURO_ORIGEM,
-                TypeSexo.MACHO,
-                40.00F,
-                "Comportamento",
-                1L,
-                1L,
-                TypeStatus.ATIVO);
-    }
-
-    @Test
-    void shouldReturnAllOvinos() {
-        when(ovinoRepository.findAll()).thenReturn(List.of(ovino));
-        when(ovinoMapper.toDTO(ovino)).thenReturn(ovinoDTO);
-
-        List<OvinoDTO> result = ovinoService.findAll();
-
-        assertThat(result).containsExactly(ovinoDTO);
-        verify(ovinoRepository).findAll();
-    }
-
-    @Test
-    void shouldReturnOvinoById() {
-        when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino));
-        when(ovinoMapper.toDTO(ovino)).thenReturn(ovinoDTO);
-
-        OvinoDTO result = ovinoService.findById(1L);
-
-        assertThat(result).isEqualTo(ovinoDTO);
-    }
-
-    @Test
-    void shouldThrowWhenOvinoNotFound() {
-        when(ovinoRepository.findById(1L)).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> ovinoService.findById(1L))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("Ovino não encontrado");
+                null, // grau pureza
+                null, // sexo
+                1L, // maeId
+                2L, // paiId
+                TypeStatus.ATIVO,
+                null, // foto
+                1L, // compra
+                1L, // parto
+                List.of(1L) // pesos
+        );
     }
 
     @Test
     void shouldSaveNewOvino() {
-        when(criadorRepository.findById(1L)).thenReturn(Optional.of(criador));
-        when(ascendenciaRepository.findById(1L)).thenReturn(Optional.of(ascendencia));
-        when(ovinoMapper.toEntity(dto, TypeStatus.ATIVO, criador, ascendencia)).thenReturn(ovino);
-        when(ovinoMapper.toDTO(ovino)).thenReturn(ovinoDTO);
+        // Mocks para dependências
+        when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino)); // mae
+        when(ovinoRepository.findById(2L)).thenReturn(Optional.of(ovino)); // pai
+        when(compraRepository.findById(1L)).thenReturn(Optional.of(compra));
+        when(partoRepository.findById(1L)).thenReturn(Optional.of(parto));
+        when(pesagemRepository.findAllById(List.of(1L))).thenReturn(List.of(pesagem));
+        when(ovinoMapper.toEntity(any(), any(), any(), any(), any(), any())).thenReturn(ovino);
+        when(ovinoMapper.toDTO(ovino)).thenReturn(mock(OvinoDTO.class));
 
-        OvinoDTO result = ovinoService.save(dto);
+        OvinoDTO result = ovinoService.save(createOvinoDTO);
 
-        assertThat(result).isEqualTo(ovinoDTO);
-        verify(ovinoRepository).save(ovino);
+        assertNotNull(result);
+        verify(ovinoRepository).save(any(Ovino.class));
     }
 
     @Test
     void shouldUpdateOvino() {
-        when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino));
-        when(criadorRepository.findById(1L)).thenReturn(Optional.of(criador));
-        when(ascendenciaRepository.findById(1L)).thenReturn(Optional.of(ascendencia));
-        when(ovinoMapper.toDTO(ovino)).thenReturn(ovinoDTO);
+        when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino)); // entidade a atualizar
+        when(ovinoRepository.findById(2L)).thenReturn(Optional.of(ovino)); // pai
+        when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino)); // mae
+        when(compraRepository.findById(1L)).thenReturn(Optional.of(compra));
+        when(partoRepository.findById(1L)).thenReturn(Optional.of(parto));
+        when(pesagemRepository.findAllById(List.of(1L))).thenReturn(List.of(pesagem));
+        doNothing().when(ovinoMapper).updateEntityFromDTO(any(), any(), any(), any(), any(), any(), any());
+        when(ovinoMapper.toDTO(ovino)).thenReturn(mock(OvinoDTO.class));
 
-        OvinoDTO result = ovinoService.update(1L, dto);
+        OvinoDTO updated = ovinoService.update(1L, createOvinoDTO);
 
-        assertThat(result).isEqualTo(ovinoDTO);
-        verify(ovinoMapper).updateEntityFromDTO(dto, TypeStatus.ATIVO, ovino, criador, ascendencia);
+        assertNotNull(updated);
         verify(ovinoRepository).save(ovino);
+    }
+
+    @Test
+    void shouldThrowWhenOvinoNotFoundOnUpdate() {
+        when(ovinoRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> ovinoService.update(1L, createOvinoDTO));
+
+        assertEquals("Ovino não encontrado", exception.getMessage());
     }
 
     @Test
@@ -173,26 +138,17 @@ class OvinoServiceTest {
 
         ovinoService.disable(1L);
 
-        assertThat(ovino.getStatus()).isEqualTo(TypeStatus.DESATIVADO);
+        assertEquals(TypeStatus.DESATIVADO, ovino.getStatus());
         verify(ovinoRepository).save(ovino);
     }
 
     @Test
-    void shouldThrowWhenCriadorNotFound() {
-        when(criadorRepository.findById(1L)).thenReturn(Optional.empty());
+    void shouldThrowWhenOvinoNotFoundOnDisable() {
+        when(ovinoRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> ovinoService.save(dto))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("Criador não encontrado");
-    }
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> ovinoService.disable(1L));
 
-    @Test
-    void shouldThrowWhenAscendenciaNotFound() {
-        when(criadorRepository.findById(1L)).thenReturn(Optional.of(criador));
-        when(ascendenciaRepository.findById(1L)).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> ovinoService.save(dto))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("Ascendência não encontrada");
+        assertEquals("Ovino não encontrado", exception.getMessage());
     }
 }

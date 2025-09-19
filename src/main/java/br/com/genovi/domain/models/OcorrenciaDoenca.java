@@ -31,12 +31,12 @@ public class OcorrenciaDoenca {
 
     @ManyToOne
     @JoinColumn(name = "id_responsavel")
-    private Usuario responsavel;
+    private Funcionario responsavel;
 
     public OcorrenciaDoenca() {
     }
 
-    public OcorrenciaDoenca(Long id, Ovino ovino, Doenca doenca, LocalDateTime dataInicio, LocalDateTime dataFim, boolean curada, Usuario responsavel) {
+    public OcorrenciaDoenca(Long id, Ovino ovino, Doenca doenca, LocalDateTime dataInicio, LocalDateTime dataFim, boolean curada, Funcionario responsavel) {
         this.id = id;
         this.ovino = ovino;
         this.doenca = doenca;
@@ -94,11 +94,11 @@ public class OcorrenciaDoenca {
         this.curada = curada;
     }
 
-    public Usuario getResponsavel() {
+    public Funcionario getResponsavel() {
         return responsavel;
     }
 
-    public void setResponsavel(Usuario responsavel) {
+    public void setResponsavel(Funcionario responsavel) {
         this.responsavel = responsavel;
     }
 }

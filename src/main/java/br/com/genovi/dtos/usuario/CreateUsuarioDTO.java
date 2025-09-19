@@ -3,9 +3,9 @@ package br.com.genovi.dtos.usuario;
 import br.com.genovi.domain.enums.TypeUsuario;
 
 public record CreateUsuarioDTO(Long id,
-                               String username,
+                               boolean ativo,
                                String email,
                                String senha,
-                               TypeUsuario perfil,
-                               Boolean autenticacao2fa) {
+                               Boolean autenticacao2fa,
+                               Long funcionarioId) {
 }

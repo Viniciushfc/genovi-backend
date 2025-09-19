@@ -10,7 +10,6 @@ import br.com.genovi.infrastructure.mappers.AplicacaoMapper;
 import br.com.genovi.infrastructure.mappers.MedicamentoMapper;
 import br.com.genovi.infrastructure.mappers.OvinoMapper;
 import br.com.genovi.infrastructure.mappers.UsuarioMapper;
-
 import br.com.genovi.infrastructure.repositories.AplicacaoRepository;
 import br.com.genovi.infrastructure.repositories.MedicamentoRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
@@ -39,9 +38,6 @@ class AplicacaoServiceTest {
 
     @Mock
     private MedicamentoRepository medicamentoRepository;
-
-    @Mock
-    private UsuarioRepository usuarioRepository;
 
     @Mock
     private AplicacaoMapper aplicacaoMapper;
@@ -77,9 +73,21 @@ class AplicacaoServiceTest {
         usuario.setId(3L);
 
         aplicacao = new Aplicacao();
-        aplicacaoDTO = new AplicacaoDTO(LocalDateTime.of(2024, 1, 1, 10, 0), ovinoMapper.toDTO(ovino), medicamentoMapper.toDTO(medicamento), true, LocalDateTime.of(2024, 1, 1, 10, 0), usuarioMapper.toDTO(usuario),"obs teste");
+        aplicacao.setId(1L); // essencial para o teste delete
 
-        createDto = new CreateAplicacaoDTO(LocalDateTime.of(2024, 1, 1, 10, 0), 1L, 2L, true, LocalDateTime.of(2024, 1, 1, 10, 0), 3L, "OBS TESTE");
+        aplicacaoDTO = new AplicacaoDTO(
+                LocalDateTime.of(2024, 1, 1, 10, 0),
+                ovinoMapper.toDTO(ovino),
+                medicamentoMapper.toDTO(medicamento),
+                LocalDateTime.of(2024, 1, 1, 10, 0)
+        );
+
+        createDto = new CreateAplicacaoDTO(
+                LocalDateTime.of(2024, 1, 1, 10, 0),
+                1L, // ovinoId
+                2L, // medicamentoId
+                LocalDateTime.of(2024, 1, 1, 10, 0)
+        );
     }
 
     @Test
@@ -116,8 +124,7 @@ class AplicacaoServiceTest {
     void saveDeveSalvarEMapearDTO() {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino));
         when(medicamentoRepository.findById(2L)).thenReturn(Optional.of(medicamento));
-        when(usuarioRepository.findById(3L)).thenReturn(Optional.of(usuario));
-        when(aplicacaoMapper.toEntity(createDto, ovino, medicamento, usuario)).thenReturn(aplicacao);
+        when(aplicacaoMapper.toEntity(createDto, ovino, medicamento)).thenReturn(aplicacao);
         when(aplicacaoMapper.toDTO(aplicacao)).thenReturn(aplicacaoDTO);
 
         AplicacaoDTO result = aplicacaoService.save(createDto);
@@ -137,15 +144,6 @@ class AplicacaoServiceTest {
     void saveDeveLancarExcecaoSeMedicamentoNaoEncontrado() {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino));
         when(medicamentoRepository.findById(2L)).thenReturn(Optional.empty());
-
-        assertThrows(RuntimeException.class, () -> aplicacaoService.save(createDto));
-    }
-
-    @Test
-    void saveDeveLancarExcecaoSeUsuarioNaoEncontrado() {
-        when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino));
-        when(medicamentoRepository.findById(2L)).thenReturn(Optional.of(medicamento));
-        when(usuarioRepository.findById(3L)).thenReturn(Optional.empty());
 
         assertThrows(RuntimeException.class, () -> aplicacaoService.save(createDto));
     }

@@ -1,11 +1,14 @@
 package br.com.genovi.domain.models;
 
 import br.com.genovi.domain.enums.TypeGrauPureza;
+import br.com.genovi.domain.enums.TypeRaca;
 import br.com.genovi.domain.enums.TypeSexo;
 import br.com.genovi.domain.enums.TypeStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -22,60 +25,74 @@ public class Ovino {
     @Column(name = "nome")
     private String nome;
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "raca")
-    private String raca;
+    private TypeRaca raca;
 
     @Column(name = "fbb")
     private String fbb;
 
-    @Column(name = "data_nascimento")
+    @Column(name = "data_nascimento", nullable = true)
     private LocalDateTime dataNascimento;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "id_criador")
-    private Criador criador;
+    //Se tiver compra pega da compra se nao pega do parto se nao manualmente
+    @Column(name = "data_cadastro", nullable = true)
+    private LocalDateTime dataCadastro;
 
-    @Column(name = "tempo_fazenda")
-    private int tempoFazenda;
-
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "grau_pureza")
     private TypeGrauPureza typeGrauPureza;
 
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "sexo")
     private TypeSexo sexo;
 
-    @Column(name = "peso")
-    private Float peso;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_ovino_mae", nullable = true)
+    private Ovino ovinoMae;
 
-    @Column(name = "comportamento")
-    private String comportamento;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_ovino_pai", nullable = true)
+    private Ovino ovinoPai;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "id_ascendencia")
-    private Ascendencia ascendencia;
-
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "status")
     private TypeStatus status;
 
-    public Ovino() {
+    @Column(name = "foto_ovino", nullable = true)
+    private String fotoOvino;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_compra", nullable = true)
+    private Compra compra;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_parto", nullable = true)
+    private Parto parto;
+
+    @OneToMany(mappedBy = "ovino", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pesagem> pesagens = new ArrayList<>();
+
+    public Ovino() {
     }
 
-    public Ovino(Long id, Long rfid, String nome, String raca, String fbb, LocalDateTime dataNascimento, Criador criador, int tempoFazenda, TypeGrauPureza typeGrauPureza, TypeSexo sexo, Float peso, String comportamento, Ascendencia ascendencia, TypeStatus status) {
+    public Ovino(Long id, Long rfid, String nome, TypeRaca raca, String fbb, LocalDateTime dataNascimento, LocalDateTime dataCadastro, TypeGrauPureza typeGrauPureza, TypeSexo sexo, Ovino ovinoMae, Ovino ovinoPai, TypeStatus status, String fotoOvino, Compra compra, Parto parto, List<Pesagem> pesagens) {
         this.id = id;
         this.rfid = rfid;
         this.nome = nome;
         this.raca = raca;
         this.fbb = fbb;
         this.dataNascimento = dataNascimento;
-        this.criador = criador;
-        this.tempoFazenda = tempoFazenda;
+        this.dataCadastro = dataCadastro;
         this.typeGrauPureza = typeGrauPureza;
         this.sexo = sexo;
-        this.peso = peso;
-        this.comportamento = comportamento;
-        this.ascendencia = ascendencia;
+        this.ovinoMae = ovinoMae;
+        this.ovinoPai = ovinoPai;
         this.status = status;
+        this.fotoOvino = fotoOvino;
+        this.compra = compra;
+        this.parto = parto;
+        this.pesagens = pesagens;
     }
 
     public Long getId() {
@@ -102,11 +119,11 @@ public class Ovino {
         this.nome = nome;
     }
 
-    public String getRaca() {
+    public TypeRaca getRaca() {
         return raca;
     }
 
-    public void setRaca(String raca) {
+    public void setRaca(TypeRaca raca) {
         this.raca = raca;
     }
 
@@ -126,20 +143,12 @@ public class Ovino {
         this.dataNascimento = dataNascimento;
     }
 
-    public Criador getCriador() {
-        return criador;
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
     }
 
-    public void setCriador(Criador criador) {
-        this.criador = criador;
-    }
-
-    public int getTempoFazenda() {
-        return tempoFazenda;
-    }
-
-    public void setTempoFazenda(int tempoFazendo) {
-        this.tempoFazenda = tempoFazendo;
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 
     public TypeGrauPureza getTypeGrauPureza() {
@@ -158,28 +167,20 @@ public class Ovino {
         this.sexo = sexo;
     }
 
-    public Float getPeso() {
-        return peso;
+    public Ovino getOvinoMae() {
+        return ovinoMae;
     }
 
-    public void setPeso(Float peso) {
-        this.peso = peso;
+    public void setOvinoMae(Ovino ovinoMae) {
+        this.ovinoMae = ovinoMae;
     }
 
-    public String getComportamento() {
-        return comportamento;
+    public Ovino getOvinoPai() {
+        return ovinoPai;
     }
 
-    public void setComportamento(String comportamento) {
-        this.comportamento = comportamento;
-    }
-
-    public Ascendencia getAscendencia() {
-        return ascendencia;
-    }
-
-    public void setAscendencia(Ascendencia ascendencia) {
-        this.ascendencia = ascendencia;
+    public void setOvinoPai(Ovino ovinoPai) {
+        this.ovinoPai = ovinoPai;
     }
 
     public TypeStatus getStatus() {
@@ -188,5 +189,37 @@ public class Ovino {
 
     public void setStatus(TypeStatus status) {
         this.status = status;
+    }
+
+    public String getFotoOvino() {
+        return fotoOvino;
+    }
+
+    public void setFotoOvino(String fotoOvino) {
+        this.fotoOvino = fotoOvino;
+    }
+
+    public Compra getCompra() {
+        return compra;
+    }
+
+    public void setCompra(Compra compra) {
+        this.compra = compra;
+    }
+
+    public Parto getParto() {
+        return parto;
+    }
+
+    public void setParto(Parto parto) {
+        this.parto = parto;
+    }
+
+    public List<Pesagem> getPesagens() {
+        return pesagens;
+    }
+
+    public void setPesagens(List<Pesagem> pesagens) {
+        this.pesagens = pesagens;
     }
 }

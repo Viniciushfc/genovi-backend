@@ -29,19 +29,19 @@ public class Medicamento {
     @Column(name = "doce_unica")
     private boolean doceUnica;
 
-    @Column(name = "descricao")
-    private String descricao;
+    @Column(name = "quantidade_doses")
+    private Integer quantidadeDoses;
 
     public Medicamento() {
     }
 
-    public Medicamento(Long id, String nome, String fabricante, List<Doenca> doencas, boolean doceUnica, String descricao) {
+    public Medicamento(Long id, String nome, String fabricante, List<Doenca> doencas, boolean doceUnica, Integer quantidadeDoses) {
         this.id = id;
         this.nome = nome;
         this.fabricante = fabricante;
         this.doencas = doencas;
         this.doceUnica = doceUnica;
-        this.descricao = descricao;
+        this.quantidadeDoses = quantidadeDoses;
     }
 
     public Long getId() {
@@ -84,11 +84,11 @@ public class Medicamento {
         this.doceUnica = doceUnica;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public Integer getQuantidadeDoses() {
+        return quantidadeDoses;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setQuantidadeDoses(Integer quantidadeDoses) {
+        this.quantidadeDoses = quantidadeDoses;
     }
 }

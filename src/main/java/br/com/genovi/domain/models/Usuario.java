@@ -1,7 +1,6 @@
 package br.com.genovi.domain.models;
 
 import br.com.genovi.domain.enums.Role;
-import br.com.genovi.domain.enums.TypeUsuario;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -13,29 +12,39 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private Boolean ativo;
-    private String username;
+
+    @Column(name = "ativo")
+    private boolean ativo;
+
+    @Column(name = "email", unique = true)
     private String email;
+
+    @Column(name = "senha")
     private String senha;
-    private TypeUsuario perfil;
-    //A autenticacao2fa precisa ser "Boolean" devido a possibilidade de ser null
+
+    @Column(name = "autenticacao2fa") //A autenticacao2fa precisa ser "Boolean" devido a possibilidade de ser null
     private Boolean autenticacao2fa;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private Set<Role> roles;
+
+    @OneToOne
+    @JoinColumn(name = "id_funcionario")
+    private Funcionario funcionario;
 
     public Usuario() {
     }
 
-    public Usuario(Long id, Boolean ativo, String username, String email, String senha, TypeUsuario perfil, Boolean autenticacao2fa, Set<Role> roles) {
+    public Usuario(Long id, boolean ativo, String email, String senha, Boolean autenticacao2fa, Set<Role> roles, Funcionario funcionario) {
         this.id = id;
         this.ativo = ativo;
-        this.username = username;
         this.email = email;
         this.senha = senha;
-        this.perfil = perfil;
         this.autenticacao2fa = autenticacao2fa;
         this.roles = roles;
+        this.funcionario = funcionario;
     }
 
     public Long getId() {
@@ -46,20 +55,12 @@ public class Usuario {
         this.id = id;
     }
 
-    public Boolean isAtivo() {
+    public boolean isAtivo() {
         return ativo;
     }
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {
@@ -78,14 +79,6 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public TypeUsuario getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(TypeUsuario perfil) {
-        this.perfil = perfil;
-    }
-
     public Boolean getAutenticacao2fa() {
         return autenticacao2fa;
     }
@@ -94,12 +87,12 @@ public class Usuario {
         this.autenticacao2fa = autenticacao2fa;
     }
 
-    public Boolean getAtivo() {
-        return ativo;
+    public Funcionario getFuncionario() {
+        return funcionario;
     }
 
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
     }
 
     public Set<Role> getRoles() {

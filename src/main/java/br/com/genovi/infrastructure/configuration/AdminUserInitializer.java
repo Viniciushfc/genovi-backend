@@ -16,14 +16,14 @@ public class AdminUserInitializer {
     @Bean
     public ApplicationRunner adminInitializer(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            if (usuarioRepository.findByUsername("admin").isEmpty()) {
+            if (usuarioRepository.findByEmail("admin@admin.com").isEmpty()) {
                 Usuario admin = new Usuario();
-                admin.setUsername("admin");
+                admin.setEmail("admin@admin.com");
                 admin.setSenha(passwordEncoder.encode("1234"));
                 admin.setRoles(Set.of(Role.ROLE_ADMIN, Role.ROLE_USER));
 
                 usuarioRepository.save(admin);
-                System.out.println("✔️ Admin user created with username 'admin' and password '1234'");
+                System.out.println("✔️ Admin user created with email 'admin@admin.com' and password '1234'");
             }
         };
     }

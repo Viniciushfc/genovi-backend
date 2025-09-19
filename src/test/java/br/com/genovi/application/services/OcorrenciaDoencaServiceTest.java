@@ -1,16 +1,16 @@
 package br.com.genovi.application.services;
 
 import br.com.genovi.domain.models.Doenca;
+import br.com.genovi.domain.models.Funcionario;
 import br.com.genovi.domain.models.OcorrenciaDoenca;
 import br.com.genovi.domain.models.Ovino;
-import br.com.genovi.domain.models.Usuario;
 import br.com.genovi.dtos.ocorrencia_doenca.CreateOcorrenciaDoencaDTO;
 import br.com.genovi.dtos.ocorrencia_doenca.OcorrenciaDoencaDTO;
 import br.com.genovi.infrastructure.mappers.OcorrenciaDoencaMapper;
 import br.com.genovi.infrastructure.repositories.DoencaRepository;
+import br.com.genovi.infrastructure.repositories.FuncionarioRepository;
 import br.com.genovi.infrastructure.repositories.OcorrenciaDoencaRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
-import br.com.genovi.infrastructure.repositories.UsuarioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,8 +22,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class OcorrenciaDoencaServiceTest {
@@ -38,7 +40,7 @@ class OcorrenciaDoencaServiceTest {
     private DoencaRepository doencaRepository;
 
     @Mock
-    private UsuarioRepository usuarioRepository;
+    private FuncionarioRepository funcionarioRepository;
 
     @Mock
     private OcorrenciaDoencaMapper ocorrenciaDoencaMapper;
@@ -50,7 +52,7 @@ class OcorrenciaDoencaServiceTest {
     private Doenca doenca;
 
     @Mock
-    private Usuario usuario;
+    private Funcionario funcionario;
 
     @Mock
     private OcorrenciaDoenca ocorrencia;
@@ -72,8 +74,8 @@ class OcorrenciaDoencaServiceTest {
         doenca = new Doenca();
         doenca.setId(2L);
 
-        usuario = new Usuario();
-        usuario.setId(3L);
+        funcionario = new Funcionario();
+        funcionario.setId(3L);
 
         dto = new CreateOcorrenciaDoencaDTO(
                 1L,
@@ -91,7 +93,7 @@ class OcorrenciaDoencaServiceTest {
                 dto.dataInicio(),
                 dto.dataFinal(),
                 dto.curado(),
-                usuario
+                funcionario
         );
     }
 
@@ -99,8 +101,8 @@ class OcorrenciaDoencaServiceTest {
     void shouldSaveOccurrenceSuccessfully() {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino));
         when(doencaRepository.findById(2L)).thenReturn(Optional.of(doenca));
-        when(usuarioRepository.findById(3L)).thenReturn(Optional.of(usuario));
-        when(ocorrenciaDoencaMapper.toEntity(dto, ovino, doenca, usuario)).thenReturn(ocorrencia);
+        when(funcionarioRepository.findById(3L)).thenReturn(Optional.of(funcionario));
+        when(ocorrenciaDoencaMapper.toEntity(dto, ovino, doenca, funcionario)).thenReturn(ocorrencia);
         when(ocorrenciaDoencaMapper.toDTO(ocorrencia)).thenReturn(ocorrenciaDTO);
 
         OcorrenciaDoencaDTO result = service.save(dto);

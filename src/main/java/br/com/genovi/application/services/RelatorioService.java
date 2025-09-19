@@ -22,7 +22,6 @@ public class RelatorioService {
 
     public byte[] gerarRelatorioRegistro(Long id) throws Exception {
         OvinoDTO ovino = ovinoService.findById(id);
-        GenealogiaDTO genealogiaDTO = ovinoService.familyTree(ovino);
 
         //le o arquivo .jrxml
         InputStream inputStream = new ClassPathResource("reports/relatorio-registro.jrxml").getInputStream();
@@ -38,53 +37,11 @@ public class RelatorioService {
         parametros.put("nome", ovino.nome() != null ? ovino.nome() : "N/A");
         parametros.put("fbb", ovino.fbb() != null ? ovino.fbb() : "N/A");
         parametros.put("nascimento", ovino.dataNascimento() != null ? ovino.dataNascimento().format(formatter) : "N/A");
-        parametros.put("sexo", ovino.sexo() != null ? ovino.sexo().name() : "N/A");
+
         parametros.put("rfid", ovino.rfid() != null ? String.valueOf(ovino.rfid()) : "N/A");
         parametros.put("pureza", ovino.typeGrauPureza() != null ? ovino.typeGrauPureza().name() : "N/A");
         parametros.put("raca", ovino.raca() != null ? ovino.raca() : "N/A");
 
-        if (ovino.criador() != null) {
-            parametros.put("criador_nome", ovino.criador().nome() != null ? ovino.criador().nome() : "N/A");
-            parametros.put("criador_cpfCnpj", ovino.criador().cpfCnpj() != null ? ovino.criador().cpfCnpj() : "N/A");
-            parametros.put("criador_endereco", ovino.criador().endereco() != null ? ovino.criador().endereco() : "N/A");
-            parametros.put("criador_telefone", ovino.criador().telefone() != null ? ovino.criador().telefone() : "N/A");
-        } else {
-            parametros.put("criador_nome", "N/A");
-            parametros.put("criador_cpfCnpj", "N/A");
-            parametros.put("criador_endereco", "N/A");
-            parametros.put("criador_telefone", "N/A");
-        }
-
-        if (genealogiaDTO != null) {
-            GenealogiaDTO pai = genealogiaDTO.carneiroPai();
-            GenealogiaDTO mae = genealogiaDTO.ovelhaMae();
-
-            parametros.put("carneiro_pai", pai != null && pai.ovino() != null ? pai.ovino().nome() : "N/A");
-            parametros.put("ovelha_mae", mae != null && mae.ovino() != null ? mae.ovino().nome() : "N/A");
-
-            if (pai != null) {
-                parametros.put("carneiro_avo2", pai.carneiroPai() != null && pai.carneiroPai().ovino() != null ? pai.carneiroPai().ovino().nome() : "N/A");
-                parametros.put("ovelha_avo2", pai.ovelhaMae() != null && pai.ovelhaMae().ovino() != null ? pai.ovelhaMae().ovino().nome() : "N/A");
-            } else {
-                parametros.put("carneiro_avo2", "N/A");
-                parametros.put("ovelha_avo2", "N/A");
-            }
-
-            if (mae != null) {
-                parametros.put("carneiro_avo", mae.carneiroPai() != null && mae.carneiroPai().ovino() != null ? mae.carneiroPai().ovino().nome() : "N/A");
-                parametros.put("ovelha_avo", mae.ovelhaMae() != null && mae.ovelhaMae().ovino() != null ? mae.ovelhaMae().ovino().nome() : "N/A");
-            } else {
-                parametros.put("carneiro_avo", "N/A");
-                parametros.put("ovelha_avo", "N/A");
-            }
-        } else {
-            parametros.put("carneiro_pai", "N/A");
-            parametros.put("ovelha_mae", "N/A");
-            parametros.put("carneiro_avo", "N/A");
-            parametros.put("ovelha_avo", "N/A");
-            parametros.put("carneiro_avo2", "N/A");
-            parametros.put("ovelha_avo2", "N/A");
-        }
 
         //Preenche o relatorio
         JasperPrint print = JasperFillManager.fillReport(report, parametros, new JREmptyDataSource());

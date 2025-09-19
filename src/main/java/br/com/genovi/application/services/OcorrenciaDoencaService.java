@@ -1,17 +1,11 @@
 package br.com.genovi.application.services;
 
-import br.com.genovi.domain.models.Doenca;
-import br.com.genovi.domain.models.OcorrenciaDoenca;
-import br.com.genovi.domain.models.Ovino;
-import br.com.genovi.domain.models.Usuario;
+import br.com.genovi.domain.models.*;
 import br.com.genovi.domain.utils.DateValidationUtils;
 import br.com.genovi.dtos.ocorrencia_doenca.CreateOcorrenciaDoencaDTO;
 import br.com.genovi.dtos.ocorrencia_doenca.OcorrenciaDoencaDTO;
 import br.com.genovi.infrastructure.mappers.OcorrenciaDoencaMapper;
-import br.com.genovi.infrastructure.repositories.DoencaRepository;
-import br.com.genovi.infrastructure.repositories.OcorrenciaDoencaRepository;
-import br.com.genovi.infrastructure.repositories.OvinoRepository;
-import br.com.genovi.infrastructure.repositories.UsuarioRepository;
+import br.com.genovi.infrastructure.repositories.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,14 +16,14 @@ public class OcorrenciaDoencaService {
     private final OcorrenciaDoencaRepository ocorrenciaDoencaRepository;
     private final OvinoRepository ovinoRepository;
     private final DoencaRepository doencaRepository;
-    private final UsuarioRepository usuarioRepository;
+    private final FuncionarioRepository funcionarioRepository;
     private final OcorrenciaDoencaMapper ocorrenciaDoencaMapper;
 
-    public OcorrenciaDoencaService(OcorrenciaDoencaRepository ocorrenciaDoencaRepository, OvinoRepository ovinoRepository, DoencaRepository doencaRepository, UsuarioRepository usuarioRepository, OcorrenciaDoencaMapper ocorrenciaDoencaMapper) {
+    public OcorrenciaDoencaService(OcorrenciaDoencaRepository ocorrenciaDoencaRepository, OvinoRepository ovinoRepository, DoencaRepository doencaRepository, OcorrenciaDoencaMapper ocorrenciaDoencaMapper, FuncionarioRepository funcionarioRepository) {
         this.ocorrenciaDoencaRepository = ocorrenciaDoencaRepository;
         this.ovinoRepository = ovinoRepository;
         this.doencaRepository = doencaRepository;
-        this.usuarioRepository = usuarioRepository;
+        this.funcionarioRepository = funcionarioRepository;
         this.ocorrenciaDoencaMapper = ocorrenciaDoencaMapper;
     }
 
@@ -47,9 +41,9 @@ public class OcorrenciaDoencaService {
                 .orElseThrow(() -> new RuntimeException("Doença não encontrada para Ocorrencia Doença"));
     }
 
-    private Usuario findUsuarioById(Long id) {
-        return usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado para Ocorrencia Doença"));
+    private Funcionario findFuncionarioById(Long id) {
+        return funcionarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Funcionario não encontrado para Ocorrencia Doença"));
     }
 
     public List<OcorrenciaDoencaDTO> findAll() {
@@ -65,9 +59,9 @@ public class OcorrenciaDoencaService {
 
         Ovino ovino = findOvinoEntityById(dto.ovinoId());
         Doenca doenca = findDoencaEntityById(dto.doencaId());
-        Usuario usuario = findUsuarioById(dto.responsavelId());
+        Funcionario funcionario = findFuncionarioById(dto.responsavelId());
 
-        OcorrenciaDoenca ocorrenciaDoenca = ocorrenciaDoencaMapper.toEntity(dto, ovino, doenca, usuario);
+        OcorrenciaDoenca ocorrenciaDoenca = ocorrenciaDoencaMapper.toEntity(dto, ovino, doenca, funcionario);
 
         ocorrenciaDoencaRepository.save(ocorrenciaDoenca);
 
@@ -79,10 +73,10 @@ public class OcorrenciaDoencaService {
 
         Ovino ovino = findOvinoEntityById(dto.ovinoId());
         Doenca doenca = findDoencaEntityById(dto.doencaId());
-        Usuario usuario = findUsuarioById(dto.responsavelId());
+        Funcionario funcionario = findFuncionarioById(dto.responsavelId());
 
         OcorrenciaDoenca ocorrenciaDoenca = findOcorrenciaDoencaById(id);
-        ocorrenciaDoencaMapper.updateEntityFromDTO(dto, ocorrenciaDoenca, ovino, doenca, usuario);
+        ocorrenciaDoencaMapper.updateEntityFromDTO(dto, ocorrenciaDoenca, ovino, doenca, funcionario);
 
         ocorrenciaDoencaRepository.save(ocorrenciaDoenca);
 

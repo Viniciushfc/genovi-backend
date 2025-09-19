@@ -13,9 +13,6 @@ public class Reproducao {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "data_reproducao")
-    private LocalDateTime dataReproducao;
-
     @ManyToOne
     @JoinColumn(name = "id_carneiro_pai")
     private Ovino carneiroPai;
@@ -26,6 +23,9 @@ public class Reproducao {
 
     @Column(name = "reproducao")
     private TypeReproducao typeReproducao;
+
+    @Column(name = "data_reproducao")
+    private LocalDateTime dataReproducao;
 
     @Column(name = "observacoes")
     private String observacoes;

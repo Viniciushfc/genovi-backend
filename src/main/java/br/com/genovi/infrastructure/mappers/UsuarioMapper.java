@@ -1,6 +1,8 @@
 package br.com.genovi.infrastructure.mappers;
 
+import br.com.genovi.domain.models.Funcionario;
 import br.com.genovi.domain.models.Usuario;
+import br.com.genovi.dtos.funcionario.FuncionarioDTO;
 import br.com.genovi.dtos.usuario.CreateUsuarioDTO;
 import br.com.genovi.dtos.usuario.UsuarioDTO;
 import org.springframework.stereotype.Component;
@@ -8,35 +10,40 @@ import org.springframework.stereotype.Component;
 @Component
 public class UsuarioMapper {
 
-    public Usuario toEntity(CreateUsuarioDTO dto, Boolean ativo) {
+    private final FuncionarioMapper funcionarioMapper;
+
+    public UsuarioMapper(FuncionarioMapper funcionarioMapper) {
+        this.funcionarioMapper = funcionarioMapper;
+    }
+
+    public Usuario toEntity(CreateUsuarioDTO dto, Boolean ativo, Funcionario funcionario) {
         return new Usuario(
                 null,
                 ativo,
-                dto.username(),
                 dto.email(),
                 dto.senha(),
-                dto.perfil(),
                 dto.autenticacao2fa(),
-                null
+                null,
+                funcionario
         );
     }
 
     public UsuarioDTO toDTO(Usuario entity) {
         return new UsuarioDTO(
-                entity.getUsername(),
+                entity.getId(),
+                entity.isAtivo(),
                 entity.getEmail(),
                 entity.getSenha(),
-                entity.getPerfil(),
-                entity.getAutenticacao2fa()
+                entity.getAutenticacao2fa(),
+                funcionarioMapper.toDTO(entity.getFuncionario())
         );
     }
 
-    public void updateEntityFromDTO(CreateUsuarioDTO dto, Usuario entity, Boolean ativo) {
-        entity.setAtivo(ativo);
-        entity.setUsername(dto.username());
+    public void updateEntityFromDTO(CreateUsuarioDTO dto, Usuario entity, Funcionario funcionario) {
+        entity.setAtivo(dto.ativo());
         entity.setEmail(dto.email());
         entity.setSenha(dto.senha());
-        entity.setPerfil(dto.perfil());
         entity.setAutenticacao2fa(dto.autenticacao2fa());
+        entity.setFuncionario(funcionario);
     }
 }

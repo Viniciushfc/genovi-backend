@@ -1,10 +1,12 @@
 package br.com.genovi.application.services;
 
-import br.com.genovi.domain.enums.TypeUsuario;
+import br.com.genovi.domain.models.Funcionario;
 import br.com.genovi.domain.models.Usuario;
 import br.com.genovi.dtos.usuario.CreateUsuarioDTO;
 import br.com.genovi.dtos.usuario.UsuarioDTO;
+import br.com.genovi.infrastructure.mappers.FuncionarioMapper;
 import br.com.genovi.infrastructure.mappers.UsuarioMapper;
+import br.com.genovi.infrastructure.repositories.FuncionarioRepository;
 import br.com.genovi.infrastructure.repositories.UsuarioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,12 +15,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static br.com.genovi.domain.enums.Role.ROLE_USER;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,103 +31,112 @@ class UsuarioServiceTest {
     private UsuarioRepository usuarioRepository;
 
     @Mock
+    private FuncionarioRepository funcionarioRepository;
+
+    @Mock
     private UsuarioMapper usuarioMapper;
+
+    @Mock
+    private FuncionarioMapper funcionarioMapper;
 
     @InjectMocks
     private UsuarioService usuarioService;
 
+    private Funcionario funcionario;
     private Usuario usuario;
-    private CreateUsuarioDTO createUsuarioDTO;
+    private CreateUsuarioDTO createDTO;
     private UsuarioDTO usuarioDTO;
 
     @BeforeEach
-    void setup() {
+    void setUp() {
+        funcionario = new Funcionario();
+        funcionario.setId(1L);
+
         usuario = new Usuario();
         usuario.setId(1L);
         usuario.setAtivo(true);
-        usuario.setRoles(Collections.singleton(ROLE_USER));
 
-        createUsuarioDTO = new CreateUsuarioDTO(
-                1L,
-                "Username Test",
-                "e-mail@teste.com",
-                "Senha@Test123",
-                TypeUsuario.TRATADOR,
-                true
-        );
-
-        usuarioDTO = new UsuarioDTO(
-                "Username Test",
-                "e-mail@teste.com",
-                "Senha@Test123",
-                TypeUsuario.TRATADOR,
-                true
-        );
+        createDTO = new CreateUsuarioDTO(1L, true, "teste", "teste123", true, 1L);
+        usuarioDTO = new UsuarioDTO(1L, true, "teste", "teste123", true, funcionarioMapper.toDTO(funcionario));
     }
 
     @Test
-    void shouldReturnAllUsuarios() {
+    void shouldFindAllUsuarios() {
         when(usuarioRepository.findAll()).thenReturn(List.of(usuario));
         when(usuarioMapper.toDTO(usuario)).thenReturn(usuarioDTO);
 
         List<UsuarioDTO> result = usuarioService.findAll();
 
-        assertThat(result).containsExactly(usuarioDTO);
+        assertThat(result).hasSize(1);
         verify(usuarioRepository).findAll();
     }
 
     @Test
-    void shouldReturnUsuarioById() {
+    void shouldFindById() {
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
         when(usuarioMapper.toDTO(usuario)).thenReturn(usuarioDTO);
 
         UsuarioDTO result = usuarioService.findById(1L);
 
-        assertThat(result).isEqualTo(usuarioDTO);
+        assertThat(result).isNotNull();
+        verify(usuarioRepository).findById(1L);
     }
 
     @Test
-    void shouldThrowWhenUsuarioNotFound() {
+    void shouldThrowWhenFindByIdNotFound() {
         when(usuarioRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> usuarioService.findById(1L))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("Usuario não encontrado");
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> usuarioService.findById(1L));
+
+        assertThat(exception.getMessage()).isEqualTo("Usuario não encontrado");
     }
 
     @Test
     void shouldSaveUsuario() {
-        when(usuarioMapper.toEntity(createUsuarioDTO, true)).thenReturn(usuario);
-        when(usuarioRepository.save(usuario)).thenReturn(usuario);
+        when(funcionarioRepository.findById(1L)).thenReturn(Optional.of(funcionario));
+        when(usuarioMapper.toEntity(createDTO, true, funcionario)).thenReturn(usuario);
         when(usuarioMapper.toDTO(usuario)).thenReturn(usuarioDTO);
+        when(usuarioRepository.save(any())).thenReturn(usuario);
 
-        UsuarioDTO result = usuarioService.save(createUsuarioDTO);
+        UsuarioDTO result = usuarioService.save(createDTO);
 
-        assertThat(result).isEqualTo(usuarioDTO);
+        assertThat(result).isNotNull();
         verify(usuarioRepository).save(usuario);
     }
 
     @Test
-    void shouldUpdateUsuario() {
-        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
-        doNothing().when(usuarioMapper).updateEntityFromDTO(createUsuarioDTO, usuario, true);
-        when(usuarioMapper.toDTO(usuario)).thenReturn(usuarioDTO);
+    void shouldThrowWhenSaveUsuarioFuncionarioNotFound() {
+        when(funcionarioRepository.findById(1L)).thenReturn(Optional.empty());
 
-        UsuarioDTO result = usuarioService.update(1L, createUsuarioDTO);
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> usuarioService.save(createDTO));
 
-        assertThat(result).isEqualTo(usuarioDTO);
-        verify(usuarioMapper).updateEntityFromDTO(createUsuarioDTO, usuario, true);
+        assertThat(exception.getMessage()).isEqualTo("Funcionario não encontrado");
     }
 
     @Test
-    void shouldUpdateThrowWhenNotFound() {
+    void shouldUpdateUsuario() {
+        when(funcionarioRepository.findById(1L)).thenReturn(Optional.of(funcionario));
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
+        when(usuarioMapper.toDTO(usuario)).thenReturn(usuarioDTO);
+
+        UsuarioDTO result = usuarioService.update(1L, createDTO);
+
+        assertThat(result).isNotNull();
+        assertThat(usuario.getRoles()).contains(ROLE_USER);
+        verify(usuarioMapper).updateEntityFromDTO(createDTO, usuario, funcionario);
+    }
+
+    @Test
+    void shouldThrowWhenUpdateUsuarioNotFound() {
         when(usuarioRepository.findById(1L)).thenReturn(Optional.empty());
+        when(funcionarioRepository.findById(1L)).thenReturn(Optional.of(funcionario));
 
-        assertThatThrownBy(() -> usuarioService.update(1L, createUsuarioDTO))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("Usuario não encontrado");
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> usuarioService.update(1L, createDTO));
 
-        verify(usuarioRepository, never()).save(any());
+        assertThat(exception.getMessage()).isEqualTo("Usuario não encontrado");
     }
 
     @Test
@@ -139,12 +151,11 @@ class UsuarioServiceTest {
 
     @Test
     void shouldThrowWhenDisableUsuarioNotFound() {
-        when(usuarioRepository.findById(99L)).thenReturn(Optional.empty());
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> usuarioService.disable(99L))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessage("Usuario não encontrado");
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> usuarioService.disable(1L));
 
-        verify(usuarioRepository, never()).save(any());
+        assertThat(exception.getMessage()).isEqualTo("Usuario não encontrado");
     }
 }

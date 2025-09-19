@@ -23,7 +23,7 @@ public class MedicamentoMapper {
                 dto.fabricante(),
                 doencas,
                 dto.doseUnica(),
-                dto.descricao()
+                dto.quantidadeDoses()
         );
     }
 
@@ -35,7 +35,7 @@ public class MedicamentoMapper {
                         .map(doencaMapper::toDTO)
                         .toList(),
                 entity.isDoceUnica(),
-                entity.getDescricao()
+                entity.getQuantidadeDoses()
         );
     }
 
@@ -44,7 +44,7 @@ public class MedicamentoMapper {
         entity.setFabricante(dto.fabricante());
         entity.setDoencas(doencas);
         entity.setDoceUnica(dto.doseUnica());
-        entity.setDescricao(dto.descricao());
+        entity.setQuantidadeDoses(dto.quantidadeDoses());
     }
 }
 

@@ -1,10 +1,12 @@
 package br.com.genovi.application.services;
 
 
+import br.com.genovi.domain.models.Funcionario;
 import br.com.genovi.domain.models.Usuario;
 import br.com.genovi.dtos.usuario.CreateUsuarioDTO;
 import br.com.genovi.dtos.usuario.UsuarioDTO;
 import br.com.genovi.infrastructure.mappers.UsuarioMapper;
+import br.com.genovi.infrastructure.repositories.FuncionarioRepository;
 import br.com.genovi.infrastructure.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +19,17 @@ import static br.com.genovi.domain.enums.Role.ROLE_USER;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final FuncionarioRepository funcionarioRepository;
     private final UsuarioMapper usuarioMapper;
 
-    public UsuarioService(UsuarioRepository usuarioRepository, UsuarioMapper usuarioMapper) {
+    public UsuarioService(UsuarioRepository usuarioRepository, FuncionarioRepository funcionarioRepository, UsuarioMapper usuarioMapper) {
         this.usuarioRepository = usuarioRepository;
+        this.funcionarioRepository = funcionarioRepository;
         this.usuarioMapper = usuarioMapper;
+    }
+
+    private Funcionario findFuncionarioById(Long id) {
+        return funcionarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Funcionario não encontrado"));
     }
 
     private Usuario findUsuarioById(Long id) {
@@ -37,7 +45,9 @@ public class UsuarioService {
     }
 
     public UsuarioDTO save(CreateUsuarioDTO dto) {
-        Usuario usuario = usuarioMapper.toEntity(dto, true);
+        Funcionario funcionario = findFuncionarioById(dto.funcionarioId());
+
+        Usuario usuario = usuarioMapper.toEntity(dto, true, funcionario);
 
         usuarioRepository.save(usuario);
 
@@ -45,9 +55,10 @@ public class UsuarioService {
     }
 
     public UsuarioDTO update(Long id, CreateUsuarioDTO dto) {
+        Funcionario funcionario = findFuncionarioById(dto.funcionarioId());
         Usuario usuario = findUsuarioById(id);
 
-        usuarioMapper.updateEntityFromDTO(dto, usuario, true);
+        usuarioMapper.updateEntityFromDTO(dto, usuario, funcionario);
         usuario.setRoles(Collections.singleton(ROLE_USER));
 
         return usuarioMapper.toDTO(usuario);

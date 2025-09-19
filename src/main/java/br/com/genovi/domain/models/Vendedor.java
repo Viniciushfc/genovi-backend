@@ -3,18 +3,24 @@ package br.com.genovi.domain.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "criador")
-public class Criador {
+@Table(name = "vendedor")
+public class Vendedor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "ativo")
+    private boolean ativo;
 
     @Column(name = "nome")
     private String nome;
 
-    @Column(unique = true, name = "cpf_cnpj")
+    @Column(name = "cpfCnpj", unique = true)
     private String cpfCnpj;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "endereco")
     private String endereco;
@@ -22,13 +28,15 @@ public class Criador {
     @Column(name = "telefone")
     private String telefone;
 
-    public Criador() {
+    public Vendedor() {
     }
 
-    public Criador(Long id, String nome, String cpfCnpj, String endereco, String telefone) {
+    public Vendedor(Long id, boolean ativo, String nome, String cpfCnpj, String email, String endereco, String telefone) {
         this.id = id;
+        this.ativo = ativo;
         this.nome = nome;
         this.cpfCnpj = cpfCnpj;
+        this.email = email;
         this.endereco = endereco;
         this.telefone = telefone;
     }
@@ -39,6 +47,14 @@ public class Criador {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public String getNome() {
@@ -55,6 +71,14 @@ public class Criador {
 
     public void setCpfCnpj(String cpfCnpj) {
         this.cpfCnpj = cpfCnpj;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getEndereco() {

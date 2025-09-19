@@ -1,10 +1,6 @@
 package br.com.genovi.domain.models;
 
-
 import jakarta.persistence.*;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "parto")
@@ -14,42 +10,26 @@ public class Parto {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_ovelha_mae")
-    private Ovino ovelhaMae;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_ovino_mae")
+    private Ovino ovinoMae;
 
-    @OneToMany
-    @JoinColumn(name = "id_parto")
-    private List<Ovino> animaisCriados;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_ovino_pai")
+    private Ovino ovinoPai;
 
-    @Column(name = "data_parto")
-    private LocalDateTime dataParto;
-
-    @Column(name = "numero_crias")
-    private int numeroCrias;
-
-    @Column(name = "observacoes")
-    private String observacoes;
-
-    @Column(name = "rejeicao_materna")
-    private boolean rejeicaoMaterna;
-
-    @OneToOne
-    @JoinColumn(name = "id_reproducaos")
-    private Reproducao reproducaos;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_gestacao")
+    private Gestacao gestacao;
 
     public Parto() {
     }
 
-    public Parto(Long id, Ovino ovelhaMae, List<Ovino> animaisCriados, LocalDateTime dataParto, int numeroCrias, String observacoes, boolean rejeicaoMaterna, Reproducao reproducaos) {
+    public Parto(Long id, Gestacao gestacao, Ovino ovinoMae, Ovino ovinoPai) {
         this.id = id;
-        this.ovelhaMae = ovelhaMae;
-        this.animaisCriados = animaisCriados;
-        this.dataParto = dataParto;
-        this.numeroCrias = numeroCrias;
-        this.observacoes = observacoes;
-        this.rejeicaoMaterna = rejeicaoMaterna;
-        this.reproducaos = reproducaos;
+        this.gestacao = gestacao;
+        this.ovinoMae = ovinoMae;
+        this.ovinoPai = ovinoPai;
     }
 
     public Long getId() {
@@ -60,59 +40,27 @@ public class Parto {
         this.id = id;
     }
 
-    public Ovino getOvelhaMae() {
-        return ovelhaMae;
+    public Gestacao getGestacao() {
+        return gestacao;
     }
 
-    public void setOvelhaMae(Ovino ovelhaMae) {
-        this.ovelhaMae = ovelhaMae;
+    public void setGestacao(Gestacao gestacao) {
+        this.gestacao = gestacao;
     }
 
-    public List<Ovino> getAnimaisCriados() {
-        return animaisCriados;
+    public Ovino getOvinoMae() {
+        return ovinoMae;
     }
 
-    public void setAnimaisCriados(List<Ovino> animaisCriados) {
-        this.animaisCriados = animaisCriados;
+    public void setOvinoMae(Ovino ovinoMae) {
+        this.ovinoMae = ovinoMae;
     }
 
-    public LocalDateTime getDataParto() {
-        return dataParto;
+    public Ovino getOvinoPai() {
+        return ovinoPai;
     }
 
-    public void setDataParto(LocalDateTime dataParto) {
-        this.dataParto = dataParto;
-    }
-
-    public int getNumeroCrias() {
-        return numeroCrias;
-    }
-
-    public void setNumeroCrias(int numeroCrias) {
-        this.numeroCrias = numeroCrias;
-    }
-
-    public String getObservacoes() {
-        return observacoes;
-    }
-
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
-    }
-
-    public boolean isRejeicaoMaterna() {
-        return rejeicaoMaterna;
-    }
-
-    public void setRejeicaoMaterna(boolean rejeicaoMaterna) {
-        this.rejeicaoMaterna = rejeicaoMaterna;
-    }
-
-    public Reproducao getReproducaos() {
-        return reproducaos;
-    }
-
-    public void setReproducaos(Reproducao reproducaos) {
-        this.reproducaos = reproducaos;
+    public void setOvinoPai(Ovino ovinoPai) {
+        this.ovinoPai = ovinoPai;
     }
 }
