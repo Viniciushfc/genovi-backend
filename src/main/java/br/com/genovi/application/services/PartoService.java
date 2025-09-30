@@ -71,7 +71,7 @@ public class PartoService {
         Ovino ovinoPai = findOvinoEntityById(dto.ovelhaPaiId());
         Gestacao gestacao = findGestacaoEntityById(dto.gestacaoId());
 
-        partoMapper.updateEntity(entity, ovinoMae, ovinoPai, gestacao);
+        partoMapper.updateEntity(dto, entity, ovinoMae, ovinoPai, gestacao);
 
         return partoMapper.toDTO(entity);
     }
