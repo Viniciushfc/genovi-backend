@@ -5,5 +5,6 @@ import java.util.List;
 
 public record CreatePartoDTO(Long ovelhaMaeId,
                              Long ovelhaPaiId,
-                             Long gestacaoId)  {
+                             Long gestacaoId,
+                             LocalDateTime dataParto) {
 }
