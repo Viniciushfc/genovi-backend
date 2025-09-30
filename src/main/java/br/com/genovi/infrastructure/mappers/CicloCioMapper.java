@@ -26,6 +26,10 @@ public class CicloCioMapper {
     }
 
     public CicloCioDTO toDTO(CicloCio entity) {
+        if (entity == null) {
+            return null;
+        }
+        
         return new CicloCioDTO(
                 ovinoMapper.toDTO(entity.getOvelha()),
                 entity.getDataInicio(),

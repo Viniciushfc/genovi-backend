@@ -18,16 +18,21 @@ public class ReproducaoMapper {
     public Reproducao toEntity(CreateReproducaoDTO dto, Ovino carneiroPai, Ovino ovelhaMae) {
         return new Reproducao(
                 null,
-                dto.dataReproducao(),
                 carneiroPai,
                 ovelhaMae,
                 dto.typeReproducao(),
+                dto.dataReproducao(),
                 dto.observacoes()
         );
     }
 
     public ReproducaoDTO toDTO(Reproducao entity) {
+        if (entity == null) {
+            return null;
+        }
+
         return new ReproducaoDTO(
+                entity.getId(),
                 entity.getDataReproducao(),
                 ovinoMapper.toDTO(entity.getCarneiroPai()),
                 ovinoMapper.toDTO(entity.getOvelhaMae()),

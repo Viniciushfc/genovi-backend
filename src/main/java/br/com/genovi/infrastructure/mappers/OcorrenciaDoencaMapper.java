@@ -19,6 +19,7 @@ public class OcorrenciaDoencaMapper {
     }
 
     public OcorrenciaDoenca toEntity(CreateOcorrenciaDoencaDTO dto, Ovino ovino, Doenca doenca, Funcionario funcionario) {
+
         return new OcorrenciaDoenca(
                 null,
                 ovino,
@@ -31,6 +32,10 @@ public class OcorrenciaDoencaMapper {
     }
 
     public OcorrenciaDoencaDTO toDTO(OcorrenciaDoenca entity) {
+        if (entity == null) {
+            return null;
+        }
+        
         return new OcorrenciaDoencaDTO(
                 ovinoMapper.toDTO(entity.getOvino()),
                 doencaMapper.toDTO(entity.getDoenca()),

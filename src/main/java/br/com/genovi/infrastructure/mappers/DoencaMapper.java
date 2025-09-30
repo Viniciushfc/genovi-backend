@@ -17,6 +17,10 @@ public class DoencaMapper {
     }
 
     public DoencaDTO toDTO(Doenca entity) {
+        if (entity == null) {
+            return null;
+        }
+
         return new DoencaDTO(
                 entity.getId(),
                 entity.getNome(),

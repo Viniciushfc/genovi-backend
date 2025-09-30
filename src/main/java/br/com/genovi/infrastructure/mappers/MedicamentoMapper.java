@@ -29,7 +29,10 @@ public class MedicamentoMapper {
     }
 
     public MedicamentoDTO toDTO(Medicamento entity) {
-        if (entity == null) return null;
+        if (entity == null) {
+            return null;
+        }
+
         return new MedicamentoDTO(
                 entity.getNome(),
                 entity.getFabricante(),

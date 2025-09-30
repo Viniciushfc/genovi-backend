@@ -21,6 +21,10 @@ public class FuncionarioMapper {
     }
 
     public FuncionarioDTO toDTO(Funcionario entity) {
+        if (entity == null) {
+            return null;
+        }
+
         return new FuncionarioDTO(
                 entity.getId(),
                 entity.getNome(),

@@ -28,13 +28,17 @@ public class AmamentacaoMapper {
     }
 
     //Converter Entidade para DTO
-    public AmamentacaoDTO toDTO(Amamentacao amamentacao) {
+    public AmamentacaoDTO toDTO(Amamentacao entity) {
+        if (entity == null) {
+            return null;
+        }
+
         return new AmamentacaoDTO(
-                ovinoMapper.toDTO(amamentacao.getOvelhaMae()),
-                ovinoMapper.toDTO(amamentacao.getCordeiroMamando()),
-                amamentacao.getDataInicio(),
-                amamentacao.getDataFim(),
-                amamentacao.getObservacoes()
+                ovinoMapper.toDTO(entity.getOvelhaMae()),
+                ovinoMapper.toDTO(entity.getCordeiroMamando()),
+                entity.getDataInicio(),
+                entity.getDataFim(),
+                entity.getObservacoes()
         );
     }
 

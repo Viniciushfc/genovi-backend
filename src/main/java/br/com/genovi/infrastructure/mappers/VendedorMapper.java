@@ -20,15 +20,19 @@ public class VendedorMapper {
         );
     }
 
-    public VendedorDTO toDTO(Vendedor vendedor) {
+    public VendedorDTO toDTO(Vendedor entity) {
+        if (entity == null) {
+            return null;
+        }
+
         return new VendedorDTO(
-                vendedor.getId(),
-                vendedor.isAtivo(),
-                vendedor.getNome(),
-                vendedor.getCpfCnpj(),
-                vendedor.getEmail(),
-                vendedor.getEndereco(),
-                vendedor.getTelefone()
+                entity.getId(),
+                entity.isAtivo(),
+                entity.getNome(),
+                entity.getCpfCnpj(),
+                entity.getEmail(),
+                entity.getEndereco(),
+                entity.getTelefone()
         );
     }
 

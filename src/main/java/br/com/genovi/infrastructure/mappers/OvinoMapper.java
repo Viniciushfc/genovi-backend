@@ -42,28 +42,28 @@ public class OvinoMapper {
                 pesagens);
     }
 
-    public OvinoDTO toDTO(Ovino ovino) {
-        if (ovino == null) {
+    public OvinoDTO toDTO(Ovino entity) {
+        if (entity == null) {
             return null;
         }
         return new OvinoDTO(
-                ovino.getId(),
-                ovino.getRfid(),
-                ovino.getNome(),
-                ovino.getRaca(),
-                ovino.getFbb(),
-                ovino.getDataNascimento(),
-                ovino.getDataCadastro(),
-                ovino.getTypeGrauPureza(),
-                ovino.getOvinoMae(),
-                ovino.getOvinoPai(),
-                ovino.getStatus(),
-                ovino.getFotoOvino(),
-                compraMapper.toDTO(ovino.getCompra()),
-                partoMapper.toDTO(ovino.getParto()),
-                ovino.getPesagens() == null
+                entity.getId(),
+                entity.getRfid(),
+                entity.getNome(),
+                entity.getRaca(),
+                entity.getFbb(),
+                entity.getDataNascimento(),
+                entity.getDataCadastro(),
+                entity.getTypeGrauPureza(),
+                entity.getOvinoMae(),
+                entity.getOvinoPai(),
+                entity.getStatus(),
+                entity.getFotoOvino(),
+                compraMapper.toDTO(entity.getCompra()),
+                partoMapper.toDTO(entity.getParto()),
+                entity.getPesagens() == null
                         ? Collections.emptyList()
-                        : ovino.getPesagens().stream().map(pesagemMapper::toDTO).toList()
+                        : entity.getPesagens().stream().map(pesagemMapper::toDTO).toList()
         );
     }
 

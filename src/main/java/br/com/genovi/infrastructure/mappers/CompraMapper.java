@@ -24,15 +24,15 @@ public class CompraMapper {
         );
     }
 
-    public CompraDTO toDTO(Compra compra) {
-        if (compra == null) {
+    public CompraDTO toDTO(Compra entity) {
+        if (entity == null) {
             return null;
         }
         return new CompraDTO(
-                compra.getId(),
-                compra.getDataCompra(),
-                compra.getValor(),
-                vendedorMapper.toDTO(compra.getVendedor())
+                entity.getId(),
+                entity.getDataCompra(),
+                entity.getValor(),
+                vendedorMapper.toDTO(entity.getVendedor())
         );
     }
 

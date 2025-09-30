@@ -1,15 +1,12 @@
 package br.com.genovi.infrastructure.mappers;
 
-import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Gestacao;
+import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Parto;
-import br.com.genovi.domain.models.Reproducao;
 import br.com.genovi.dtos.parto.CreatePartoDTO;
 import br.com.genovi.dtos.parto.PartoDTO;
 import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class PartoMapper {
@@ -23,12 +20,13 @@ public class PartoMapper {
         this.gestacaoMapper = gestacaoMapper;
     }
 
-    public Parto toEntity(Ovino ovinoMae, Ovino ovinoPai, Gestacao gestacao) {
+    public Parto toEntity(CreatePartoDTO dto, Ovino ovinoMae, Ovino ovinoPai, Gestacao gestacao) {
         return new Parto(
                 null,
-                gestacao,
                 ovinoPai,
-                ovinoMae
+                ovinoMae,
+                gestacao,
+                dto.dataParto()
         );
     }
 
@@ -36,17 +34,20 @@ public class PartoMapper {
         if (entity == null) {
             return null;
         }
+
         return new PartoDTO(
                 entity.getId(),
                 gestacaoMapper.toDTO(entity.getGestacao()),
                 ovinoMapper.toDTO(entity.getOvinoMae()),
-                ovinoMapper.toDTO(entity.getOvinoPai())
+                ovinoMapper.toDTO(entity.getOvinoPai()),
+                entity.getDataParto()
         );
     }
 
-    public void updateEntity(Parto entity, Ovino ovinoMae, Ovino ovinoPai, Gestacao gestacao) {
+    public void updateEntity(CreatePartoDTO dto, Parto entity, Ovino ovinoMae, Ovino ovinoPai, Gestacao gestacao) {
         entity.setGestacao(gestacao);
         entity.setOvinoMae(ovinoMae);
         entity.setOvinoPai(ovinoPai);
+        entity.setDataParto(dto.dataParto());
     }
 }

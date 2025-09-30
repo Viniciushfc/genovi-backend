@@ -23,16 +23,22 @@ public class GestacaoMapper {
                 null,
                 ovelhaMae,
                 ovelhaPai,
-                reproducao
+                reproducao,
+                dto.dataGestacao()
         );
     }
 
-    public GestacaoDTO toDTO(Gestacao gestacao) {
+    public GestacaoDTO toDTO(Gestacao entity) {
+        if (entity == null) {
+            return null;
+        }
+
         return new GestacaoDTO(
-                gestacao.getId(),
-                ovinoMapper.toDTO(gestacao.getOvelhaMae()),
-                ovinoMapper.toDTO(gestacao.getOvelhaPai()),
-                reproducaoMapper.toDTO(gestacao.getReproducao())
+                entity.getId(),
+                ovinoMapper.toDTO(entity.getOvelhaMae()),
+                ovinoMapper.toDTO(entity.getOvelhaPai()),
+                reproducaoMapper.toDTO(entity.getReproducao()),
+                entity.getDataGestacao()
         );
     }
 
@@ -40,5 +46,6 @@ public class GestacaoMapper {
         entity.setReproducao(reproducao);
         entity.setOvelhaMae(ovelhaMae);
         entity.setOvelhaPai(ovelhaPai);
+        entity.setDataGestacao(dto.dataGestacao());
     }
 }

@@ -23,17 +23,17 @@ public class PesagemMapper {
                 ovino);
     }
 
-    public PesagemDTO toDTO(Pesagem pesagem) {
-        if (pesagem == null) {
+    public PesagemDTO toDTO(Pesagem entity) {
+        if (entity == null) {
             return null;
         }
-        Ovino ovino = pesagem.getOvino();
+        Ovino ovino = entity.getOvino();
         OvinoResumoDTO ovinoResumo = ovino != null
                 ? new OvinoResumoDTO(ovino.getId(), ovino.getRfid(), ovino.getNome(), ovino.getFbb())
                 : null;
         return new PesagemDTO(
-                pesagem.getId(),
-                pesagem.getDataPesagem(),
+                entity.getId(),
+                entity.getDataPesagem(),
                 ovinoResumo
         );
     }

@@ -31,6 +31,10 @@ public class AplicacaoMapper {
     }
 
     public AplicacaoDTO toDTO(Aplicacao entity) {
+        if (entity == null) {
+            return null;
+        }
+
         return new AplicacaoDTO(
                 entity.getDataAplicacao(),
                 ovinoMapper.toDTO(entity.getOvino()),

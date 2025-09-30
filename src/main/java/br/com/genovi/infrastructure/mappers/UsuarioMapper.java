@@ -29,6 +29,10 @@ public class UsuarioMapper {
     }
 
     public UsuarioDTO toDTO(Usuario entity) {
+        if (entity == null) {
+            return null;
+        }
+
         return new UsuarioDTO(
                 entity.getId(),
                 entity.isAtivo(),
