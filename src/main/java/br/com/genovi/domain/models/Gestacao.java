@@ -22,8 +22,11 @@ public class Gestacao {
     private Ovino ovelhaPai;
 
     @OneToOne
-    @JoinColumn(name = "id_reproducao")
+    @JoinColumn(name = "id_reproducao", nullable = true)
     private Reproducao reproducao;
+
+    @Column(name = "data_gestacao")
+    private LocalDateTime dataGestacao;
 
     public Gestacao() {
     }

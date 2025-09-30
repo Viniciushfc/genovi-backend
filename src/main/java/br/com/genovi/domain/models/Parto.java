@@ -2,6 +2,8 @@ package br.com.genovi.domain.models;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "parto")
 public class Parto {
@@ -10,17 +12,20 @@ public class Parto {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_ovino_mae")
     private Ovino ovinoMae;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_ovino_pai")
     private Ovino ovinoPai;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_gestacao")
+    @JoinColumn(name = "id_gestacao", nullable = true)
     private Gestacao gestacao;
+
+    @Column(name = "data_parto")
+    private LocalDateTime dataParto;
 
     public Parto() {
     }

@@ -6,9 +6,11 @@ import br.com.genovi.dtos.ovino.OvinoDTO;
 
 import java.time.LocalDateTime;
 
-public record ReproducaoDTO(LocalDateTime dataReproducao,
-                            OvinoDTO carneiroId,
-                            OvinoDTO ovelhaId,
-                            TypeReproducao typeReproducao,
-                            String observacoes) {
+public record ReproducaoDTO(
+        Long id,
+        LocalDateTime dataReproducao,
+        OvinoDTO carneiroId,
+        OvinoDTO ovelhaId,
+        TypeReproducao typeReproducao,
+        String observacoes) {
 }
