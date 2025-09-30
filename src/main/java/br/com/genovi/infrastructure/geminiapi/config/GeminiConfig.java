@@ -1,4 +1,4 @@
-package br.com.genovi.geminiapi.config;
+package br.com.genovi.infrastructure.geminiapi.config;
 
 
 import org.springframework.boot.context.properties.ConfigurationProperties;

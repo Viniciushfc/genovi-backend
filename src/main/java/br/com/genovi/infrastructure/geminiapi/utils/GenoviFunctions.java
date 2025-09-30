@@ -1,4 +1,4 @@
-package br.com.genovi.geminiapi.utils;
+package br.com.genovi.infrastructure.geminiapi.utils;
 
 import com.google.gson.JsonObject;
 import org.springframework.stereotype.Component;

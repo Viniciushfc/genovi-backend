@@ -1,4 +1,4 @@
-package br.com.genovi.geminiapi.service;
+package br.com.genovi.infrastructure.geminiapi.service;
 
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;

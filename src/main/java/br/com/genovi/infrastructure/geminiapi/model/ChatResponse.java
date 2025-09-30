@@ -1,4 +1,4 @@
-package br.com.genovi.geminiapi.model;
+package br.com.genovi.infrastructure.geminiapi.model;
 
 import java.time.LocalDateTime;
 

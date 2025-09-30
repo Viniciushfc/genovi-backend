@@ -1,9 +1,9 @@
-package br.com.genovi.geminiapi.service;
+package br.com.genovi.infrastructure.geminiapi.service;
 
-import br.com.genovi.geminiapi.config.GeminiConfig;
-import br.com.genovi.geminiapi.model.ChatRequest;
-import br.com.genovi.geminiapi.model.ChatResponse;
-import br.com.genovi.geminiapi.utils.GenoviFunctions;
+import br.com.genovi.infrastructure.geminiapi.config.GeminiConfig;
+import br.com.genovi.infrastructure.geminiapi.model.ChatRequest;
+import br.com.genovi.infrastructure.geminiapi.model.ChatResponse;
+import br.com.genovi.infrastructure.geminiapi.utils.GenoviFunctions;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

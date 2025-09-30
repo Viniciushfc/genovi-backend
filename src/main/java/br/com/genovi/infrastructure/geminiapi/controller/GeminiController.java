@@ -1,8 +1,8 @@
-package br.com.genovi.geminiapi.controller;
+package br.com.genovi.infrastructure.geminiapi.controller;
 
-import br.com.genovi.geminiapi.model.ChatRequest;
-import br.com.genovi.geminiapi.model.ChatResponse;
-import br.com.genovi.geminiapi.service.GeminiService;
+import br.com.genovi.infrastructure.geminiapi.model.ChatRequest;
+import br.com.genovi.infrastructure.geminiapi.model.ChatResponse;
+import br.com.genovi.infrastructure.geminiapi.service.GeminiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
