@@ -1,9 +1,17 @@
 package br.com.genovi.domain.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "medicamento")
 public class Medicamento {
@@ -34,73 +42,4 @@ public class Medicamento {
 
     @Column(name = "is_vacina")
     private boolean isVacina;
-
-    public Medicamento() {
-    }
-
-    public Medicamento(Long id, String nome, String fabricante, List<Doenca> doencas, boolean doceUnica, Integer quantidadeDoses, boolean isVacina) {
-        this.id = id;
-        this.nome = nome;
-        this.fabricante = fabricante;
-        this.doencas = doencas;
-        this.doceUnica = doceUnica;
-        this.quantidadeDoses = quantidadeDoses;
-        this.isVacina = isVacina;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getFabricante() {
-        return fabricante;
-    }
-
-    public void setFabricante(String fabricante) {
-        this.fabricante = fabricante;
-    }
-
-    public List<Doenca> getDoencas() {
-        return doencas;
-    }
-
-    public void setDoencas(List<Doenca> doencas) {
-        this.doencas = doencas;
-    }
-
-    public boolean isDoceUnica() {
-        return doceUnica;
-    }
-
-    public void setDoceUnica(boolean doceUnica) {
-        this.doceUnica = doceUnica;
-    }
-
-    public Integer getQuantidadeDoses() {
-        return quantidadeDoses;
-    }
-
-    public void setQuantidadeDoses(Integer quantidadeDoses) {
-        this.quantidadeDoses = quantidadeDoses;
-    }
-
-    public boolean isVacina() {
-        return isVacina;
-    }
-
-    public void setVacina(boolean vacina) {
-        isVacina = vacina;
-    }
 }

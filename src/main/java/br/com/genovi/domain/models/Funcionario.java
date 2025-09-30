@@ -1,9 +1,17 @@
 package br.com.genovi.domain.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "funcionario")
 public class Funcionario {
@@ -29,73 +37,4 @@ public class Funcionario {
 
     @Column(name = "data_recisao")
     private LocalDateTime dataRecisao;
-
-    public Funcionario() {
-    }
-
-    public Funcionario(Long id, String nome, String cpfCnpj, String endereco, String telefone, LocalDateTime dataAdmissao, LocalDateTime dataRecisao) {
-        this.id = id;
-        this.nome = nome;
-        this.cpfCnpj = cpfCnpj;
-        this.endereco = endereco;
-        this.telefone = telefone;
-        this.dataAdmissao = dataAdmissao;
-        this.dataRecisao = dataRecisao;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpfCnpj() {
-        return cpfCnpj;
-    }
-
-    public void setCpfCnpj(String cpfCnpj) {
-        this.cpfCnpj = cpfCnpj;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public LocalDateTime getDataAdmissao() {
-        return dataAdmissao;
-    }
-
-    public void setDataAdmissao(LocalDateTime dataAdmissao) {
-        this.dataAdmissao = dataAdmissao;
-    }
-
-    public LocalDateTime getDataRecisao() {
-        return dataRecisao;
-    }
-
-    public void setDataRecisao(LocalDateTime dataRecisao) {
-        this.dataRecisao = dataRecisao;
-    }
 }

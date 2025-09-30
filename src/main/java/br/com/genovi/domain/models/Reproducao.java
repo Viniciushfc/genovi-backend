@@ -2,9 +2,17 @@ package br.com.genovi.domain.models;
 
 import br.com.genovi.domain.enums.TypeReproducao;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "reproducao")
 public class Reproducao {
@@ -30,63 +38,4 @@ public class Reproducao {
     @Column(name = "observacoes")
     private String observacoes;
 
-    public Reproducao() {
-    }
-
-    public Reproducao(Long id, LocalDateTime dataReproducao, Ovino carneiroPai, Ovino ovelhaMae, TypeReproducao typeReproducao, String observacoes) {
-        this.id = id;
-        this.dataReproducao = dataReproducao;
-        this.carneiroPai = carneiroPai;
-        this.ovelhaMae = ovelhaMae;
-        this.typeReproducao = typeReproducao;
-        this.observacoes = observacoes;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getDataReproducao() {
-        return dataReproducao;
-    }
-
-    public void setDataReproducao(LocalDateTime dataReproducao) {
-        this.dataReproducao = dataReproducao;
-    }
-
-    public Ovino getCarneiroPai() {
-        return carneiroPai;
-    }
-
-    public void setCarneiroPai(Ovino carneiroPai) {
-        this.carneiroPai = carneiroPai;
-    }
-
-    public Ovino getOvelhaMae() {
-        return ovelhaMae;
-    }
-
-    public void setOvelhaMae(Ovino ovelhaMae) {
-        this.ovelhaMae = ovelhaMae;
-    }
-
-    public TypeReproducao getTypeReproducao() {
-        return typeReproducao;
-    }
-
-    public void setTypeReproducao(TypeReproducao typeReproducao) {
-        this.typeReproducao = typeReproducao;
-    }
-
-    public String getObservacoes() {
-        return observacoes;
-    }
-
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
-    }
 }

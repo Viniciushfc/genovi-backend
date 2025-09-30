@@ -1,9 +1,17 @@
 package br.com.genovi.domain.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "ciclo_Cio")
 public class CicloCio {
@@ -24,55 +32,4 @@ public class CicloCio {
 
     @Column(name = "observacoes")
     private String observacoes;
-
-    public CicloCio() {
-    }
-
-    public CicloCio(Long id, Ovino ovelha, LocalDateTime dataInicio, LocalDateTime dataFim, String observacoes) {
-        this.id = id;
-        this.ovelha = ovelha;
-        this.dataInicio = dataInicio;
-        this.dataFim = dataFim;
-        this.observacoes = observacoes;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Ovino getOvelha() {
-        return ovelha;
-    }
-
-    public void setOvelha(Ovino ovelha) {
-        this.ovelha = ovelha;
-    }
-
-    public LocalDateTime getDataInicio() {
-        return dataInicio;
-    }
-
-    public void setDataInicio(LocalDateTime dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-
-    public LocalDateTime getDataFim() {
-        return dataFim;
-    }
-
-    public void setDataFim(LocalDateTime dataFim) {
-        this.dataFim = dataFim;
-    }
-
-    public String getObservacoes() {
-        return observacoes;
-    }
-
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
-    }
 }

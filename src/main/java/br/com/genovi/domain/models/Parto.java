@@ -1,9 +1,17 @@
 package br.com.genovi.domain.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "parto")
 public class Parto {
@@ -26,46 +34,4 @@ public class Parto {
 
     @Column(name = "data_parto")
     private LocalDateTime dataParto;
-
-    public Parto() {
-    }
-
-    public Parto(Long id, Gestacao gestacao, Ovino ovinoMae, Ovino ovinoPai) {
-        this.id = id;
-        this.gestacao = gestacao;
-        this.ovinoMae = ovinoMae;
-        this.ovinoPai = ovinoPai;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Gestacao getGestacao() {
-        return gestacao;
-    }
-
-    public void setGestacao(Gestacao gestacao) {
-        this.gestacao = gestacao;
-    }
-
-    public Ovino getOvinoMae() {
-        return ovinoMae;
-    }
-
-    public void setOvinoMae(Ovino ovinoMae) {
-        this.ovinoMae = ovinoMae;
-    }
-
-    public Ovino getOvinoPai() {
-        return ovinoPai;
-    }
-
-    public void setOvinoPai(Ovino ovinoPai) {
-        this.ovinoPai = ovinoPai;
-    }
 }
