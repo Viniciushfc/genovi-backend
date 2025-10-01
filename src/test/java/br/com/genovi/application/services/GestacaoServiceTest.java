@@ -16,6 +16,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -65,8 +67,8 @@ class GestacaoServiceTest {
         gestacao = new Gestacao();
         gestacao.setId(10L);
 
-        createGestacaoDTO = new CreateGestacaoDTO(1L, 2L, 3L);
-        gestacaoDTO = new GestacaoDTO(10L, null, null, null);
+        createGestacaoDTO = new CreateGestacaoDTO(1L, 2L, 3L, LocalDateTime.now());
+        gestacaoDTO = new GestacaoDTO(10L, null, null, null, LocalDateTime.now());
     }
 
     @Test
@@ -267,7 +269,7 @@ class GestacaoServiceTest {
         gestacao2.setId(11L);
         List<Gestacao> gestacoes = Arrays.asList(gestacao, gestacao2);
 
-        GestacaoDTO gestacaoDTO2 = new GestacaoDTO(11L, null, null, null);
+        GestacaoDTO gestacaoDTO2 = new GestacaoDTO(11L, null, null, null, LocalDateTime.now());
 
         when(gestacaoRepository.findAll()).thenReturn(gestacoes);
         when(gestacaoMapper.toDTO(gestacao)).thenReturn(gestacaoDTO);

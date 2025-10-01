@@ -65,7 +65,7 @@ class ReproducaoServiceTest {
         reproducao = new Reproducao();
         reproducao.setId(1L);
 
-        reproducaoDTO = new ReproducaoDTO(LocalDateTime.now(), ovinoMapper.toDTO(carneiro), ovinoMapper.toDTO(ovelha), TypeReproducao.INSEMINACAO_ARTIFICIAL, "Observacoes Test");
+        reproducaoDTO = new ReproducaoDTO(1L, LocalDateTime.now(), ovinoMapper.toDTO(carneiro), ovinoMapper.toDTO(ovelha), TypeReproducao.INSEMINACAO_ARTIFICIAL, "Observacoes Test");
 
         createReproducaoDTO = new CreateReproducaoDTO(LocalDateTime.now(), 1L, 2L, TypeReproducao.INSEMINACAO_ARTIFICIAL, "Observacoes Test");
     }

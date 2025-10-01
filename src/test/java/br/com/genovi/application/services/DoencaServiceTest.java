@@ -32,112 +32,121 @@ class DoencaServiceTest {
     private DoencaService doencaService;
 
     private Doenca doenca;
-    private CreateDoencaDTO createDoencaDTO;
     private DoencaDTO doencaDTO;
+    private CreateDoencaDTO createDoencaDTO;
 
     @BeforeEach
     void setUp() {
-        doenca = new Doenca();
-        doenca.setId(1L);
-        doenca.setNome("Nome teste");
-        doenca.setDescricao("Descrição Teste");
-
-        createDoencaDTO = new CreateDoencaDTO(
-                "Nome teste",
-                "Descrição Teste"
-        );
-
-        doencaDTO = new DoencaDTO(
-                1L,
-                "Nome teste",
-                "Descrição Teste"
-        );
+        doenca = new Doenca(1L, "Febre Aftosa", "Doença viral");
+        doencaDTO = new DoencaDTO(1L, "Febre Aftosa", "Doença viral");
+        createDoencaDTO = new CreateDoencaDTO("Febre Aftosa", "Doença viral");
     }
 
     @Test
-    void testFindAllSuccess() {
+    void testFindAll() {
+        // Arrange
         when(doencaRepository.findAll()).thenReturn(Collections.singletonList(doenca));
         when(doencaMapper.toDTO(doenca)).thenReturn(doencaDTO);
 
+        // Act
         List<DoencaDTO> result = doencaService.findAll();
 
+        // Assert
+        assertNotNull(result);
         assertEquals(1, result.size());
-        assertEquals("Nome teste", result.get(0).nome());
+        assertEquals(doencaDTO, result.get(0));
         verify(doencaRepository, times(1)).findAll();
     }
 
     @Test
-    void testFindByIdSuccess() {
+    void testFindById_Success() {
+        // Arrange
         when(doencaRepository.findById(1L)).thenReturn(Optional.of(doenca));
         when(doencaMapper.toDTO(doenca)).thenReturn(doencaDTO);
 
+        // Act
         DoencaDTO result = doencaService.findById(1L);
 
+        // Assert
         assertNotNull(result);
-        assertEquals(1L, result.id());
+        assertEquals(doencaDTO, result);
         verify(doencaRepository, times(1)).findById(1L);
     }
 
     @Test
-    void testFindByIdNotFound() {
+    void testFindById_NotFound() {
+        // Arrange
         when(doencaRepository.findById(1L)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> doencaService.findById(1L));
+        // Act & Assert
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            doencaService.findById(1L);
+        });
         assertEquals("Doença não encontrada", exception.getMessage());
         verify(doencaRepository, times(1)).findById(1L);
     }
 
     @Test
-    void testSaveSuccess() {
+    void testSave() {
+        // Arrange
         when(doencaMapper.toEntity(createDoencaDTO)).thenReturn(doenca);
         when(doencaRepository.save(doenca)).thenReturn(doenca);
         when(doencaMapper.toDTO(doenca)).thenReturn(doencaDTO);
 
+        // Act
         DoencaDTO result = doencaService.save(createDoencaDTO);
 
+        // Assert
         assertNotNull(result);
-        assertEquals("Nome teste", result.nome());
+        assertEquals(doencaDTO, result);
         verify(doencaRepository, times(1)).save(doenca);
     }
 
     @Test
-    void testUpdateSuccess() {
+    void testUpdate_Success() {
+        // Arrange
+        CreateDoencaDTO updateDto = new CreateDoencaDTO("Brucelose", "Nova descrição");
+        Doenca updatedDoenca = new Doenca(1L, "Brucelose", "Nova descrição");
+        DoencaDTO updatedDtoResponse = new DoencaDTO(1L, "Brucelose", "Nova descrição");
+
         when(doencaRepository.findById(1L)).thenReturn(Optional.of(doenca));
-        doNothing().when(doencaMapper).updateEntityFromDTO(createDoencaDTO, doenca);
-        when(doencaRepository.save(doenca)).thenReturn(doenca);
-        when(doencaMapper.toDTO(doenca)).thenReturn(doencaDTO);
+        when(doencaRepository.save(any(Doenca.class))).thenReturn(updatedDoenca);
+        when(doencaMapper.toDTO(updatedDoenca)).thenReturn(updatedDtoResponse);
 
-        DoencaDTO result = doencaService.update(1L, createDoencaDTO);
+        // Act
+        DoencaDTO result = doencaService.update(1L, updateDto);
 
+        // Assert
         assertNotNull(result);
-        assertEquals("Nome teste", result.nome());
-        verify(doencaRepository, times(1)).save(doenca);
-    }
-
-    @Test
-    void testUpdateNotFound() {
-        when(doencaRepository.findById(1L)).thenReturn(Optional.empty());
-
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> doencaService.update(1L, createDoencaDTO));
-        assertEquals("Doença não encontrada", exception.getMessage());
+        assertEquals("Brucelose", result.nome());
         verify(doencaRepository, times(1)).findById(1L);
-        verify(doencaRepository, never()).save(any());
+        verify(doencaRepository, times(1)).save(any(Doenca.class));
+        verify(doencaMapper, times(1)).updateEntityFromDTO(updateDto, doenca);
     }
 
     @Test
-    void testDeleteSuccess() {
+    void testDelete_Success() {
+        // Arrange
         when(doencaRepository.findById(1L)).thenReturn(Optional.of(doenca));
+        doNothing().when(doencaRepository).deleteById(1L);
 
-        doencaService.delete(1L);
+        // Act
+        assertDoesNotThrow(() -> doencaService.delete(1L));
 
+        // Assert
+        verify(doencaRepository, times(1)).findById(1L);
         verify(doencaRepository, times(1)).deleteById(1L);
     }
 
     @Test
-    void testDeleteNotFound() {
+    void testDelete_NotFound() {
+        // Arrange
         when(doencaRepository.findById(1L)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> doencaService.delete(1L));
+        // Act & Assert
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            doencaService.delete(1L);
+        });
         assertEquals("Doença não encontrada", exception.getMessage());
         verify(doencaRepository, times(1)).findById(1L);
         verify(doencaRepository, never()).deleteById(anyLong());
