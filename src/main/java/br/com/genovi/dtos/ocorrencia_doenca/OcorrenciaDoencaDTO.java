@@ -12,6 +12,5 @@ public record OcorrenciaDoencaDTO(OvinoDTO ovino,
                                   DoencaDTO doenca,
                                   LocalDateTime dataInicio,
                                   LocalDateTime dataFinal,
-                                  Boolean curado,
-                                  FuncionarioDTO responsavel) {
+                                  Boolean curado) {
 }

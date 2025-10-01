@@ -41,8 +41,4 @@ public class OcorrenciaDoenca {
 
     @Column(name = "curada")
     private boolean curada;
-
-    @ManyToOne
-    @JoinColumn(name = "id_responsavel")
-    private Funcionario responsavel;
 }

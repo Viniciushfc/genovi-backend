@@ -18,7 +18,7 @@ public class OcorrenciaDoencaMapper {
         this.doencaMapper = doencaMapper;
     }
 
-    public OcorrenciaDoenca toEntity(CreateOcorrenciaDoencaDTO dto, Ovino ovino, Doenca doenca, Funcionario funcionario) {
+    public OcorrenciaDoenca toEntity(CreateOcorrenciaDoencaDTO dto, Ovino ovino, Doenca doenca) {
 
         return new OcorrenciaDoenca(
                 null,
@@ -26,8 +26,7 @@ public class OcorrenciaDoencaMapper {
                 doenca,
                 dto.dataInicio(),
                 dto.dataFinal(),
-                dto.curado(),
-                funcionario
+                dto.curado()
         );
     }
 
@@ -35,22 +34,13 @@ public class OcorrenciaDoencaMapper {
         if (entity == null) {
             return null;
         }
-        
+
         return new OcorrenciaDoencaDTO(
                 ovinoMapper.toDTO(entity.getOvino()),
                 doencaMapper.toDTO(entity.getDoenca()),
                 entity.getDataInicio(),
                 entity.getDataFinal(),
-                entity.isCurada(),
-                funcionarioMapper.toDTO(entity.getResponsavel()));
-    }
-
-    public void updateEntityFromDTO(CreateOcorrenciaDoencaDTO dto, OcorrenciaDoenca entity, Ovino ovino, Doenca doenca, Funcionario funcionario) {
-        entity.setOvino(ovino);
-        entity.setDoenca(doenca);
-        entity.setDataInicio(dto.dataInicio());
-        entity.setDataFinal(dto.dataFinal());
-        entity.setCurada(dto.curado());
-        entity.setResponsavel(funcionario);
+                entity.isCurada()
+        );
     }
 }
