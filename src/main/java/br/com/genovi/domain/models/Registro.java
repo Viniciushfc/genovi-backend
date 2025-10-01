@@ -17,7 +17,12 @@ import java.time.LocalDateTime;
 public class Registro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_registro",
+            sequenceName = "seq_registro",
+            allocationSize = 1
+    )
     private Long id;
 
     @Column(name = "data_registro", nullable = false)

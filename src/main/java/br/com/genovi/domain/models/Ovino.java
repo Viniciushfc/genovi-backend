@@ -24,6 +24,11 @@ public class Ovino {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_ovino",
+            sequenceName = "seq_ovino",
+            allocationSize = 1
+    )
     private Long id;
 
     @Column(unique = true, name = "RFID")

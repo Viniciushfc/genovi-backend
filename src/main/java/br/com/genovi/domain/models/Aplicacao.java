@@ -18,6 +18,11 @@ public class Aplicacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_aplicacao",
+            sequenceName = "seq_aplicacao",
+            allocationSize = 1
+    )
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)

@@ -18,6 +18,11 @@ public class Amamentacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_amamentacao",
+            sequenceName = "seq_amamentacao",
+            allocationSize = 1
+    )
     private Long id;
 
     @ManyToOne

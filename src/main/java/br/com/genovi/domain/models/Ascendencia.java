@@ -16,6 +16,11 @@ public class Ascendencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_acendencia",
+            sequenceName = "seq_acendencia",
+            allocationSize = 1
+    )
     private Long id;
 
     @ManyToOne(optional = true)

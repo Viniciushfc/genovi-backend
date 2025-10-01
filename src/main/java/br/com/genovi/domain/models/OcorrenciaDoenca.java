@@ -18,6 +18,11 @@ public class OcorrenciaDoenca {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_ocorrencia_doenca",
+            sequenceName = "seq_ocorrencia_doenca",
+            allocationSize = 1
+    )
     private Long id;
 
     @ManyToOne

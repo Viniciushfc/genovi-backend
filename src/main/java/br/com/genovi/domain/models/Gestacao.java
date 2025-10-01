@@ -19,6 +19,11 @@ public class Gestacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_gestacao",
+            sequenceName = "seq_gestacao",
+            allocationSize = 1
+    )
     private Long id;
 
     @ManyToOne

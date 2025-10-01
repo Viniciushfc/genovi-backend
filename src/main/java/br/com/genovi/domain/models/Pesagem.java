@@ -18,6 +18,11 @@ public class Pesagem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_pesagem",
+            sequenceName = "seq_pesagem",
+            allocationSize = 1
+    )
     private Long id;
 
     @Column(name = "data_pesagem")

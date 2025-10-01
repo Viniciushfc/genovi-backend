@@ -18,6 +18,11 @@ public class Compra {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_compra",
+            sequenceName = "seq_compra",
+            allocationSize = 1
+    )
     private Long id;
 
     @Column(name = "data_compra")

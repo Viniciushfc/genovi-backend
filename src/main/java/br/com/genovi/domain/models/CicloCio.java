@@ -18,6 +18,11 @@ public class CicloCio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_ciclo_cio",
+            sequenceName = "seq_ciclo_cio",
+            allocationSize = 1
+    )
     private Long id;
 
     @ManyToOne

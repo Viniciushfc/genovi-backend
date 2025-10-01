@@ -19,6 +19,11 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_usuario",
+            sequenceName = "seq_usuario",
+            allocationSize = 1
+    )
     private Long id;
 
     @Column(name = "ativo")

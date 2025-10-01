@@ -18,6 +18,11 @@ public class Funcionario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_funcionario",
+            sequenceName = "seq_funcionario",
+            allocationSize = 1
+    )
     private Long id;
 
     @Column(name = "nome")

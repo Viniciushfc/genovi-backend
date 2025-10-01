@@ -18,6 +18,11 @@ public class Parto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_parto",
+            sequenceName = "seq_parto",
+            allocationSize = 1
+    )
     private Long id;
 
     @ManyToOne(cascade = CascadeType.ALL)

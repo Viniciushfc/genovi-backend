@@ -18,6 +18,11 @@ public class Medicamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_medicamento",
+            sequenceName = "seq_medicamento",
+            allocationSize = 1
+    )
     private Long id;
 
     @Column(name = "nome")

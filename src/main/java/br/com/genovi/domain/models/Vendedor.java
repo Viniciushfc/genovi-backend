@@ -15,7 +15,12 @@ import lombok.Setter;
 public class Vendedor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(
+            name = "gen_vendedor",
+            sequenceName = "seq_vendedor",
+            allocationSize = 1
+    )
     private Long id;
 
     @Column(name = "ativo")
