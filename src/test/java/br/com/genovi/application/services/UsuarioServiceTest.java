@@ -119,13 +119,15 @@ class UsuarioServiceTest {
     void shouldUpdateUsuario() {
         when(funcionarioRepository.findById(1L)).thenReturn(Optional.of(funcionario));
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
-        when(usuarioMapper.toDTO(usuario)).thenReturn(usuarioDTO);
+        when(usuarioMapper.toEntity(createDTO, usuario.isAtivo(), funcionario)).thenReturn(usuario);
+        when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
+        when(usuarioMapper.toDTO(any(Usuario.class))).thenReturn(usuarioDTO);
 
         UsuarioDTO result = usuarioService.update(1L, createDTO);
 
         assertThat(result).isNotNull();
         assertThat(usuario.getRoles()).contains(ROLE_USER);
-        verify(usuarioMapper).updateEntityFromDTO(createDTO, usuario, funcionario);
+        verify(usuarioRepository).save(any(Usuario.class));
     }
 
     @Test

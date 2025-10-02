@@ -140,7 +140,7 @@ class GestacaoServiceTest {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovinoMae));
         when(ovinoRepository.findById(2L)).thenReturn(Optional.of(ovinoPai));
         when(reproducaoRepository.findById(3L)).thenReturn(Optional.of(reproducao));
-        doNothing().when(gestacaoMapper).updateEntityFromDTO(createGestacaoDTO, gestacao, ovinoMae, ovinoPai, reproducao);
+        when(gestacaoMapper.toEntity(createGestacaoDTO, ovinoMae, ovinoPai, reproducao)).thenReturn(gestacao);
         when(gestacaoRepository.save(gestacao)).thenReturn(gestacao);
         when(gestacaoMapper.toDTO(gestacao)).thenReturn(gestacaoDTO);
 
@@ -150,7 +150,7 @@ class GestacaoServiceTest {
         verify(ovinoRepository).findById(1L);
         verify(ovinoRepository).findById(2L);
         verify(reproducaoRepository).findById(3L);
-        verify(gestacaoMapper).updateEntityFromDTO(createGestacaoDTO, gestacao, ovinoMae, ovinoPai, reproducao);
+        verify(gestacaoMapper).toEntity(createGestacaoDTO, ovinoMae, ovinoPai, reproducao);
         verify(gestacaoRepository).save(gestacao);
         verify(gestacaoMapper).toDTO(gestacao);
         assertThat(result).isEqualTo(gestacaoDTO);
@@ -319,7 +319,7 @@ class GestacaoServiceTest {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovinoMae));
         when(ovinoRepository.findById(2L)).thenReturn(Optional.of(ovinoPai));
         when(reproducaoRepository.findById(3L)).thenReturn(Optional.of(reproducao));
-        doNothing().when(gestacaoMapper).updateEntityFromDTO(any(), any(), any(), any(), any());
+        when(gestacaoMapper.toEntity(any(), any(), any(), any())).thenReturn(gestacao);
         when(gestacaoMapper.toDTO(any())).thenReturn(gestacaoDTO);
         when(gestacaoRepository.save(any())).thenReturn(gestacao);
 

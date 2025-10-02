@@ -138,13 +138,14 @@ class ReproducaoServiceTest {
         when(reproducaoRepository.findById(1L)).thenReturn(Optional.of(reproducao));
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(carneiro));
         when(ovinoRepository.findById(2L)).thenReturn(Optional.of(ovelha));
-        when(reproducaoRepository.save(reproducao)).thenReturn(reproducao);
-        when(reproducaoMapper.toDTO(reproducao)).thenReturn(reproducaoDTO);
+        when(reproducaoMapper.toEntity(createReproducaoDTO, carneiro, ovelha)).thenReturn(reproducao);
+        when(reproducaoRepository.save(any(Reproducao.class))).thenReturn(reproducao);
+        when(reproducaoMapper.toDTO(any(Reproducao.class))).thenReturn(reproducaoDTO);
 
         ReproducaoDTO result = reproducaoService.update(1L, createReproducaoDTO);
 
         assertThat(result).isEqualTo(reproducaoDTO);
-        verify(reproducaoMapper).updateEntetyFromDTO(createReproducaoDTO, reproducao, carneiro, ovelha);
+        verify(reproducaoRepository).save(any(Reproducao.class));
     }
 
     @Test

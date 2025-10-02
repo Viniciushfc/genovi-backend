@@ -82,8 +82,7 @@ class OcorrenciaDoencaServiceTest {
                 2L,
                 LocalDateTime.now(),
                 LocalDateTime.now().plusDays(5),
-                true,
-                3L
+                true
         );
 
         ocorrencia = new OcorrenciaDoenca(
@@ -92,8 +91,7 @@ class OcorrenciaDoencaServiceTest {
                 doenca,
                 dto.dataInicio(),
                 dto.dataFinal(),
-                dto.curado(),
-                funcionario
+                dto.curado()
         );
     }
 
@@ -101,8 +99,7 @@ class OcorrenciaDoencaServiceTest {
     void shouldSaveOccurrenceSuccessfully() {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino));
         when(doencaRepository.findById(2L)).thenReturn(Optional.of(doenca));
-        when(funcionarioRepository.findById(3L)).thenReturn(Optional.of(funcionario));
-        when(ocorrenciaDoencaMapper.toEntity(dto, ovino, doenca, funcionario)).thenReturn(ocorrencia);
+        when(ocorrenciaDoencaMapper.toEntity(dto, ovino, doenca)).thenReturn(ocorrencia);
         when(ocorrenciaDoencaMapper.toDTO(ocorrencia)).thenReturn(ocorrenciaDTO);
 
         OcorrenciaDoencaDTO result = service.save(dto);

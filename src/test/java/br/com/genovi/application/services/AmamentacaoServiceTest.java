@@ -22,6 +22,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 class AmamentacaoServiceTest {
@@ -119,12 +120,13 @@ class AmamentacaoServiceTest {
         when(amamentacaoRepository.findById(1L)).thenReturn(Optional.of(amamentacao));
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovelhaMae));
         when(ovinoRepository.findById(2L)).thenReturn(Optional.of(cordeiro));
-        when(amamentacaoMapper.toDTO(amamentacao)).thenReturn(amamentacaoDTO);
+        when(amamentacaoMapper.toEntity(createDto, ovelhaMae, cordeiro)).thenReturn(amamentacao);
+        when(amamentacaoMapper.toDTO(any(Amamentacao.class))).thenReturn(amamentacaoDTO);
 
         AmamentacaoDTO result = amamentacaoService.update(1L, createDto);
 
         assertNotNull(result);
-        verify(amamentacaoRepository).save(amamentacao);
+        verify(amamentacaoRepository).save(any(Amamentacao.class));
     }
 
     @Test
