@@ -2,6 +2,7 @@ package br.com.genovi.application.services;
 
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Pesagem;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.pesagem.CreatePesagemDTO;
 import br.com.genovi.dtos.pesagem.PesagemDTO;
 import br.com.genovi.infrastructure.mappers.PesagemMapper;
@@ -25,13 +26,15 @@ public class PesagemService {
     }
 
     private Pesagem findPesagemById(Long id) {
+        if (id == null) return null;
         return pesagemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Pesagem não encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Pesagem não encontrada"));
     }
 
     private Ovino findOvinoById(Long id) {
+        if (id == null) return null;
         return ovinoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ovino não encontrado para Pesagem"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ovino não encontrado para Pesagem"));
     }
 
     public List<PesagemDTO> findAll() {
@@ -54,9 +57,12 @@ public class PesagemService {
         Pesagem entity = findPesagemById(id);
         Ovino ovino = findOvinoById(dto.idOvino());
 
-        pesagemMapper.updateEntityFromDTO(dto, entity, ovino);
+        Long existingId = entity.getId();
+        Pesagem updatedPesagem = pesagemMapper.toEntity(dto, ovino);
+        updatedPesagem.setId(existingId);
+        pesagemRepository.save(updatedPesagem);
 
-        return pesagemMapper.toDTO(pesagemRepository.save(entity));
+        return pesagemMapper.toDTO(updatedPesagem);
     }
 
     public void delete(Long id) {
