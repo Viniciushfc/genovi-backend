@@ -4,6 +4,7 @@ import br.com.genovi.domain.models.Ascendencia;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.ascendencia.AscendenciaDTO;
 import br.com.genovi.dtos.ascendencia.CreateAscendenciaDTO;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.infrastructure.mappers.AscendenciaMapper;
 import br.com.genovi.infrastructure.repositories.AscendenciaRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
@@ -25,7 +26,8 @@ public class AscendenciaService {
     }
 
     private Ascendencia findAscendenciaEntityById(Long id) {
-        return ascendenciaRepository.findById(id).orElseThrow(() -> new RuntimeException("Ascendencia não encontrada"));
+        if (id == null) return null;
+        return ascendenciaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ascendencia não encontrada"));
     }
 
     private Ovino findOvinoEntityById(Long id) {
@@ -34,7 +36,7 @@ public class AscendenciaService {
         }
 
         return ovinoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ovino não encontrado para Ascendencia"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ovino não encontrado para Ascendencia"));
     }
 
     public List<AscendenciaDTO> findAll() {
@@ -60,10 +62,11 @@ public class AscendenciaService {
         Ovino ovinoPai = findOvinoEntityById(dto.idOvinoPai());
         Ovino ovinoMae = findOvinoEntityById(dto.idOvinoMae());
 
-        ascendenciaMapper.updateEntityFromDTO(ascendencia, ovinoPai, ovinoMae);
-
-        ascendenciaRepository.save(ascendencia);
-        return ascendenciaMapper.toDTO(ascendencia);
+        Long existingId = ascendencia.getId();
+        Ascendencia updatedAscendencia = ascendenciaMapper.toEntity(dto, ovinoPai, ovinoMae);
+        updatedAscendencia.setId(existingId);
+        ascendenciaRepository.save(updatedAscendencia);
+        return ascendenciaMapper.toDTO(updatedAscendencia);
     }
 
     public void delete(Long id) {

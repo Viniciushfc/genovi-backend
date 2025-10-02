@@ -3,14 +3,13 @@ package br.com.genovi.application.services;
 import br.com.genovi.domain.models.Aplicacao;
 import br.com.genovi.domain.models.Medicamento;
 import br.com.genovi.domain.models.Ovino;
-import br.com.genovi.domain.models.Usuario;
 import br.com.genovi.dtos.aplicacao.AplicacaoDTO;
 import br.com.genovi.dtos.aplicacao.CreateAplicacaoDTO;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.infrastructure.mappers.AplicacaoMapper;
 import br.com.genovi.infrastructure.repositories.AplicacaoRepository;
 import br.com.genovi.infrastructure.repositories.MedicamentoRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
-import br.com.genovi.infrastructure.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,18 +35,21 @@ public class AplicacaoService {
     }
 
     private Ovino findOvinoById(Long id) {
+        if (id == null) return null;
         return ovinoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ovino não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ovino não encontrado"));
     }
 
     private Medicamento findMedicamentoById(Long id) {
+        if (id == null) return null;
         return medicamentoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Medicamento não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Medicamento não encontrado"));
     }
 
     private Aplicacao findAplicacaoById(Long id) {
+        if (id == null) return null;
         return aplicacaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Aplicacao não encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Aplicacao não encontrada"));
     }
 
     public List<AplicacaoDTO> findAll() {

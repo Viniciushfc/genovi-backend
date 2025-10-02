@@ -4,6 +4,7 @@ import br.com.genovi.domain.models.Funcionario;
 import br.com.genovi.domain.utils.CpfCnpjUtils;
 import br.com.genovi.dtos.funcionario.CreateFuncionarioDTO;
 import br.com.genovi.dtos.funcionario.FuncionarioDTO;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.infrastructure.mappers.FuncionarioMapper;
 import br.com.genovi.infrastructure.repositories.FuncionarioRepository;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,8 @@ public class FuncionarioService {
     }
 
     private Funcionario findFuncionarioEntityById(Long id) {
-        return funcionarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Funcionario não encontrado"));
+        if (id == null) return null;
+        return funcionarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Funcionario não encontrado"));
     }
 
     public List<FuncionarioDTO> findAll() {
@@ -49,9 +51,12 @@ public class FuncionarioService {
         }
 
         Funcionario funcionario = findFuncionarioEntityById(id);
-        funcionarioMapper.updateEntityFromDTO(dto, funcionario);
-        funcionarioRepository.save(funcionario);
-        return funcionarioMapper.toDTO(funcionario);
+
+        Long existingId = funcionario.getId();
+        Funcionario updatedFuncionario = funcionarioMapper.toEntity(dto);
+        updatedFuncionario.setId(existingId);
+        funcionarioRepository.save(updatedFuncionario);
+        return funcionarioMapper.toDTO(updatedFuncionario);
     }
 
     public void delete(Long id) {

@@ -4,6 +4,7 @@ import br.com.genovi.domain.models.Compra;
 import br.com.genovi.domain.models.Vendedor;
 import br.com.genovi.dtos.compra.CompraDTO;
 import br.com.genovi.dtos.compra.CreateCompraDTO;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.infrastructure.mappers.CompraMapper;
 import br.com.genovi.infrastructure.repositories.CompraRepository;
 import br.com.genovi.infrastructure.repositories.VendedorRepository;
@@ -25,13 +26,15 @@ public class CompraService {
     }
 
     private Compra findCompraById(Long id) {
+        if (id == null) return null;
         return compraRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Compra não encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Compra não encontrada"));
     }
 
     private Vendedor findVendedorById(Long id) {
+        if (id == null) return null;
         return vendedorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vendedor não encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Vendedor não encontrada"));
     }
 
     public List<CompraDTO> findAll() {
@@ -54,9 +57,12 @@ public class CompraService {
         Compra entity = findCompraById(id);
         Vendedor vendedor = findVendedorById(dto.vendedorId());
 
-        compraMapper.updateEntityFromDTO(dto, entity, vendedor);
+        Long existingId = entity.getId();
+        Compra updatedCompra = compraMapper.toEntity(dto, vendedor);
+        updatedCompra.setId(existingId);
+        compraRepository.save(updatedCompra);
 
-        return compraMapper.toDTO(compraRepository.save(entity));
+        return compraMapper.toDTO(updatedCompra);
     }
 
     public void delete(Long id) {

@@ -5,6 +5,7 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.utils.DateValidationUtils;
 import br.com.genovi.dtos.ciclo_cio.CicloCioDTO;
 import br.com.genovi.dtos.ciclo_cio.CreateCicloCioDTO;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.infrastructure.mappers.CicloCioMapper;
 import br.com.genovi.infrastructure.repositories.CicloCioRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
@@ -26,12 +27,14 @@ public class CicloCioService {
     }
 
     private CicloCio findCicloCioById(Long id) {
-        return cicloCioRepository.findById(id).orElseThrow(() -> new RuntimeException("Ciclo e cio não encontrado"));
+        if (id == null) return null;
+        return cicloCioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ciclo e cio não encontrado"));
     }
 
     private Ovino findOvinoEntityById(Long id) {
+        if (id == null) return null;
         return ovinoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ovino não encontrado para CicloCio"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ovino não encontrado para CicloCio"));
     }
 
     public List<CicloCioDTO> findAll() {
@@ -59,11 +62,12 @@ public class CicloCioService {
         CicloCio cicloCio = findCicloCioById(id);
         Ovino ovino = findOvinoEntityById(dto.ovelhaId());
 
-        cicloCioMapper.updateEntityFromDTO(dto, cicloCio, ovino);
+        Long existingId = cicloCio.getId();
+        CicloCio updatedCicloCio = cicloCioMapper.toEntity(dto, ovino);
+        updatedCicloCio.setId(existingId);
+        cicloCioRepository.save(updatedCicloCio);
 
-        cicloCioRepository.save(cicloCio);
-
-        return cicloCioMapper.toDTO(cicloCio);
+        return cicloCioMapper.toDTO(updatedCicloCio);
     }
 
     public void delete(Long id) {

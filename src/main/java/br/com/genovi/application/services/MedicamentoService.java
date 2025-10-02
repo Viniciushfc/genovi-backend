@@ -2,6 +2,7 @@ package br.com.genovi.application.services;
 
 import br.com.genovi.domain.models.Doenca;
 import br.com.genovi.domain.models.Medicamento;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.medicamento.CreateMedicamentoDTO;
 import br.com.genovi.dtos.medicamento.MedicamentoDTO;
 import br.com.genovi.infrastructure.mappers.MedicamentoMapper;
@@ -28,8 +29,9 @@ public class MedicamentoService {
     }
 
     private Medicamento findMedicamentoById(Long id) {
+        if (id == null) return null;
         return medicamentoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Medicamento não encontrado com ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Medicamento não encontrado com ID: " + id));
     }
 
     public List<MedicamentoDTO> findAll() {
@@ -61,13 +63,15 @@ public class MedicamentoService {
         List<Doenca> doencas = doencaRepository.findAllById(dto.doencasIds());
 
         if (doencas.size() != dto.doencasIds().size()) {
-            throw new RuntimeException("Uma ou mais Doenças não foram encontradas.");
+            throw new ResourceNotFoundException("Uma ou mais Doenças não foram encontradas.");
         }
 
-        medicamentoMapper.updateEntityFromDTO(dto, medicamento, doencas);
-        medicamentoRepository.save(medicamento);
+        Long existingId = medicamento.getId();
+        Medicamento updatedMedicamento = medicamentoMapper.toEntity(dto, doencas);
+        updatedMedicamento.setId(existingId);
+        medicamentoRepository.save(updatedMedicamento);
 
-        return medicamentoMapper.toDTO(medicamento);
+        return medicamentoMapper.toDTO(updatedMedicamento);
     }
 
     public void delete(Long id) {

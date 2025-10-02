@@ -3,6 +3,7 @@ package br.com.genovi.application.services;
 import br.com.genovi.domain.models.Doenca;
 import br.com.genovi.dtos.doencas.CreateDoencaDTO;
 import br.com.genovi.dtos.doencas.DoencaDTO;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.infrastructure.mappers.DoencaMapper;
 import br.com.genovi.infrastructure.repositories.DoencaRepository;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,8 @@ public class DoencaService {
     }
 
     private Doenca findDoencaEntityById(Long id) {
-        return doencaRepository.findById(id).orElseThrow(() -> new RuntimeException("Doença não encontrada"));
+        if (id == null) return null;
+        return doencaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Doença não encontrada"));
     }
 
     public List<DoencaDTO> findAll() {
@@ -39,8 +41,12 @@ public class DoencaService {
 
     public DoencaDTO update(Long id, CreateDoencaDTO dto) {
         Doenca doenca = findDoencaEntityById(id);
-        doencaMapper.updateEntityFromDTO(dto, doenca);
-        return doencaMapper.toDTO(doencaRepository.save(doenca));
+
+        Long existingId = doenca.getId();
+        Doenca updatedDoenca = doencaMapper.toEntity(dto);
+        updatedDoenca.setId(existingId);
+        doencaRepository.save(updatedDoenca);
+        return doencaMapper.toDTO(updatedDoenca);
     }
 
     public void delete(Long id) {

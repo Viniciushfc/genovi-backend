@@ -1,6 +1,9 @@
 package br.com.genovi.application.services;
 
-import br.com.genovi.domain.models.*;
+import br.com.genovi.domain.models.OcorrenciaDoenca;
+import br.com.genovi.domain.models.Ovino;
+import br.com.genovi.domain.models.Doenca;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.domain.utils.DateValidationUtils;
 import br.com.genovi.dtos.ocorrencia_doenca.CreateOcorrenciaDoencaDTO;
 import br.com.genovi.dtos.ocorrencia_doenca.OcorrenciaDoencaDTO;
@@ -28,22 +31,20 @@ public class OcorrenciaDoencaService {
     }
 
     private OcorrenciaDoenca findOcorrenciaDoencaById(Long id) {
-        return ocorrenciaDoencaRepository.findById(id).orElseThrow(() -> new RuntimeException("OcorrenciaDoenca não encontrado"));
+        if (id == null) return null;
+        return ocorrenciaDoencaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("OcorrenciaDoenca não encontrado"));
     }
 
     private Ovino findOvinoEntityById(Long id) {
+        if (id == null) return null;
         return ovinoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ovino não encontrado para Ocorrencia Doença"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ovino não encontrado para Ocorrencia Doença"));
     }
 
     private Doenca findDoencaEntityById(Long id) {
+        if (id == null) return null;
         return doencaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Doença não encontrada para Ocorrencia Doença"));
-    }
-
-    private Funcionario findFuncionarioById(Long id) {
-        return funcionarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Funcionario não encontrado para Ocorrencia Doença"));
+                .orElseThrow(() -> new ResourceNotFoundException("Doença não encontrada para Ocorrencia Doença"));
     }
 
     public List<OcorrenciaDoencaDTO> findAll() {
@@ -59,9 +60,8 @@ public class OcorrenciaDoencaService {
 
         Ovino ovino = findOvinoEntityById(dto.ovinoId());
         Doenca doenca = findDoencaEntityById(dto.doencaId());
-        Funcionario funcionario = findFuncionarioById(dto.responsavelId());
 
-        OcorrenciaDoenca ocorrenciaDoenca = ocorrenciaDoencaMapper.toEntity(dto, ovino, doenca, funcionario);
+        OcorrenciaDoenca ocorrenciaDoenca = ocorrenciaDoencaMapper.toEntity(dto, ovino, doenca);
 
         ocorrenciaDoencaRepository.save(ocorrenciaDoenca);
 
@@ -73,14 +73,15 @@ public class OcorrenciaDoencaService {
 
         Ovino ovino = findOvinoEntityById(dto.ovinoId());
         Doenca doenca = findDoencaEntityById(dto.doencaId());
-        Funcionario funcionario = findFuncionarioById(dto.responsavelId());
 
         OcorrenciaDoenca ocorrenciaDoenca = findOcorrenciaDoencaById(id);
-        ocorrenciaDoencaMapper.updateEntityFromDTO(dto, ocorrenciaDoenca, ovino, doenca, funcionario);
 
-        ocorrenciaDoencaRepository.save(ocorrenciaDoenca);
+        Long existingId = ocorrenciaDoenca.getId();
+        OcorrenciaDoenca updatedOcorrenciaDoenca = ocorrenciaDoencaMapper.toEntity(dto, ovino, doenca);
+        updatedOcorrenciaDoenca.setId(existingId);
+        ocorrenciaDoencaRepository.save(updatedOcorrenciaDoenca);
 
-        return ocorrenciaDoencaMapper.toDTO(ocorrenciaDoenca);
+        return ocorrenciaDoencaMapper.toDTO(updatedOcorrenciaDoenca);
     }
 
     public void delete(Long id) {

@@ -3,6 +3,7 @@ package br.com.genovi.application.services;
 
 import br.com.genovi.domain.models.Funcionario;
 import br.com.genovi.domain.models.Usuario;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.usuario.CreateUsuarioDTO;
 import br.com.genovi.dtos.usuario.UsuarioDTO;
 import br.com.genovi.infrastructure.mappers.UsuarioMapper;
@@ -29,11 +30,13 @@ public class UsuarioService {
     }
 
     private Funcionario findFuncionarioById(Long id) {
-        return funcionarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Funcionario não encontrado"));
+        if (id == null) return null;
+        return funcionarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Funcionario não encontrado"));
     }
 
     private Usuario findUsuarioById(Long id) {
-        return usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+        if (id == null) return null;
+        return usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Usuario não encontrado"));
     }
 
     public List<UsuarioDTO> findAll() {
@@ -58,10 +61,14 @@ public class UsuarioService {
         Funcionario funcionario = findFuncionarioById(dto.funcionarioId());
         Usuario usuario = findUsuarioById(id);
 
-        usuarioMapper.updateEntityFromDTO(dto, usuario, funcionario);
-        usuario.setRoles(Collections.singleton(ROLE_USER));
+        Long existingId = usuario.getId();
+        Usuario updatedUsuario = usuarioMapper.toEntity(dto, usuario.isAtivo(), funcionario);
+        updatedUsuario.setId(existingId);
+        updatedUsuario.setRoles(Collections.singleton(ROLE_USER));
 
-        return usuarioMapper.toDTO(usuario);
+        usuarioRepository.save(updatedUsuario);
+
+        return usuarioMapper.toDTO(updatedUsuario);
     }
 
     public void disable(Long id) {

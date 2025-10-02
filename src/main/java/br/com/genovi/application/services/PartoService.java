@@ -3,6 +3,7 @@ package br.com.genovi.application.services;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Gestacao;
 import br.com.genovi.domain.models.Parto;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.domain.models.Reproducao;
 import br.com.genovi.dtos.parto.CreatePartoDTO;
 import br.com.genovi.dtos.parto.PartoDTO;
@@ -31,18 +32,21 @@ public class PartoService {
     }
 
     private Parto findPartoEntityById(Long id) {
+        if (id == null) return null;
         return partoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Parto não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Parto não encontrado"));
     }
 
     private Ovino findOvinoEntityById(Long id) {
+        if (id == null) return null;
         return ovinoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ovino não encontrado para Parto"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ovino não encontrado para Parto"));
     }
 
     private Gestacao findGestacaoEntityById(Long id) {
+        if (id == null) return null;
         return gestacaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Gestação não encontrada para Parto"));
+                .orElseThrow(() -> new ResourceNotFoundException("Gestação não encontrada para Parto"));
     }
 
     public List<PartoDTO> findAll() {
@@ -71,9 +75,12 @@ public class PartoService {
         Ovino ovinoPai = findOvinoEntityById(dto.ovelhaPaiId());
         Gestacao gestacao = findGestacaoEntityById(dto.gestacaoId());
 
-        partoMapper.updateEntity(dto, entity, ovinoMae, ovinoPai, gestacao);
+        Long existingId = entity.getId();
+        Parto updatedParto = partoMapper.toEntity(dto, ovinoMae, ovinoPai, gestacao);
+        updatedParto.setId(existingId);
+        partoRepository.save(updatedParto);
 
-        return partoMapper.toDTO(entity);
+        return partoMapper.toDTO(updatedParto);
     }
 
     public void delete(Long id) {

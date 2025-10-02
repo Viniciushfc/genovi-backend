@@ -2,6 +2,7 @@ package br.com.genovi.application.services;
 
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Reproducao;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.reproducao.CreateReproducaoDTO;
 import br.com.genovi.dtos.reproducao.ReproducaoDTO;
 import br.com.genovi.infrastructure.mappers.ReproducaoMapper;
@@ -25,12 +26,14 @@ public class ReproducaoService {
     }
 
     private Reproducao findReproducaoById(Long id) {
-        return reproducaoRepository.findById(id).orElseThrow(() -> new RuntimeException("Reproducao não encontrado"));
+        if (id == null) return null;
+        return reproducaoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Reproducao não encontrado"));
     }
 
     private Ovino findOvinoEntityById(Long id) {
+        if (id == null) return null;
         return ovinoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ovino não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ovino não encontrado"));
     }
 
     public List<ReproducaoDTO> findAll() {
@@ -57,11 +60,12 @@ public class ReproducaoService {
         Ovino carneiro = findOvinoEntityById(dto.carneiroId());
         Ovino ovelha = findOvinoEntityById(dto.ovelhaId());
 
-        reproducaoMapper.updateEntetyFromDTO(dto, reproducao, carneiro, ovelha);
+        Long existingId = reproducao.getId();
+        Reproducao updatedReproducao = reproducaoMapper.toEntity(dto, carneiro, ovelha);
+        updatedReproducao.setId(existingId);
+        reproducaoRepository.save(updatedReproducao);
 
-        reproducao = reproducaoRepository.save(reproducao);
-
-        return reproducaoMapper.toDTO(reproducao);
+        return reproducaoMapper.toDTO(updatedReproducao);
     }
 
     public void delete(Long id) {

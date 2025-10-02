@@ -2,6 +2,7 @@ package br.com.genovi.application.services;
 
 import br.com.genovi.domain.enums.TypeStatus;
 import br.com.genovi.domain.models.*;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.ovino.CreateOvinoDTO;
 import br.com.genovi.dtos.ovino.OvinoDTO;
 import br.com.genovi.dtos.relatorios.GenealogiaDTO;
@@ -36,7 +37,7 @@ public class OvinoService {
     private Ovino findOvinoEntityById(Long id) {
         if (id == null) return null;
         return ovinoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ovino não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ovino não encontrado"));
     }
 
 //    private Ascendencia findAscendenciaEntityById(Long id) {
@@ -47,26 +48,26 @@ public class OvinoService {
     private Funcionario findFuncionarioById(Long id) {
         if (id == null) return null;
         return funcionarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Funcionario não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionario não encontrado"));
     }
 
     private Compra findCompraById(Long id) {
         if (id == null) return null;
         return compraRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Compra não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Compra não encontrado"));
     }
 
     private Parto findPartoById(Long id) {
         if (id == null) return null;
         return partoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Parto não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Parto não encontrado"));
     }
 
     private List<Pesagem> findPesagensByIds(List<Long> ids) {
         if (ids == null) return null;
         List<Pesagem> pesagens = pesagemRepository.findAllById(ids);
         if (pesagens.size() != ids.size()) {
-            throw new RuntimeException("Alguma pesagem não foi encontrada");
+            throw new ResourceNotFoundException("Alguma pesagem não foi encontrada");
         }
         return pesagens;
     }
@@ -103,11 +104,12 @@ public class OvinoService {
         Parto parto = findPartoById(dto.parto());
         List<Pesagem> pesagens = findPesagensByIds(dto.pesos());
 
-        ovinoMapper.updateEntityFromDTO(dto, entity, mae, pai, compra, parto, pesagens);
+        Long existingId = entity.getId();
+        Ovino updatedOvino = ovinoMapper.toEntity(dto, mae, pai, compra, parto, pesagens);
+        updatedOvino.setId(existingId);
+        ovinoRepository.save(updatedOvino);
 
-        ovinoRepository.save(entity);
-
-        return ovinoMapper.toDTO(entity);
+        return ovinoMapper.toDTO(updatedOvino);
     }
 
     public void disable(Long id) {

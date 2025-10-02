@@ -1,6 +1,7 @@
 package br.com.genovi.application.services;
 
 import br.com.genovi.domain.models.Vendedor;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.vendedor.CreateVendedorDTO;
 import br.com.genovi.dtos.vendedor.VendedorDTO;
 import br.com.genovi.infrastructure.mappers.VendedorMapper;
@@ -21,8 +22,9 @@ public class VendedorService {
     }
 
     private Vendedor findVendedorById(Long id) {
+        if (id == null) return null;
         return vendedorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vendedor não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Vendedor não encontrado"));
     }
 
     public List<VendedorDTO> findAll() {
@@ -45,9 +47,12 @@ public class VendedorService {
     public VendedorDTO update(Long id, CreateVendedorDTO dto) {
         Vendedor entity = findVendedorById(id);
 
-        vendedorMapper.updateEntityFromDTO(dto, entity);
+        Long existingId = entity.getId();
+        Vendedor updatedVendedor = vendedorMapper.toEntity(dto);
+        updatedVendedor.setId(existingId);
+        vendedorRepository.save(updatedVendedor);
 
-        return vendedorMapper.toDTO(vendedorRepository.save(entity));
+        return vendedorMapper.toDTO(updatedVendedor);
     }
 
     public void disableById(Long id) {

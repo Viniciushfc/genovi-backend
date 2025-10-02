@@ -1,6 +1,7 @@
 package br.com.genovi.application.services;
 
 import br.com.genovi.domain.models.Gestacao;
+import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Reproducao;
 import br.com.genovi.dtos.gestacao.CreateGestacaoDTO;
@@ -29,18 +30,21 @@ public class GestacaoService {
     }
 
     private Gestacao findGestacaoById(Long id) {
+        if (id == null) return null;
         return gestacaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Gestação não encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Gestação não encontrada"));
     }
 
     private Ovino findOvinoById(Long id) {
+        if (id == null) return null;
         return ovinoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ovino não encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ovino não encontrada"));
     }
 
     private Reproducao findReproducaoById(Long id) {
+        if (id == null) return null;
         return reproducaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Reprodução não encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Reprodução não encontrada"));
     }
 
     public List<GestacaoDTO> findAll() {
@@ -67,7 +71,7 @@ public class GestacaoService {
         Ovino ovinoPai = findOvinoById(dto.ovelhaPaiId());
         Reproducao reproducao = findReproducaoById(dto.reproducaoId());
 
-        gestacaoMapper.updateEntityFromDTO(dto, entity, ovinoMae, ovinoPai, reproducao);
+        entity = gestacaoMapper.toEntity(dto, ovinoMae, ovinoPai, reproducao);
 
         return gestacaoMapper.toDTO(gestacaoRepository.save(entity));
     }
