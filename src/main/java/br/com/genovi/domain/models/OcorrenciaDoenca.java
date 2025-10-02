@@ -36,7 +36,7 @@ public class OcorrenciaDoenca {
     @Column(name = "data_inicio")
     private LocalDateTime dataInicio;
 
-    @Column(name = "data_final")
+    @Column(name = "data_final", nullable = true)
     private LocalDateTime dataFinal;
 
     @Column(name = "curada")
