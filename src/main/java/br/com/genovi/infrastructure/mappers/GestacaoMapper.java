@@ -41,11 +41,4 @@ public class GestacaoMapper {
                 entity.getDataGestacao()
         );
     }
-
-    public void updateEntityFromDTO(CreateGestacaoDTO dto, Gestacao entity, Ovino ovelhaMae, Ovino ovelhaPai, Reproducao reproducao) {
-        entity.setReproducao(reproducao);
-        entity.setOvelhaMae(ovelhaMae);
-        entity.setOvelhaPai(ovelhaPai);
-        entity.setDataGestacao(dto.dataGestacao());
-    }
 }

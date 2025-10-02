@@ -37,11 +37,4 @@ public class CicloCioMapper {
                 entity.getObservacoes()
         );
     }
-
-    public void updateEntityFromDTO(CreateCicloCioDTO dto, CicloCio entity, Ovino ovelha) {
-        entity.setOvelha(ovelha);
-        entity.setDataInicio(dto.dataInicio());
-        entity.setDataFim(dto.dataFim());
-        entity.setObservacoes(dto.observacoes());
-    }
 }

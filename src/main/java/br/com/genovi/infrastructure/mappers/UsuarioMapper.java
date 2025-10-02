@@ -42,12 +42,4 @@ public class UsuarioMapper {
                 funcionarioMapper.toDTO(entity.getFuncionario())
         );
     }
-
-    public void updateEntityFromDTO(CreateUsuarioDTO dto, Usuario entity, Funcionario funcionario) {
-        entity.setAtivo(dto.ativo());
-        entity.setEmail(dto.email());
-        entity.setSenha(dto.senha());
-        entity.setAutenticacao2fa(dto.autenticacao2fa());
-        entity.setFuncionario(funcionario);
-    }
 }

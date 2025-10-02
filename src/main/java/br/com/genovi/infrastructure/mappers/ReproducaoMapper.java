@@ -40,12 +40,4 @@ public class ReproducaoMapper {
                 entity.getObservacoes()
         );
     }
-
-    public void updateEntetyFromDTO(CreateReproducaoDTO dto, Reproducao entity, Ovino carneiroPai, Ovino ovelhaMae) {
-        entity.setDataReproducao(dto.dataReproducao());
-        entity.setCarneiroPai(carneiroPai);
-        entity.setOvelhaMae(ovelhaMae);
-        entity.setTypeReproducao(dto.typeReproducao());
-        entity.setObservacoes(dto.observacoes());
-    }
 }

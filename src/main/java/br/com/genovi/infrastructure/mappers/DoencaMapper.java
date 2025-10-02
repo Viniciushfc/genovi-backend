@@ -27,9 +27,4 @@ public class DoencaMapper {
                 entity.getDescricao()
         );
     }
-
-    public void updateEntityFromDTO(CreateDoencaDTO dto, Doenca entity) {
-        entity.setNome(dto.nome());
-        entity.setDescricao(dto.descricao());
-    }
 }

@@ -35,13 +35,4 @@ public class VendedorMapper {
                 entity.getTelefone()
         );
     }
-
-    public void updateEntityFromDTO(CreateVendedorDTO dto, Vendedor entity) {
-        entity.setAtivo(dto.ativo());
-        entity.setNome(dto.nome());
-        entity.setCpfCnpj(dto.cpfCnpj());
-        entity.setEmail(dto.email());
-        entity.setEndereco(dto.endereco());
-        entity.setTelefone(dto.telefone());
-    }
 }

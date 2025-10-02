@@ -43,11 +43,4 @@ public class PartoMapper {
                 entity.getDataParto()
         );
     }
-
-    public void updateEntity(CreatePartoDTO dto, Parto entity, Ovino ovinoMae, Ovino ovinoPai, Gestacao gestacao) {
-        entity.setGestacao(gestacao);
-        entity.setOvinoMae(ovinoMae);
-        entity.setOvinoPai(ovinoPai);
-        entity.setDataParto(dto.dataParto());
-    }
 }

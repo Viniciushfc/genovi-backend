@@ -66,23 +66,4 @@ public class OvinoMapper {
                         : entity.getPesagens().stream().map(pesagemMapper::toDTO).toList()
         );
     }
-
-
-    public void updateEntityFromDTO(CreateOvinoDTO dto, Ovino entity, Ovino ovinoMae, Ovino ovinoPai, Compra compra, Parto parto, List<Pesagem> pesagens) {
-        entity.setRfid(dto.rfid());
-        entity.setNome(dto.nome());
-        entity.setRaca(dto.raca());
-        entity.setFbb(dto.fbb());
-        entity.setDataNascimento(dto.dataNascimento());
-        entity.setDataCadastro(dto.dataCadastro());
-        entity.setTypeGrauPureza(dto.typeGrauPureza());
-        entity.setSexo(dto.sexo());
-        entity.setOvinoMae(ovinoMae);
-        entity.setOvinoPai(ovinoPai);
-        entity.setStatus(dto.status());
-        entity.setFotoOvino(dto.fotoOvino());
-        entity.setCompra(compra);
-        entity.setParto(parto);
-        entity.setPesagens(pesagens);
-    }
 }

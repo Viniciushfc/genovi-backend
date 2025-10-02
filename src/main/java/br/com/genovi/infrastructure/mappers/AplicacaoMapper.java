@@ -43,12 +43,4 @@ public class AplicacaoMapper {
 
         );
     }
-
-    public void updateEntityFromDTO(CreateAplicacaoDTO dto, Aplicacao entity, Ovino ovino, Medicamento medicamento) {
-        entity.setDataAplicacao(dto.dataAplicacao());
-        entity.setOvino(ovino);
-        entity.setMedicamento(medicamento);
-        entity.setDataProximaDose(dto.dataProximaDose());
-
-    }
 }

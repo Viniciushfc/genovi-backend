@@ -35,9 +35,4 @@ public class AscendenciaMapper {
                 entity.getMae() != null ? ovinoMapper.toDTO(entity.getMae()) : null
         );
     }
-
-    public void updateEntityFromDTO(Ascendencia entity, Ovino pai, Ovino mae) {
-        entity.setPai(pai);
-        entity.setMae(mae);
-    }
 }

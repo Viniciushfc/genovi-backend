@@ -44,14 +44,5 @@ public class MedicamentoMapper {
                 entity.isVacina()
         );
     }
-
-    public void updateEntityFromDTO(CreateMedicamentoDTO dto, Medicamento entity, List<Doenca> doencas) {
-        entity.setNome(dto.nome());
-        entity.setFabricante(dto.fabricante());
-        entity.setDoencas(doencas);
-        entity.setDoceUnica(dto.doseUnica());
-        entity.setQuantidadeDoses(dto.quantidadeDoses());
-        entity.setVacina(dto.isVacina());
-    }
 }
 

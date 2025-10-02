@@ -41,13 +41,4 @@ public class AmamentacaoMapper {
                 entity.getObservacoes()
         );
     }
-
-    //Atualizar uma entidade existente a partir do DTO
-    public void updateEntityFromDTO(CreateAmamentacaoDTO dto, Amamentacao entity, Ovino ovelhaMae, Ovino carneiro) {
-        entity.setOvelhaMae(ovelhaMae);
-        entity.setCordeiroMamando(carneiro);
-        entity.setDataInicio(dto.dataInicio());
-        entity.setDataFim(dto.dataFim());
-        entity.setObservacoes(dto.observacoes());
-    }
 }

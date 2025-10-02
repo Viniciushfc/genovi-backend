@@ -35,11 +35,4 @@ public class CompraMapper {
                 vendedorMapper.toDTO(entity.getVendedor())
         );
     }
-
-
-    public void updateEntityFromDTO(CreateCompraDTO dto, Compra entity, Vendedor vendedor) {
-        entity.setDataCompra(dto.dataCompra());
-        entity.setValor(dto.valor());
-        entity.setVendedor(vendedor);
-    }
 }

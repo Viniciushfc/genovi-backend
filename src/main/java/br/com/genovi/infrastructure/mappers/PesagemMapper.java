@@ -37,9 +37,4 @@ public class PesagemMapper {
                 ovinoResumo
         );
     }
-
-    public void updateEntityFromDTO(CreatePesagemDTO dto, Pesagem entity, Ovino ovino) {
-        entity.setDataPesagem(dto.dataPesagem());
-        entity.setOvino(ovino);
-    }
 }

@@ -35,13 +35,4 @@ public class FuncionarioMapper {
                 entity.getDataRecisao()
         );
     }
-
-    public void updateEntityFromDTO(CreateFuncionarioDTO dto, Funcionario entity) {
-        entity.setNome(dto.nome());
-        entity.setCpfCnpj(dto.cpfCnpj());
-        entity.setEndereco(dto.endereco());
-        entity.setTelefone(dto.telefone());
-        entity.setDataAdmissao(dto.dataAdmissao());
-        entity.setDataRecisao(dto.dataRecisao());
-    }
 }
