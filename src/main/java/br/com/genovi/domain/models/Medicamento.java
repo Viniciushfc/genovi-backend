@@ -39,9 +39,6 @@ public class Medicamento {
     )
     private List<Doenca> doencas;
 
-    @Column(name = "doce_unica")
-    private boolean doceUnica;
-
     @Column(name = "quantidade_doses")
     private Integer quantidadeDoses;
 
