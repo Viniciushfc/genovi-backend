@@ -39,6 +39,9 @@ public class Medicamento {
     )
     private List<Doenca> doencas;
 
+    @Column(name = "intervalo_doses")
+    private Integer intervaloDoses;
+
     @Column(name = "quantidade_doses")
     private Integer quantidadeDoses;
 

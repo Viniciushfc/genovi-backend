@@ -8,6 +8,7 @@ public record MedicamentoDTO(
         Long id,
         String nome,
         String fabricante,
+        Integer intervaloDoses,
         List<DoencaDTO> doencas,
         Integer quantidadeDoses,
         boolean isVacina) {

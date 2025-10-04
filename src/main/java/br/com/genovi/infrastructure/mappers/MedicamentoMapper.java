@@ -18,11 +18,12 @@ public class MedicamentoMapper {
     }
 
     public Medicamento toEntity(CreateMedicamentoDTO dto, List<Doenca> doencas) {
-        return new Medicamento(null,
+        return new Medicamento(
+                null,
                 dto.nome(),
                 dto.fabricante(),
                 doencas,
-                dto.doseUnica(),
+                dto.intervaloDoses(),
                 dto.quantidadeDoses(),
                 dto.isVacina()
         );
@@ -34,12 +35,13 @@ public class MedicamentoMapper {
         }
 
         return new MedicamentoDTO(
+                entity.getId(),
                 entity.getNome(),
                 entity.getFabricante(),
+                entity.getIntervaloDoses(),
                 entity.getDoencas().stream()
                         .map(doencaMapper::toDTO)
                         .toList(),
-                entity.isDoceUnica(),
                 entity.getQuantidadeDoses(),
                 entity.isVacina()
         );

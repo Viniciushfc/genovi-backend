@@ -58,7 +58,7 @@ class MedicamentoServiceTest {
                 "Remédio Teste",
                 "Fabricante Teste",
                 List.of(1L),
-                true,
+                1,
                 1,
                 true
         );
@@ -67,8 +67,7 @@ class MedicamentoServiceTest {
     @Test
     void testFindAll() {
         MedicamentoDTO medicamentoDTO = new MedicamentoDTO(
-                "Remédio Teste", "Fabricante Teste", List.of(new DoencaDTO(1L,"Nome Doença", "Doença X")), true, 1, true
-        );
+                1L, "Remédio Teste", "Fabricante Teste", 1, List.of(new DoencaDTO(1L, "Nome Doença", "Doença X")), 1, true);
 
         when(medicamentoRepository.findAll()).thenReturn(List.of(medicamento));
         when(medicamentoMapper.toDTO(medicamento)).thenReturn(medicamentoDTO);
@@ -82,8 +81,7 @@ class MedicamentoServiceTest {
     @Test
     void testFindById() {
         MedicamentoDTO medicamentoDTO = new MedicamentoDTO(
-                "Remédio Teste", "Fabricante Teste", List.of(new DoencaDTO(1L,"Nome Doença", "Doença X")), true, 1, true
-        );
+                1L, "Remédio Teste", "Fabricante Teste", 1, List.of(new DoencaDTO(1L, "Nome Doença", "Doença X")), 1, true);
 
         when(medicamentoRepository.findById(1L)).thenReturn(Optional.of(medicamento));
         when(medicamentoMapper.toDTO(medicamento)).thenReturn(medicamentoDTO);
@@ -97,8 +95,7 @@ class MedicamentoServiceTest {
     @Test
     void testSave() {
         MedicamentoDTO medicamentoDTO = new MedicamentoDTO(
-                "Remédio Teste", "Fabricante Teste", List.of(new DoencaDTO(1L,"Nome Doença", "Doença X")), true, 1, true
-        );
+                1L, "Remédio Teste", "Fabricante Teste", 1, List.of(new DoencaDTO(1L, "Nome Doença", "Doença X")), 1, true);
 
         when(doencaRepository.findAllById(List.of(1L))).thenReturn(List.of(doenca));
         when(medicamentoMapper.toEntity(createMedicamentoDTO, List.of(doenca))).thenReturn(medicamento);
@@ -125,8 +122,8 @@ class MedicamentoServiceTest {
     @Test
     void testUpdate() {
         MedicamentoDTO medicamentoDTO = new MedicamentoDTO(
-                "Atualizado", "Fabricante A", List.of(new DoencaDTO(1L, "Nome Doença", "Doença X")), true, 1, true
-        );
+                1L, "Remédio Teste", "Fabricante Teste", 1, List.of(new DoencaDTO(1L, "Nome Doença", "Doença X")), 1, true);
+
 
         when(medicamentoRepository.findById(1L)).thenReturn(Optional.of(medicamento));
         when(doencaRepository.findAllById(List.of(1L))).thenReturn(List.of(doenca));
