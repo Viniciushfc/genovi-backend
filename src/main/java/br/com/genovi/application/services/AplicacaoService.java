@@ -7,7 +7,12 @@ import java.util.List;
 
 public interface AplicacaoService {
     List<AplicacaoDTO> findAll();
+
     AplicacaoDTO findById(Long id);
+
     AplicacaoDTO save(CreateAplicacaoDTO dto);
+
+    AplicacaoDTO update(Long id, CreateAplicacaoDTO dto);
+
     void delete(Long id);
 }
