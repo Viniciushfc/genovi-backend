@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface OcorrenciaDoencaService {
     List<OcorrenciaDoencaDTO> findAll();
+
     OcorrenciaDoencaDTO findById(Long id);
+
     OcorrenciaDoencaDTO save(CreateOcorrenciaDoencaDTO dto);
+
     OcorrenciaDoencaDTO update(Long id, CreateOcorrenciaDoencaDTO dto);
+
     void delete(Long id);
 }

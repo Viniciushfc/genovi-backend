@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface OvinoService {
     List<OvinoDTO> findAll();
+
     OvinoDTO findById(Long id);
+
     OvinoDTO save(CreateOvinoDTO dto);
+
     OvinoDTO update(Long id, CreateOvinoDTO dto);
+
     void disable(Long id);
 }

@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface DoencaService {
     List<DoencaDTO> findAll();
+
     DoencaDTO findById(Long id);
+
     DoencaDTO save(CreateDoencaDTO dto);
+
     DoencaDTO update(Long id, CreateDoencaDTO dto);
+
     void delete(Long id);
 }

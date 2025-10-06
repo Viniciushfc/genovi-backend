@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface PartoService {
     List<PartoDTO> findAll();
+
     PartoDTO findById(Long id);
+
     PartoDTO save(CreatePartoDTO dto);
+
     PartoDTO update(Long id, CreatePartoDTO dto);
+
     void delete(Long id);
 }
