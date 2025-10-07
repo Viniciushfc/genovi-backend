@@ -1,5 +1,6 @@
 package br.com.genovi.application.services;
 
+import br.com.genovi.application.services.impl.OcorrenciaDoencaServiceImpl;
 import br.com.genovi.domain.models.Doenca;
 import br.com.genovi.domain.models.Funcionario;
 import br.com.genovi.domain.models.OcorrenciaDoenca;
@@ -64,7 +65,7 @@ class OcorrenciaDoencaServiceTest {
     private OcorrenciaDoencaDTO ocorrenciaDTO;
 
     @InjectMocks
-    private OcorrenciaDoencaService service;
+    private OcorrenciaDoencaServiceImpl service;
 
     @BeforeEach
     void setUp() {

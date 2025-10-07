@@ -1,5 +1,6 @@
 package br.com.genovi.application.services;
 
+import br.com.genovi.application.services.impl.AscendenciaServiceImpl;
 import br.com.genovi.domain.models.Ascendencia;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.ascendencia.AscendenciaDTO;
@@ -52,7 +53,7 @@ class AscendenciaServiceTest {
     private OvinoMapper ovinoMapper;
 
     @InjectMocks
-    private AscendenciaService ascendenciaService;
+    private AscendenciaServiceImpl ascendenciaService;
 
 
     @BeforeEach

@@ -1,5 +1,6 @@
 package br.com.genovi.application.services;
 
+import br.com.genovi.application.services.impl.ReproducaoServiceImpl;
 import br.com.genovi.domain.enums.TypeReproducao;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Reproducao;
@@ -52,7 +53,7 @@ class ReproducaoServiceTest {
     private OvinoMapper ovinoMapper;
 
     @InjectMocks
-    private ReproducaoService reproducaoService;
+    private ReproducaoServiceImpl reproducaoService;
 
     @BeforeEach
     void setUp() {

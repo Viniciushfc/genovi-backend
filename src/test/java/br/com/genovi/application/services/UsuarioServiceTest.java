@@ -1,5 +1,6 @@
 package br.com.genovi.application.services;
 
+import br.com.genovi.application.services.impl.UsuarioServiceImpl;
 import br.com.genovi.domain.models.Funcionario;
 import br.com.genovi.domain.models.Usuario;
 import br.com.genovi.dtos.usuario.CreateUsuarioDTO;
@@ -40,7 +41,7 @@ class UsuarioServiceTest {
     private FuncionarioMapper funcionarioMapper;
 
     @InjectMocks
-    private UsuarioService usuarioService;
+    private UsuarioServiceImpl usuarioService;
 
     private Funcionario funcionario;
     private Usuario usuario;

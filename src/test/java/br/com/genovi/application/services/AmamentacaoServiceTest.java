@@ -1,5 +1,6 @@
 package br.com.genovi.application.services;
 
+import br.com.genovi.application.services.impl.AmamentacaoServiceImpl;
 import br.com.genovi.domain.models.Amamentacao;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.amamentacao.AmamentacaoDTO;
@@ -55,7 +56,7 @@ class AmamentacaoServiceTest {
     private OvinoMapper ovinoMapper;
 
     @InjectMocks
-    private AmamentacaoService amamentacaoService;
+    private AmamentacaoServiceImpl amamentacaoService;
 
     @BeforeEach
     void setUp() {

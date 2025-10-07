@@ -1,5 +1,6 @@
 package br.com.genovi.application.services;
 
+import br.com.genovi.application.services.impl.CicloCioServiceImpl;
 import br.com.genovi.domain.models.CicloCio;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.ciclo_cio.CicloCioDTO;
@@ -50,7 +51,7 @@ class CicloCioServiceTest {
     private OvinoMapper ovinoMapper;
 
     @InjectMocks
-    private CicloCioService cicloCioService;
+    private CicloCioServiceImpl cicloCioService;
 
     @BeforeEach
     void setUp() {

@@ -1,5 +1,6 @@
 package br.com.genovi.application.services;
 
+import br.com.genovi.application.services.impl.DoencaServiceImpl;
 import br.com.genovi.domain.models.Doenca;
 import br.com.genovi.dtos.doencas.CreateDoencaDTO;
 import br.com.genovi.dtos.doencas.DoencaDTO;
@@ -29,7 +30,7 @@ class DoencaServiceTest {
     private DoencaMapper doencaMapper;
 
     @InjectMocks
-    private DoencaService doencaService;
+    private DoencaServiceImpl doencaService;
 
     private Doenca doenca;
     private DoencaDTO doencaDTO;

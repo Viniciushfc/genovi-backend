@@ -1,5 +1,6 @@
 package br.com.genovi.application.services;
 
+import br.com.genovi.application.services.impl.GestacaoServiceImpl;
 import br.com.genovi.domain.models.Gestacao;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Reproducao;
@@ -44,7 +45,7 @@ class GestacaoServiceTest {
     private GestacaoMapper gestacaoMapper;
 
     @InjectMocks
-    private GestacaoService gestacaoService;
+    private GestacaoServiceImpl gestacaoService;
 
     private Ovino ovinoMae;
     private Ovino ovinoPai;

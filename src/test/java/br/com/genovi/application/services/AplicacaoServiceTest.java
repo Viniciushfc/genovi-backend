@@ -1,5 +1,6 @@
 package br.com.genovi.application.services;
 
+import br.com.genovi.application.services.impl.AplicacaoServiceImpl;
 import br.com.genovi.domain.models.Aplicacao;
 import br.com.genovi.domain.models.Medicamento;
 import br.com.genovi.domain.models.Ovino;
@@ -52,7 +53,7 @@ class AplicacaoServiceTest {
     private UsuarioMapper usuarioMapper;
 
     @InjectMocks
-    private AplicacaoService aplicacaoService;
+    private AplicacaoServiceImpl aplicacaoService;
 
     private Ovino ovino;
     private Medicamento medicamento;
@@ -76,6 +77,7 @@ class AplicacaoServiceTest {
         aplicacao.setId(1L); // essencial para o teste delete
 
         aplicacaoDTO = new AplicacaoDTO(
+                1L,
                 LocalDateTime.of(2024, 1, 1, 10, 0),
                 ovinoMapper.toDTO(ovino),
                 medicamentoMapper.toDTO(medicamento),

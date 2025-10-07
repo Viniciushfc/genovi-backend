@@ -1,5 +1,6 @@
 package br.com.genovi.application.services;
 
+import br.com.genovi.application.services.impl.MedicamentoServiceImpl;
 import br.com.genovi.domain.models.Doenca;
 import br.com.genovi.domain.models.Medicamento;
 import br.com.genovi.dtos.medicamento.CreateMedicamentoDTO;
@@ -43,7 +44,7 @@ class MedicamentoServiceTest {
     private CreateMedicamentoDTO createMedicamentoDTO;
 
     @InjectMocks
-    private MedicamentoService medicamentoService;
+    private MedicamentoServiceImpl medicamentoService;
 
     @BeforeEach
     void setUp() {

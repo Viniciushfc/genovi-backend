@@ -1,5 +1,6 @@
 package br.com.genovi.application.services;
 
+import br.com.genovi.application.services.impl.FuncionarioServiceImpl;
 import br.com.genovi.domain.models.Funcionario;
 import br.com.genovi.dtos.funcionario.CreateFuncionarioDTO;
 import br.com.genovi.dtos.funcionario.FuncionarioDTO;
@@ -32,7 +33,7 @@ class FuncionarioServiceTest {
     private FuncionarioMapper funcionarioMapper;
 
     @InjectMocks
-    private FuncionarioService funcionarioService;
+    private FuncionarioServiceImpl funcionarioService;
 
     private Funcionario funcionario;
     private FuncionarioDTO funcionarioDTO;

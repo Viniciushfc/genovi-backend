@@ -1,5 +1,6 @@
 package br.com.genovi.application.services;
 
+import br.com.genovi.application.services.impl.OvinoServiceImpl;
 import br.com.genovi.domain.enums.TypeStatus;
 import br.com.genovi.domain.models.*;
 import br.com.genovi.dtos.ovino.CreateOvinoDTO;
@@ -46,7 +47,7 @@ class OvinoServiceTest {
     private OvinoMapper ovinoMapper;
 
     @InjectMocks
-    private OvinoService ovinoService;
+    private OvinoServiceImpl ovinoService;
 
     private Ovino ovino;
     private Compra compra;
