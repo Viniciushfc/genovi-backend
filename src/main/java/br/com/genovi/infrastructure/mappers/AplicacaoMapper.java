@@ -36,6 +36,7 @@ public class AplicacaoMapper {
         }
 
         return new AplicacaoDTO(
+                entity.getId(),
                 entity.getDataAplicacao(),
                 ovinoMapper.toDTO(entity.getOvino()),
                 medicamentoMapper.toDTO(entity.getMedicamento()),
