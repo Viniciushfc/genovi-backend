@@ -25,6 +25,7 @@ public record OvinoDTO(
         LocalDateTime dataNascimento,
         LocalDateTime dataCadastro,
         TypeGrauPureza typeGrauPureza,
+        TypeSexo sexo,
         Ovino maeOvino,
         Ovino paiOvino,
         TypeStatus status,
