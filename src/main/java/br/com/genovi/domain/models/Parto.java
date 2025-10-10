@@ -25,15 +25,15 @@ public class Parto {
     )
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_ovino_mae")
     private Ovino ovinoMae;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_ovino_pai")
     private Ovino ovinoPai;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "id_gestacao", nullable = true)
     private Gestacao gestacao;
 
