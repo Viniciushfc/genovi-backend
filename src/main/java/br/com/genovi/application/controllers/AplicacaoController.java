@@ -35,6 +35,12 @@ public class AplicacaoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<AplicacaoDTO> update(Long id, @RequestBody CreateAplicacaoDTO dto) {
+        AplicacaoDTO saved = aplicacaoService.save(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         aplicacaoService.delete(id);
