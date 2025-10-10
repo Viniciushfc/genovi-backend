@@ -2,47 +2,25 @@ package br.com.genovi.application.controllers;
 
 import br.com.genovi.dtos.parto.CreatePartoDTO;
 import br.com.genovi.dtos.parto.PartoDTO;
-import br.com.genovi.application.services.PartoService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
 @RequestMapping("/api/user/partos")
-public class PartoController {
-
-    private final PartoService partoService;
-
-    public PartoController(PartoService partoService) {
-        this.partoService = partoService;
-    }
-
+public interface PartoController {
     @GetMapping
-    public ResponseEntity<List<PartoDTO>> findAll() {
-        return ResponseEntity.ok(partoService.findAll());
-    }
+    ResponseEntity<List<PartoDTO>> findAll();
 
     @GetMapping("/{id}")
-    public ResponseEntity<PartoDTO> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(partoService.findById(id));
-    }
+    ResponseEntity<PartoDTO> findById(@PathVariable Long id);
 
     @PostMapping
-    public ResponseEntity<PartoDTO> save(@RequestBody CreatePartoDTO dto) {
-        PartoDTO saved = partoService.save(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-    }
+    ResponseEntity<PartoDTO> save(@RequestBody CreatePartoDTO dto);
 
     @PutMapping("/{id}")
-    public ResponseEntity<PartoDTO> update(@PathVariable Long id, @RequestBody CreatePartoDTO dto) {
-        return ResponseEntity.ok(partoService.update(id, dto));
-    }
+    ResponseEntity<PartoDTO> update(@PathVariable Long id, @RequestBody CreatePartoDTO dto);
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        partoService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
+    ResponseEntity<Void> delete(@PathVariable Long id);
 }
