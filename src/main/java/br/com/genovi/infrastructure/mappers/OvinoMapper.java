@@ -55,6 +55,7 @@ public class OvinoMapper {
                 entity.getDataNascimento(),
                 entity.getDataCadastro(),
                 entity.getTypeGrauPureza(),
+                entity.getSexo(),
                 entity.getOvinoMae(),
                 entity.getOvinoPai(),
                 entity.getStatus(),
