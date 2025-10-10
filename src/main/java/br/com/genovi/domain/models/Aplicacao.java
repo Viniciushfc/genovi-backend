@@ -25,7 +25,7 @@ public class Aplicacao {
     )
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "id_ovino")
     private Ovino ovino;
 
