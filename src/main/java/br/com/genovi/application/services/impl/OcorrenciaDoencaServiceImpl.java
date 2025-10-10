@@ -5,7 +5,6 @@ import br.com.genovi.domain.models.OcorrenciaDoenca;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Doenca;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.domain.utils.DateValidationUtils;
 import br.com.genovi.dtos.ocorrencia_doenca.CreateOcorrenciaDoencaDTO;
 import br.com.genovi.dtos.ocorrencia_doenca.OcorrenciaDoencaDTO;
 import br.com.genovi.infrastructure.mappers.OcorrenciaDoencaMapper;
@@ -60,8 +59,6 @@ public class OcorrenciaDoencaServiceImpl implements OcorrenciaDoencaService {
 
     @Override
     public OcorrenciaDoencaDTO save(CreateOcorrenciaDoencaDTO dto) {
-        DateValidationUtils.validarPeriodo(dto.dataInicio(), dto.dataFinal());
-
         Ovino ovino = findOvinoEntityById(dto.ovinoId());
         Doenca doenca = findDoencaEntityById(dto.doencaId());
 
@@ -74,8 +71,6 @@ public class OcorrenciaDoencaServiceImpl implements OcorrenciaDoencaService {
 
     @Override
     public OcorrenciaDoencaDTO update(Long id, CreateOcorrenciaDoencaDTO dto) {
-        DateValidationUtils.validarPeriodo(dto.dataInicio(), dto.dataFinal());
-
         Ovino ovino = findOvinoEntityById(dto.ovinoId());
         Doenca doenca = findDoencaEntityById(dto.doencaId());
 

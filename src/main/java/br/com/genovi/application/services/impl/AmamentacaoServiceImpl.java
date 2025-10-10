@@ -3,7 +3,6 @@ package br.com.genovi.application.services.impl;
 import br.com.genovi.application.services.AmamentacaoService;
 import br.com.genovi.domain.models.Amamentacao;
 import br.com.genovi.domain.models.Ovino;
-import br.com.genovi.domain.utils.DateValidationUtils;
 import br.com.genovi.dtos.amamentacao.AmamentacaoDTO;
 import br.com.genovi.dtos.amamentacao.CreateAmamentacaoDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
@@ -49,7 +48,6 @@ public class AmamentacaoServiceImpl implements AmamentacaoService {
 
     @Override
     public AmamentacaoDTO save(CreateAmamentacaoDTO dto) {
-        DateValidationUtils.validarPeriodo(dto.dataInicio(), dto.dataFim());
         Ovino ovinoMae = findOvinoEntityById(dto.ovelhaMaeId());
         Ovino cordeiro = findOvinoEntityById(dto.cordeiroMamandoId());
 
@@ -62,7 +60,6 @@ public class AmamentacaoServiceImpl implements AmamentacaoService {
 
     @Override
     public AmamentacaoDTO update(Long id, CreateAmamentacaoDTO dto) {
-        DateValidationUtils.validarPeriodo(dto.dataInicio(), dto.dataFim());
         Amamentacao amamentacao = findAmamentacaoEntityById(id);
         Ovino ovinoMae = findOvinoEntityById(dto.ovelhaMaeId());
         Ovino cordeiro = findOvinoEntityById(dto.cordeiroMamandoId());
