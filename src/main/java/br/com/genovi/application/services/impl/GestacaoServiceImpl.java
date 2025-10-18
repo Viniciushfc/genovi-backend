@@ -7,14 +7,16 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Reproducao;
 import br.com.genovi.dtos.gestacao.CreateGestacaoDTO;
 import br.com.genovi.dtos.gestacao.GestacaoDTO;
-import br.com.genovi.infrastructure.mappers.GestacaoMapper;
+import br.com.genovi.infrastructure.mapper.GestacaoMapper;
 import br.com.genovi.infrastructure.repositories.GestacaoRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import br.com.genovi.infrastructure.repositories.ReproducaoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class GestacaoServiceImpl implements GestacaoService {
 
@@ -22,13 +24,6 @@ public class GestacaoServiceImpl implements GestacaoService {
     private final OvinoRepository ovinoRepository;
     private final ReproducaoRepository reproducaoRepository;
     private final GestacaoMapper gestacaoMapper;
-
-    public GestacaoServiceImpl(GestacaoRepository gestacaoRepository, OvinoRepository ovinoRepository, ReproducaoRepository reproducaoRepository, GestacaoMapper gestacaoMapper) {
-        this.gestacaoRepository = gestacaoRepository;
-        this.ovinoRepository = ovinoRepository;
-        this.reproducaoRepository = reproducaoRepository;
-        this.gestacaoMapper = gestacaoMapper;
-    }
 
     private Gestacao findGestacaoById(Long id) {
         if (id == null) return null;

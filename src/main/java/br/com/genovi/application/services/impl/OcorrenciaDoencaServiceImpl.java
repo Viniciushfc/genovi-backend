@@ -7,12 +7,14 @@ import br.com.genovi.domain.models.Doenca;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.ocorrencia_doenca.CreateOcorrenciaDoencaDTO;
 import br.com.genovi.dtos.ocorrencia_doenca.OcorrenciaDoencaDTO;
-import br.com.genovi.infrastructure.mappers.OcorrenciaDoencaMapper;
+import br.com.genovi.infrastructure.mapper.OcorrenciaDoencaMapper;
 import br.com.genovi.infrastructure.repositories.*;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class OcorrenciaDoencaServiceImpl implements OcorrenciaDoencaService {
 
@@ -21,14 +23,6 @@ public class OcorrenciaDoencaServiceImpl implements OcorrenciaDoencaService {
     private final DoencaRepository doencaRepository;
     private final FuncionarioRepository funcionarioRepository;
     private final OcorrenciaDoencaMapper ocorrenciaDoencaMapper;
-
-    public OcorrenciaDoencaServiceImpl(OcorrenciaDoencaRepository ocorrenciaDoencaRepository, OvinoRepository ovinoRepository, DoencaRepository doencaRepository, OcorrenciaDoencaMapper ocorrenciaDoencaMapper, FuncionarioRepository funcionarioRepository) {
-        this.ocorrenciaDoencaRepository = ocorrenciaDoencaRepository;
-        this.ovinoRepository = ovinoRepository;
-        this.doencaRepository = doencaRepository;
-        this.funcionarioRepository = funcionarioRepository;
-        this.ocorrenciaDoencaMapper = ocorrenciaDoencaMapper;
-    }
 
     private OcorrenciaDoenca findOcorrenciaDoencaById(Long id) {
         if (id == null) return null;

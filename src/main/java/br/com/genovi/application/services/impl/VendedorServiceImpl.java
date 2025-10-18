@@ -5,22 +5,19 @@ import br.com.genovi.domain.models.Vendedor;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.vendedor.CreateVendedorDTO;
 import br.com.genovi.dtos.vendedor.VendedorDTO;
-import br.com.genovi.infrastructure.mappers.VendedorMapper;
+import br.com.genovi.infrastructure.mapper.VendedorMapper;
 import br.com.genovi.infrastructure.repositories.VendedorRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class VendedorServiceImpl implements VendedorService {
 
     private final VendedorRepository vendedorRepository;
     private final VendedorMapper vendedorMapper;
-
-    public VendedorServiceImpl(VendedorRepository vendedorRepository, VendedorMapper vendedorMapper) {
-        this.vendedorRepository = vendedorRepository;
-        this.vendedorMapper = vendedorMapper;
-    }
 
     private Vendedor findVendedorById(Long id) {
         if (id == null) return null;

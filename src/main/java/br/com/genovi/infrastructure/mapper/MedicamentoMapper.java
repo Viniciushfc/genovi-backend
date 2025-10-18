@@ -1,21 +1,19 @@
-package br.com.genovi.infrastructure.mappers;
+package br.com.genovi.infrastructure.mapper;
 
 import br.com.genovi.domain.models.Doenca;
 import br.com.genovi.domain.models.Medicamento;
 import br.com.genovi.dtos.medicamento.CreateMedicamentoDTO;
 import br.com.genovi.dtos.medicamento.MedicamentoDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class MedicamentoMapper {
 
     private final DoencaMapper doencaMapper;
-
-    public MedicamentoMapper(DoencaMapper doencaMapper) {
-        this.doencaMapper = doencaMapper;
-    }
 
     public Medicamento toEntity(CreateMedicamentoDTO dto, List<Doenca> doencas) {
         return new Medicamento(

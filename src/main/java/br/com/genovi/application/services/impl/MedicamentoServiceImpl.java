@@ -6,28 +6,21 @@ import br.com.genovi.domain.models.Medicamento;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.medicamento.CreateMedicamentoDTO;
 import br.com.genovi.dtos.medicamento.MedicamentoDTO;
-import br.com.genovi.infrastructure.mappers.MedicamentoMapper;
+import br.com.genovi.infrastructure.mapper.MedicamentoMapper;
 import br.com.genovi.infrastructure.repositories.DoencaRepository;
 import br.com.genovi.infrastructure.repositories.MedicamentoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class MedicamentoServiceImpl implements MedicamentoService {
 
     private final MedicamentoRepository medicamentoRepository;
     private final DoencaRepository doencaRepository;
     private final MedicamentoMapper medicamentoMapper;
-
-    public MedicamentoServiceImpl(
-            MedicamentoRepository medicamentoRepository,
-            DoencaRepository doencaRepository,
-            MedicamentoMapper medicamentoMapper) {
-        this.medicamentoRepository = medicamentoRepository;
-        this.doencaRepository = doencaRepository;
-        this.medicamentoMapper = medicamentoMapper;
-    }
 
     private Medicamento findMedicamentoById(Long id) {
         if (id == null) return null;

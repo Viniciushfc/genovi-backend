@@ -6,25 +6,21 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.amamentacao.AmamentacaoDTO;
 import br.com.genovi.dtos.amamentacao.CreateAmamentacaoDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.infrastructure.mappers.AmamentacaoMapper;
+import br.com.genovi.infrastructure.mapper.AmamentacaoMapper;
 import br.com.genovi.infrastructure.repositories.AmamentacaoRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class AmamentacaoServiceImpl implements AmamentacaoService {
 
     private final AmamentacaoRepository amamentacaoRepository;
     private final OvinoRepository ovinoRepository;
     private final AmamentacaoMapper amamentacaoMapper;
-
-    public AmamentacaoServiceImpl(AmamentacaoRepository amamentacaoRepository, OvinoRepository ovinoRepository, AmamentacaoMapper amamentacaoMapper) {
-        this.amamentacaoRepository = amamentacaoRepository;
-        this.ovinoRepository = ovinoRepository;
-        this.amamentacaoMapper = amamentacaoMapper;
-    }
 
     private Amamentacao findAmamentacaoEntityById(Long id) {
         if (id == null) return null;

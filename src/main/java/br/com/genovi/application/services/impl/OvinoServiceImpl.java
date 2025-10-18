@@ -6,12 +6,14 @@ import br.com.genovi.domain.models.*;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.ovino.CreateOvinoDTO;
 import br.com.genovi.dtos.ovino.OvinoDTO;
-import br.com.genovi.infrastructure.mappers.OvinoMapper;
+import br.com.genovi.infrastructure.mapper.OvinoMapper;
 import br.com.genovi.infrastructure.repositories.*;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class OvinoServiceImpl implements OvinoService {
 
@@ -22,16 +24,6 @@ public class OvinoServiceImpl implements OvinoService {
     private final CompraRepository compraRepository;
     private final PesagemRepository pesagemRepository;
     private final OvinoMapper ovinoMapper;
-
-    public OvinoServiceImpl(OvinoRepository ovinoRepository, AscendenciaRepository ascendenciaRepository, FuncionarioRepository funcionarioRepository, PartoRepository partoRepository, CompraRepository compraRepository, PesagemRepository pesagemRepository, OvinoMapper ovinoMapper) {
-        this.ovinoRepository = ovinoRepository;
-        this.ascendenciaRepository = ascendenciaRepository;
-        this.funcionarioRepository = funcionarioRepository;
-        this.partoRepository = partoRepository;
-        this.compraRepository = compraRepository;
-        this.pesagemRepository = pesagemRepository;
-        this.ovinoMapper = ovinoMapper;
-    }
 
     private Ovino findOvinoEntityById(Long id) {
         if (id == null) return null;

@@ -4,7 +4,7 @@ import br.com.genovi.application.services.impl.DoencaServiceImpl;
 import br.com.genovi.domain.models.Doenca;
 import br.com.genovi.dtos.doencas.CreateDoencaDTO;
 import br.com.genovi.dtos.doencas.DoencaDTO;
-import br.com.genovi.infrastructure.mappers.DoencaMapper;
+import br.com.genovi.infrastructure.mapper.DoencaMapper;
 import br.com.genovi.infrastructure.repositories.DoencaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

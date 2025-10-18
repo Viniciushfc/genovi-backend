@@ -1,11 +1,13 @@
-package br.com.genovi.infrastructure.mappers;
+package br.com.genovi.infrastructure.mapper;
 
 import br.com.genovi.domain.models.Vendedor;
 import br.com.genovi.dtos.vendedor.CreateVendedorDTO;
 import br.com.genovi.dtos.vendedor.VendedorDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class VendedorMapper {
 
     public Vendedor toEntity(CreateVendedorDTO dto) {

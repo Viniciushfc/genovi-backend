@@ -1,12 +1,14 @@
-package br.com.genovi.infrastructure.mappers;
+package br.com.genovi.infrastructure.mapper;
 
 import br.com.genovi.domain.models.Registro;
 import br.com.genovi.domain.models.*;
 import br.com.genovi.dtos.relatorios.CreateRegistroRecord;
 import br.com.genovi.dtos.relatorios.RegistroRecord;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class RegistroMapper {
 
     private final ReproducaoMapper reproducaoMapper;
@@ -16,19 +18,6 @@ public class RegistroMapper {
     private final OcorrenciaDoencaMapper ocorrenciaDoencaMapper;
     private final FuncionarioMapper funcionarioMapper;
 
-    public RegistroMapper(ReproducaoMapper reproducaoMapper,
-                          GestacaoMapper gestacaoMapper,
-                          PartoMapper partoMapper,
-                          AplicacaoMapper aplicacaoMapper,
-                          OcorrenciaDoencaMapper ocorrenciaDoencaMapper,
-                          FuncionarioMapper funcionarioMapper) {
-        this.reproducaoMapper = reproducaoMapper;
-        this.gestacaoMapper = gestacaoMapper;
-        this.partoMapper = partoMapper;
-        this.aplicacaoMapper = aplicacaoMapper;
-        this.ocorrenciaDoencaMapper = ocorrenciaDoencaMapper;
-        this.funcionarioMapper = funcionarioMapper;
-    }
 
     public RegistroRecord toDTO(Registro registro) {
 

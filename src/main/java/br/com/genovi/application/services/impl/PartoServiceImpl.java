@@ -7,14 +7,16 @@ import br.com.genovi.domain.models.Parto;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.parto.CreatePartoDTO;
 import br.com.genovi.dtos.parto.PartoDTO;
-import br.com.genovi.infrastructure.mappers.PartoMapper;
+import br.com.genovi.infrastructure.mapper.PartoMapper;
 import br.com.genovi.infrastructure.repositories.GestacaoRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import br.com.genovi.infrastructure.repositories.PartoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class PartoServiceImpl implements PartoService {
 
@@ -22,13 +24,6 @@ public class PartoServiceImpl implements PartoService {
     private final OvinoRepository ovinoRepository;
     private final GestacaoRepository gestacaoRepository;
     private final PartoMapper partoMapper;
-
-    public PartoServiceImpl(PartoRepository partoRepository, OvinoRepository ovinoRepository, GestacaoRepository gestacaoRepository, PartoMapper partoMapper) {
-        this.partoRepository = partoRepository;
-        this.ovinoRepository = ovinoRepository;
-        this.gestacaoRepository = gestacaoRepository;
-        this.partoMapper = partoMapper;
-    }
 
     private Parto findPartoEntityById(Long id) {
         if (id == null) return null;

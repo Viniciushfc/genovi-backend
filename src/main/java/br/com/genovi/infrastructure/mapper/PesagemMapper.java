@@ -1,19 +1,17 @@
-package br.com.genovi.infrastructure.mappers;
+package br.com.genovi.infrastructure.mapper;
 
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Pesagem;
 import br.com.genovi.dtos.ovino.OvinoResumoDTO;
 import br.com.genovi.dtos.pesagem.CreatePesagemDTO;
 import br.com.genovi.dtos.pesagem.PesagemDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PesagemMapper {
 
-    private final OvinoMapper ovinoMapper;
-
-    public PesagemMapper(OvinoMapper ovinoMapper) {
-        this.ovinoMapper = ovinoMapper;
+    public PesagemMapper() {
     }
 
     public Pesagem toEntity(CreatePesagemDTO dto, Ovino ovino) {

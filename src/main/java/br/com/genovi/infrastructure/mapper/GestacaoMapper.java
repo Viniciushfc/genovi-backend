@@ -1,22 +1,19 @@
-package br.com.genovi.infrastructure.mappers;
+package br.com.genovi.infrastructure.mapper;
 
 import br.com.genovi.domain.models.Gestacao;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Reproducao;
 import br.com.genovi.dtos.gestacao.CreateGestacaoDTO;
 import br.com.genovi.dtos.gestacao.GestacaoDTO;
+import br.com.genovi.dtos.ovino.OvinoResumoDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class GestacaoMapper {
 
-    private final OvinoMapper ovinoMapper;
     private final ReproducaoMapper reproducaoMapper;
-
-    public GestacaoMapper(OvinoMapper ovinoMapper, ReproducaoMapper reproducaoMapper) {
-        this.ovinoMapper = ovinoMapper;
-        this.reproducaoMapper = reproducaoMapper;
-    }
 
     public Gestacao toEntity(CreateGestacaoDTO dto, Ovino ovelhaMae, Ovino ovelhaPai, Reproducao reproducao) {
         return new Gestacao(
@@ -33,10 +30,18 @@ public class GestacaoMapper {
             return null;
         }
 
+        OvinoResumoDTO maeResumo = entity.getOvelhaMae() != null
+                ? new OvinoResumoDTO(entity.getOvelhaMae().getId(), entity.getOvelhaMae().getRfid(), entity.getOvelhaMae().getNome(), entity.getOvelhaMae().getFbb())
+                : null;
+
+        OvinoResumoDTO paiResumo = entity.getOvelhaPai() != null
+                ? new OvinoResumoDTO(entity.getOvelhaPai().getId(), entity.getOvelhaPai().getRfid(), entity.getOvelhaPai().getNome(), entity.getOvelhaPai().getFbb())
+                : null;
+
         return new GestacaoDTO(
                 entity.getId(),
-                ovinoMapper.toDTO(entity.getOvelhaMae()),
-                ovinoMapper.toDTO(entity.getOvelhaPai()),
+                maeResumo,
+                paiResumo,
                 reproducaoMapper.toDTO(entity.getReproducao()),
                 entity.getDataGestacao()
         );

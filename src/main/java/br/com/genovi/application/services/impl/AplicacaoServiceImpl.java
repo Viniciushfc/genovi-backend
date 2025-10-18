@@ -7,14 +7,16 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.aplicacao.AplicacaoDTO;
 import br.com.genovi.dtos.aplicacao.CreateAplicacaoDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.infrastructure.mappers.AplicacaoMapper;
+import br.com.genovi.infrastructure.mapper.AplicacaoMapper;
 import br.com.genovi.infrastructure.repositories.AplicacaoRepository;
 import br.com.genovi.infrastructure.repositories.MedicamentoRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class AplicacaoServiceImpl implements AplicacaoService {
 
@@ -22,18 +24,6 @@ public class AplicacaoServiceImpl implements AplicacaoService {
     private final OvinoRepository ovinoRepository;
     private final MedicamentoRepository medicamentoRepository;
     private final AplicacaoMapper aplicacaoMapper;
-
-    public AplicacaoServiceImpl(
-            AplicacaoRepository aplicacaoRepository,
-            OvinoRepository ovinoRepository,
-            MedicamentoRepository medicamentoRepository,
-            AplicacaoMapper aplicacaoMapper
-    ) {
-        this.aplicacaoRepository = aplicacaoRepository;
-        this.ovinoRepository = ovinoRepository;
-        this.medicamentoRepository = medicamentoRepository;
-        this.aplicacaoMapper = aplicacaoMapper;
-    }
 
     private Ovino findOvinoById(Long id) {
         if (id == null) return null;

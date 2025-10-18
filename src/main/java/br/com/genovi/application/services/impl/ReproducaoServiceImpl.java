@@ -6,25 +6,21 @@ import br.com.genovi.domain.models.Reproducao;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.reproducao.CreateReproducaoDTO;
 import br.com.genovi.dtos.reproducao.ReproducaoDTO;
-import br.com.genovi.infrastructure.mappers.ReproducaoMapper;
+import br.com.genovi.infrastructure.mapper.ReproducaoMapper;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import br.com.genovi.infrastructure.repositories.ReproducaoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class ReproducaoServiceImpl implements ReproducaoService {
 
     private final ReproducaoRepository reproducaoRepository;
     private final OvinoRepository ovinoRepository;
     private final ReproducaoMapper reproducaoMapper;
-
-    public ReproducaoServiceImpl(ReproducaoRepository reproducaoRepository, OvinoRepository ovinoRepository, ReproducaoMapper reproducaoMapper) {
-        this.reproducaoRepository = reproducaoRepository;
-        this.ovinoRepository = ovinoRepository;
-        this.reproducaoMapper = reproducaoMapper;
-    }
 
     private Reproducao findReproducaoById(Long id) {
         if (id == null) return null;

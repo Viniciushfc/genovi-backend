@@ -6,25 +6,21 @@ import br.com.genovi.domain.models.Vendedor;
 import br.com.genovi.dtos.compra.CompraDTO;
 import br.com.genovi.dtos.compra.CreateCompraDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.infrastructure.mappers.CompraMapper;
+import br.com.genovi.infrastructure.mapper.CompraMapper;
 import br.com.genovi.infrastructure.repositories.CompraRepository;
 import br.com.genovi.infrastructure.repositories.VendedorRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class CompraServiceImpl implements CompraService {
 
     private final CompraRepository compraRepository;
     private final VendedorRepository vendedorRepository;
     private final CompraMapper compraMapper;
-
-    public CompraServiceImpl(CompraRepository compraRepository, VendedorRepository vendedorRepository, CompraMapper compraMapper) {
-        this.compraRepository = compraRepository;
-        this.vendedorRepository = vendedorRepository;
-        this.compraMapper = compraMapper;
-    }
 
     private Compra findCompraById(Long id) {
         if (id == null) return null;

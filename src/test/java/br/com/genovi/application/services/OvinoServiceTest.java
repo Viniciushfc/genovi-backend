@@ -5,7 +5,7 @@ import br.com.genovi.domain.enums.TypeStatus;
 import br.com.genovi.domain.models.*;
 import br.com.genovi.dtos.ovino.CreateOvinoDTO;
 import br.com.genovi.dtos.ovino.OvinoDTO;
-import br.com.genovi.infrastructure.mappers.OvinoMapper;
+import br.com.genovi.infrastructure.mapper.OvinoMapper;
 import br.com.genovi.infrastructure.repositories.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

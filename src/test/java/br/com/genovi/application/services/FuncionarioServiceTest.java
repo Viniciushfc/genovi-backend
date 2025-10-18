@@ -4,7 +4,7 @@ import br.com.genovi.application.services.impl.FuncionarioServiceImpl;
 import br.com.genovi.domain.models.Funcionario;
 import br.com.genovi.dtos.funcionario.CreateFuncionarioDTO;
 import br.com.genovi.dtos.funcionario.FuncionarioDTO;
-import br.com.genovi.infrastructure.mappers.FuncionarioMapper;
+import br.com.genovi.infrastructure.mapper.FuncionarioMapper;
 import br.com.genovi.infrastructure.repositories.FuncionarioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

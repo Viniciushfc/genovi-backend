@@ -6,25 +6,21 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.ascendencia.AscendenciaDTO;
 import br.com.genovi.dtos.ascendencia.CreateAscendenciaDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.infrastructure.mappers.AscendenciaMapper;
+import br.com.genovi.infrastructure.mapper.AscendenciaMapper;
 import br.com.genovi.infrastructure.repositories.AscendenciaRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class AscendenciaServiceImpl implements AscendenciaService {
 
     private final AscendenciaRepository ascendenciaRepository;
     private final OvinoRepository ovinoRepository;
     private final AscendenciaMapper ascendenciaMapper;
-
-    public AscendenciaServiceImpl(AscendenciaRepository ascendenciaRepository, OvinoRepository ovinoRepository, AscendenciaMapper ascendenciaMapper) {
-        this.ascendenciaRepository = ascendenciaRepository;
-        this.ovinoRepository = ovinoRepository;
-        this.ascendenciaMapper = ascendenciaMapper;
-    }
 
     private Ascendencia findAscendenciaEntityById(Long id) {
         if (id == null) return null;

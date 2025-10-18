@@ -1,19 +1,16 @@
-package br.com.genovi.infrastructure.mappers;
+package br.com.genovi.infrastructure.mapper;
 
 import br.com.genovi.domain.models.Amamentacao;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.amamentacao.AmamentacaoDTO;
 import br.com.genovi.dtos.amamentacao.CreateAmamentacaoDTO;
+import br.com.genovi.dtos.ovino.OvinoResumoDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class AmamentacaoMapper {
-
-    private final OvinoMapper ovinoMapper;
-
-    public AmamentacaoMapper(OvinoMapper ovinoMapper) {
-        this.ovinoMapper = ovinoMapper;
-    }
 
     //Converter DTO para Entidade
     public Amamentacao toEntity(CreateAmamentacaoDTO dto, Ovino ovelhaMae, Ovino carneiro) {
@@ -33,9 +30,17 @@ public class AmamentacaoMapper {
             return null;
         }
 
+        OvinoResumoDTO maeResumo = entity.getOvelhaMae() != null
+                ? new OvinoResumoDTO(entity.getOvelhaMae().getId(), entity.getOvelhaMae().getRfid(), entity.getOvelhaMae().getNome(), entity.getOvelhaMae().getFbb())
+                : null;
+
+        OvinoResumoDTO cordeiroResumo = entity.getCordeiroMamando() != null
+                ? new OvinoResumoDTO(entity.getCordeiroMamando().getId(), entity.getCordeiroMamando().getRfid(), entity.getCordeiroMamando().getNome(), entity.getCordeiroMamando().getFbb())
+                : null;
+
         return new AmamentacaoDTO(
-                ovinoMapper.toDTO(entity.getOvelhaMae()),
-                ovinoMapper.toDTO(entity.getCordeiroMamando()),
+                maeResumo,
+                cordeiroResumo,
                 entity.getDataInicio(),
                 entity.getDataFim(),
                 entity.getObservacoes()

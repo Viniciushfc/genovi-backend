@@ -6,22 +6,19 @@ import br.com.genovi.domain.utils.CpfCnpjUtils;
 import br.com.genovi.dtos.funcionario.CreateFuncionarioDTO;
 import br.com.genovi.dtos.funcionario.FuncionarioDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.infrastructure.mappers.FuncionarioMapper;
+import br.com.genovi.infrastructure.mapper.FuncionarioMapper;
 import br.com.genovi.infrastructure.repositories.FuncionarioRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class FuncionarioServiceImpl implements FuncionarioService {
 
     private final FuncionarioRepository funcionarioRepository;
     private final FuncionarioMapper funcionarioMapper;
-
-    public FuncionarioServiceImpl(FuncionarioRepository funcionarioRepository, FuncionarioMapper funcionarioMapper) {
-        this.funcionarioRepository = funcionarioRepository;
-        this.funcionarioMapper = funcionarioMapper;
-    }
 
     private Funcionario findFuncionarioEntityById(Long id) {
         if (id == null) return null;

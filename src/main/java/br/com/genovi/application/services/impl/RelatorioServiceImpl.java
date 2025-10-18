@@ -6,20 +6,18 @@ import br.com.genovi.dtos.ovino.OvinoDTO;
 import net.sf.jasperreports.engine.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import lombok.AllArgsConstructor;
 
 import java.io.InputStream;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
+@AllArgsConstructor
 @Service
 public class RelatorioServiceImpl implements RelatorioService {
 
     private final OvinoService ovinoService;
-
-    public RelatorioServiceImpl(OvinoService ovinoService) {
-        this.ovinoService = ovinoService;
-    }
 
     @Override
     public byte[] gerarRelatorioRegistro(Long id) throws Exception {

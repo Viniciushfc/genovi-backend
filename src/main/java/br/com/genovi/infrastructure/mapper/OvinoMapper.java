@@ -1,26 +1,24 @@
-package br.com.genovi.infrastructure.mappers;
+package br.com.genovi.infrastructure.mapper;
 
-import br.com.genovi.domain.models.*;
+import br.com.genovi.domain.models.Compra;
+import br.com.genovi.domain.models.Ovino;
+import br.com.genovi.domain.models.Parto;
+import br.com.genovi.domain.models.Pesagem;
 import br.com.genovi.dtos.ovino.CreateOvinoDTO;
 import br.com.genovi.dtos.ovino.OvinoDTO;
-import org.springframework.context.annotation.Lazy; // IMPORT CORRETO
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
 
 @Component
+@AllArgsConstructor
 public class OvinoMapper {
 
     private final PartoMapper partoMapper;
     private final PesagemMapper pesagemMapper;
     private final CompraMapper compraMapper;
-
-    public OvinoMapper(@Lazy PartoMapper partoMapper, @Lazy PesagemMapper pesagemMapper, CompraMapper compraMapper) {
-        this.partoMapper = partoMapper;
-        this.pesagemMapper = pesagemMapper;
-        this.compraMapper = compraMapper;
-    }
 
     public Ovino toEntity(CreateOvinoDTO dto, Ovino ovinoMae, Ovino ovinoPai, Compra compra, Parto parto, List<Pesagem> pesagens) {
         return new Ovino(

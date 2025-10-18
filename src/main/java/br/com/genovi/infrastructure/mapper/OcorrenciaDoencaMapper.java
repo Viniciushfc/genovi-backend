@@ -1,22 +1,20 @@
-package br.com.genovi.infrastructure.mappers;
+package br.com.genovi.infrastructure.mapper;
 
-import br.com.genovi.domain.models.*;
+import br.com.genovi.domain.models.Doenca;
+import br.com.genovi.domain.models.OcorrenciaDoenca;
+import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.ocorrencia_doenca.CreateOcorrenciaDoencaDTO;
 import br.com.genovi.dtos.ocorrencia_doenca.OcorrenciaDoencaDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class OcorrenciaDoencaMapper {
 
     private final FuncionarioMapper funcionarioMapper;
     private final OvinoMapper ovinoMapper;
     private final DoencaMapper doencaMapper;
-
-    public OcorrenciaDoencaMapper(FuncionarioMapper funcionarioMapper, OvinoMapper ovinoMapper, DoencaMapper doencaMapper) {
-        this.funcionarioMapper = funcionarioMapper;
-        this.ovinoMapper = ovinoMapper;
-        this.doencaMapper = doencaMapper;
-    }
 
     public OcorrenciaDoenca toEntity(CreateOcorrenciaDoencaDTO dto, Ovino ovino, Doenca doenca) {
 

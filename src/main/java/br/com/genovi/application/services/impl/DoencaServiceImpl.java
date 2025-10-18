@@ -5,22 +5,19 @@ import br.com.genovi.domain.models.Doenca;
 import br.com.genovi.dtos.doencas.CreateDoencaDTO;
 import br.com.genovi.dtos.doencas.DoencaDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.infrastructure.mappers.DoencaMapper;
+import br.com.genovi.infrastructure.mapper.DoencaMapper;
 import br.com.genovi.infrastructure.repositories.DoencaRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class DoencaServiceImpl implements DoencaService {
 
     private final DoencaRepository doencaRepository;
     private final DoencaMapper doencaMapper;
-
-    public DoencaServiceImpl(DoencaRepository doencaRepository, DoencaMapper doencaMapper) {
-        this.doencaRepository = doencaRepository;
-        this.doencaMapper = doencaMapper;
-    }
 
     private Doenca findDoencaEntityById(Long id) {
         if (id == null) return null;

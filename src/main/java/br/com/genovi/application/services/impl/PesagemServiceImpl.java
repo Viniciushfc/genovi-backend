@@ -6,25 +6,21 @@ import br.com.genovi.domain.models.Pesagem;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.pesagem.CreatePesagemDTO;
 import br.com.genovi.dtos.pesagem.PesagemDTO;
-import br.com.genovi.infrastructure.mappers.PesagemMapper;
+import br.com.genovi.infrastructure.mapper.PesagemMapper;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import br.com.genovi.infrastructure.repositories.PesagemRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class PesagemServiceImpl implements PesagemService {
 
     private final PesagemRepository pesagemRepository;
     private final OvinoRepository ovinoRepository;
     private final PesagemMapper pesagemMapper;
-
-    public PesagemServiceImpl(PesagemRepository pesagemRepository, OvinoRepository ovinoRepository, PesagemMapper pesagemMapper) {
-        this.pesagemRepository = pesagemRepository;
-        this.ovinoRepository = ovinoRepository;
-        this.pesagemMapper = pesagemMapper;
-    }
 
     private Pesagem findPesagemById(Long id) {
         if (id == null) return null;

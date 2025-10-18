@@ -1,20 +1,17 @@
-package br.com.genovi.infrastructure.mappers;
+package br.com.genovi.infrastructure.mapper;
 
 import br.com.genovi.domain.models.Funcionario;
 import br.com.genovi.domain.models.Usuario;
-import br.com.genovi.dtos.funcionario.FuncionarioDTO;
 import br.com.genovi.dtos.usuario.CreateUsuarioDTO;
 import br.com.genovi.dtos.usuario.UsuarioDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class UsuarioMapper {
 
     private final FuncionarioMapper funcionarioMapper;
-
-    public UsuarioMapper(FuncionarioMapper funcionarioMapper) {
-        this.funcionarioMapper = funcionarioMapper;
-    }
 
     public Usuario toEntity(CreateUsuarioDTO dto, Boolean ativo, Funcionario funcionario) {
         return new Usuario(

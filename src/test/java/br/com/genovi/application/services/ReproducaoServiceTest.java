@@ -4,10 +4,10 @@ import br.com.genovi.application.services.impl.ReproducaoServiceImpl;
 import br.com.genovi.domain.enums.TypeReproducao;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Reproducao;
+import br.com.genovi.dtos.ovino.OvinoResumoDTO;
 import br.com.genovi.dtos.reproducao.CreateReproducaoDTO;
 import br.com.genovi.dtos.reproducao.ReproducaoDTO;
-import br.com.genovi.infrastructure.mappers.OvinoMapper;
-import br.com.genovi.infrastructure.mappers.ReproducaoMapper;
+import br.com.genovi.infrastructure.mapper.ReproducaoMapper;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import br.com.genovi.infrastructure.repositories.ReproducaoRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,20 +37,14 @@ class ReproducaoServiceTest {
     @Mock
     private Reproducao reproducao;
 
-    @Mock
     private ReproducaoDTO reproducaoDTO;
 
     @Mock
     private CreateReproducaoDTO createReproducaoDTO;
 
-    @Mock
     private Ovino carneiro;
 
-    @Mock
     private Ovino ovelha;
-
-    @Mock
-    private OvinoMapper ovinoMapper;
 
     @InjectMocks
     private ReproducaoServiceImpl reproducaoService;
@@ -66,7 +60,9 @@ class ReproducaoServiceTest {
         reproducao = new Reproducao();
         reproducao.setId(1L);
 
-        reproducaoDTO = new ReproducaoDTO(1L, LocalDateTime.now(), ovinoMapper.toDTO(carneiro), ovinoMapper.toDTO(ovelha), TypeReproducao.INSEMINACAO_ARTIFICIAL, "Observacoes Test");
+        OvinoResumoDTO carneiroResumo = new OvinoResumoDTO(carneiro.getId(), carneiro.getRfid(), carneiro.getNome(), carneiro.getFbb());
+        OvinoResumoDTO ovelhaResumo = new OvinoResumoDTO(ovelha.getId(), ovelha.getRfid(), ovelha.getNome(), ovelha.getFbb());
+        reproducaoDTO = new ReproducaoDTO(1L, LocalDateTime.now(), carneiroResumo, ovelhaResumo, TypeReproducao.INSEMINACAO_ARTIFICIAL, "Observacoes Test");
 
         createReproducaoDTO = new CreateReproducaoDTO(LocalDateTime.now(), 1L, 2L, TypeReproducao.INSEMINACAO_ARTIFICIAL, "Observacoes Test");
     }

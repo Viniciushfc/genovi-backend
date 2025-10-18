@@ -6,25 +6,21 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.ciclo_cio.CicloCioDTO;
 import br.com.genovi.dtos.ciclo_cio.CreateCicloCioDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.infrastructure.mappers.CicloCioMapper;
+import br.com.genovi.infrastructure.mapper.CicloCioMapper;
 import br.com.genovi.infrastructure.repositories.CicloCioRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class CicloCioServiceImpl implements CicloCioService {
 
     private final CicloCioRepository cicloCioRepository;
     private final OvinoRepository ovinoRepository;
     private final CicloCioMapper cicloCioMapper;
-
-    public CicloCioServiceImpl(CicloCioRepository cicloCioRepository, OvinoRepository ovinoRepository, CicloCioMapper cicloCioMapper) {
-        this.cicloCioRepository = cicloCioRepository;
-        this.ovinoRepository = ovinoRepository;
-        this.cicloCioMapper = cicloCioMapper;
-    }
 
     private CicloCio findCicloCioById(Long id) {
         if (id == null) return null;

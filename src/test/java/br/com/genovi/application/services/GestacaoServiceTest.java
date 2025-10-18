@@ -6,10 +6,12 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Reproducao;
 import br.com.genovi.dtos.gestacao.CreateGestacaoDTO;
 import br.com.genovi.dtos.gestacao.GestacaoDTO;
-import br.com.genovi.infrastructure.mappers.GestacaoMapper;
+import br.com.genovi.infrastructure.mapper.GestacaoMapper;
 import br.com.genovi.infrastructure.repositories.GestacaoRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import br.com.genovi.infrastructure.repositories.ReproducaoRepository;
+import br.com.genovi.dtos.ovino.OvinoResumoDTO;
+import br.com.genovi.dtos.reproducao.ReproducaoDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -69,7 +71,11 @@ class GestacaoServiceTest {
         gestacao.setId(10L);
 
         createGestacaoDTO = new CreateGestacaoDTO(1L, 2L, 3L, LocalDateTime.now());
-        gestacaoDTO = new GestacaoDTO(10L, null, null, null, LocalDateTime.now());
+
+        OvinoResumoDTO maeResumo = new OvinoResumoDTO(1L, 101L, "Mae", "fbb1");
+        OvinoResumoDTO paiResumo = new OvinoResumoDTO(2L, 102L, "Pai", "fbb2");
+        ReproducaoDTO reproducaoDTO = new ReproducaoDTO(3L, LocalDateTime.now(), paiResumo, maeResumo, null, null);
+        gestacaoDTO = new GestacaoDTO(10L, maeResumo, paiResumo, reproducaoDTO, LocalDateTime.now());
     }
 
     @Test
@@ -270,7 +276,8 @@ class GestacaoServiceTest {
         gestacao2.setId(11L);
         List<Gestacao> gestacoes = Arrays.asList(gestacao, gestacao2);
 
-        GestacaoDTO gestacaoDTO2 = new GestacaoDTO(11L, null, null, null, LocalDateTime.now());
+        ReproducaoDTO reproducaoDTO2 = new ReproducaoDTO(4L, LocalDateTime.now(), null, null, null, null);
+        GestacaoDTO gestacaoDTO2 = new GestacaoDTO(11L, null, null, reproducaoDTO2, LocalDateTime.now());
 
         when(gestacaoRepository.findAll()).thenReturn(gestacoes);
         when(gestacaoMapper.toDTO(gestacao)).thenReturn(gestacaoDTO);
