@@ -133,7 +133,6 @@ class UsuarioServiceTest {
     @Test
     void shouldThrowWhenUpdateUsuarioNotFound() {
         when(usuarioRepository.findById(1L)).thenReturn(Optional.empty());
-        when(funcionarioRepository.findById(1L)).thenReturn(Optional.of(funcionario));
 
         RuntimeException exception = assertThrows(RuntimeException.class,
                 () -> usuarioService.update(1L, createDTO));

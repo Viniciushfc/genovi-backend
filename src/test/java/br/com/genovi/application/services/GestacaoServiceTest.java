@@ -307,7 +307,6 @@ class GestacaoServiceTest {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovinoMae));
         when(ovinoRepository.findById(2L)).thenReturn(Optional.of(ovinoPai));
         when(reproducaoRepository.findById(3L)).thenReturn(Optional.of(reproducao));
-        when(gestacaoMapper.toEntity(any(), any(), any(), any())).thenReturn(gestacao);
         when(gestacaoMapper.toDTO(any())).thenReturn(gestacaoDTO);
         when(gestacaoRepository.save(any())).thenReturn(gestacao);
 

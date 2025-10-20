@@ -2,7 +2,7 @@ package br.com.genovi.infrastructure.mapper;
 
 import br.com.genovi.domain.models.Registro;
 import br.com.genovi.domain.models.*;
-import br.com.genovi.dtos.relatorios.CreateRegistroRecord;
+import br.com.genovi.dtos.relatorios.CreateRegistroDTO;
 import br.com.genovi.dtos.relatorios.RegistroDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -32,7 +32,7 @@ public class RegistroMapper {
         );
     }
 
-    public Registro toEntity(CreateRegistroRecord dto,
+    public Registro toEntity(CreateRegistroDTO dto,
                              Funcionario funcionario,
                              Reproducao reproducao,
                              Gestacao gestacao,
