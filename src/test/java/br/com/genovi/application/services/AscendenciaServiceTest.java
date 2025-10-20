@@ -141,7 +141,7 @@ class AscendenciaServiceTest {
         when(ascendenciaRepository.findById(3L)).thenReturn(Optional.of(ascendencia));
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(pai));
         when(ovinoRepository.findById(2L)).thenReturn(Optional.of(mae));
-        when(ascendenciaMapper.toEntity(createDto, pai, mae)).thenReturn(ascendencia);
+        when(ascendenciaRepository.save(ascendencia)).thenReturn(ascendencia);
         when(ascendenciaMapper.toDTO(ascendencia)).thenReturn(ascendenciaDTO);
 
         AscendenciaDTO result = ascendenciaService.update(3L, createDto);

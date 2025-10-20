@@ -58,12 +58,11 @@ public class CompraServiceImpl implements CompraService {
         Compra entity = findCompraById(id);
         Vendedor vendedor = findVendedorById(dto.vendedorId());
 
-        Long existingId = entity.getId();
-        Compra updatedCompra = compraMapper.toEntity(dto, vendedor);
-        updatedCompra.setId(existingId);
-        compraRepository.save(updatedCompra);
+        entity.setVendedor(vendedor);
+        entity.setDataCompra(dto.dataCompra());
+        entity.setValor(dto.valor());
 
-        return compraMapper.toDTO(updatedCompra);
+        return compraMapper.toDTO(compraRepository.save(entity));
     }
 
     @Override

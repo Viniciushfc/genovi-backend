@@ -55,15 +55,15 @@ public class CicloCioServiceImpl implements CicloCioService {
 
     @Override
     public CicloCioDTO update(Long id, CreateCicloCioDTO dto) {
-        CicloCio cicloCio = findCicloCioById(id);
+        CicloCio entity = findCicloCioById(id);
         Ovino ovino = findOvinoEntityById(dto.ovelhaId());
 
-        Long existingId = cicloCio.getId();
-        CicloCio updatedCicloCio = cicloCioMapper.toEntity(dto, ovino);
-        updatedCicloCio.setId(existingId);
-        cicloCioRepository.save(updatedCicloCio);
+        entity.setOvelha(ovino);
+        entity.setDataInicio(dto.dataInicio());
+        entity.setDataFim(dto.dataFim());
+        entity.setObservacoes(dto.observacoes());
 
-        return cicloCioMapper.toDTO(updatedCicloCio);
+        return cicloCioMapper.toDTO(cicloCioRepository.save(entity));
     }
 
     @Override

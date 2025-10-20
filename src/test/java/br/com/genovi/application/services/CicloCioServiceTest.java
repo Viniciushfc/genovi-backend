@@ -129,13 +129,12 @@ class CicloCioServiceTest {
     void updateDeveAtualizarCicloCioQuandoEncontrado() {
         when(cicloCioRepository.findById(1L)).thenReturn(Optional.of(cicloCio));
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovelha));
-        when(cicloCioMapper.toEntity(createDto, ovelha)).thenReturn(cicloCio);
+        when(cicloCioRepository.save(cicloCio)).thenReturn(cicloCio);
         when(cicloCioMapper.toDTO(cicloCio)).thenReturn(cicloCioDTO);
 
         CicloCioDTO result = cicloCioService.update(1L, createDto);
 
         assertNotNull(result);
-        verify(cicloCioMapper).toEntity(createDto, ovelha);
         verify(cicloCioRepository).save(cicloCio);
     }
 

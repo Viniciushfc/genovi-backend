@@ -117,7 +117,7 @@ class AmamentacaoServiceTest {
         when(amamentacaoRepository.findById(1L)).thenReturn(Optional.of(amamentacao));
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovelhaMae));
         when(ovinoRepository.findById(2L)).thenReturn(Optional.of(cordeiro));
-        when(amamentacaoMapper.toEntity(createDto, ovelhaMae, cordeiro)).thenReturn(amamentacao);
+        when(amamentacaoRepository.save(any(Amamentacao.class))).thenReturn(amamentacao);
         when(amamentacaoMapper.toDTO(any(Amamentacao.class))).thenReturn(amamentacaoDTO);
 
         AmamentacaoDTO result = amamentacaoService.update(1L, createDto);

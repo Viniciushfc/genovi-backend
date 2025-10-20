@@ -28,27 +28,27 @@ public class Registro {
     @Column(name = "data_registro", nullable = false)
     private LocalDateTime dataRegistro;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_funcionario", nullable = false)
     private Funcionario funcionario;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_reproducao", nullable = true)
     private Reproducao reproducao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_gestacao", nullable = true)
     private Gestacao gestacao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_parto", nullable = true)
     private Parto parto;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_aplicacao", nullable = true)
     private Aplicacao aplicacao;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_ocorrencia_doenca", nullable = true)
     private OcorrenciaDoenca ocorrenciaDoenca;
 }

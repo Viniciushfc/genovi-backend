@@ -58,17 +58,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO update(Long id, CreateUsuarioDTO dto) {
+        Usuario entity = findUsuarioById(id);
         Funcionario funcionario = findFuncionarioById(dto.funcionarioId());
-        Usuario usuario = findUsuarioById(id);
 
-        Long existingId = usuario.getId();
-        Usuario updatedUsuario = usuarioMapper.toEntity(dto, usuario.isAtivo(), funcionario);
-        updatedUsuario.setId(existingId);
-        updatedUsuario.setRoles(Collections.singleton(ROLE_USER));
+        entity.setFuncionario(funcionario);
+        entity.setEmail(dto.email());
+        entity.setSenha(dto.senha());
+        entity.setAutenticacao2fa(dto.autenticacao2fa());
+        entity.setRoles(Collections.singleton(ROLE_USER));
 
-        usuarioRepository.save(updatedUsuario);
-
-        return usuarioMapper.toDTO(updatedUsuario);
+        return usuarioMapper.toDTO(usuarioRepository.save(entity));
     }
 
     @Override

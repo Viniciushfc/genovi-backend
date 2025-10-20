@@ -128,13 +128,12 @@ class MedicamentoServiceTest {
 
         when(medicamentoRepository.findById(1L)).thenReturn(Optional.of(medicamento));
         when(doencaRepository.findAllById(List.of(1L))).thenReturn(List.of(doenca));
-        when(medicamentoMapper.toEntity(createMedicamentoDTO, List.of(doenca))).thenReturn(medicamento);
+        when(medicamentoRepository.save(medicamento)).thenReturn(medicamento);
         when(medicamentoMapper.toDTO(medicamento)).thenReturn(medicamentoDTO);
 
         MedicamentoDTO result = medicamentoService.update(1L, createMedicamentoDTO);
 
         assertNotNull(result);
-        verify(medicamentoMapper).toEntity(createMedicamentoDTO, List.of(doenca));
         verify(medicamentoRepository).save(medicamento);
     }
 

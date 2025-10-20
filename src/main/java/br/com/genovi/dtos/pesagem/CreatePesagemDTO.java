@@ -4,5 +4,6 @@ import java.time.LocalDateTime;
 
 public record CreatePesagemDTO(
         LocalDateTime dataPesagem,
-        Long idOvino) {
+        Long idOvino,
+        Double pesagem) {
 }

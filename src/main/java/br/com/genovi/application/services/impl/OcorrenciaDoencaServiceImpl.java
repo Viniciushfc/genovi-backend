@@ -65,17 +65,17 @@ public class OcorrenciaDoencaServiceImpl implements OcorrenciaDoencaService {
 
     @Override
     public OcorrenciaDoencaDTO update(Long id, CreateOcorrenciaDoencaDTO dto) {
+        OcorrenciaDoenca entity = findOcorrenciaDoencaById(id);
         Ovino ovino = findOvinoEntityById(dto.ovinoId());
         Doenca doenca = findDoencaEntityById(dto.doencaId());
 
-        OcorrenciaDoenca ocorrenciaDoenca = findOcorrenciaDoencaById(id);
+        entity.setOvino(ovino);
+        entity.setDoenca(doenca);
+        entity.setDataInicio(dto.dataInicio());
+        entity.setDataFinal(dto.dataFinal());
+        entity.setCurada(dto.curado());
 
-        Long existingId = ocorrenciaDoenca.getId();
-        OcorrenciaDoenca updatedOcorrenciaDoenca = ocorrenciaDoencaMapper.toEntity(dto, ovino, doenca);
-        updatedOcorrenciaDoenca.setId(existingId);
-        ocorrenciaDoencaRepository.save(updatedOcorrenciaDoenca);
-
-        return ocorrenciaDoencaMapper.toDTO(updatedOcorrenciaDoenca);
+        return ocorrenciaDoencaMapper.toDTO(ocorrenciaDoencaRepository.save(entity));
     }
 
     @Override

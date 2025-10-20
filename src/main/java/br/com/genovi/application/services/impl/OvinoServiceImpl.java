@@ -99,12 +99,23 @@ public class OvinoServiceImpl implements OvinoService {
         Parto parto = findPartoById(dto.parto());
         List<Pesagem> pesagens = findPesagensByIds(dto.pesos());
 
-        Long existingId = entity.getId();
-        Ovino updatedOvino = ovinoMapper.toEntity(dto, mae, pai, compra, parto, pesagens);
-        updatedOvino.setId(existingId);
-        ovinoRepository.save(updatedOvino);
+        entity.setRfid(dto.rfid());
+        entity.setNome(dto.nome());
+        entity.setRaca(dto.raca());
+        entity.setFbb(dto.fbb());
+        entity.setDataNascimento(dto.dataNascimento());
+        entity.setDataCadastro(dto.dataCadastro());
+        entity.setTypeGrauPureza(dto.typeGrauPureza());
+        entity.setSexo(dto.sexo());
+        entity.setOvinoMae(mae);
+        entity.setOvinoPai(pai);
+        entity.setStatus(dto.status());
+        entity.setFotoOvino(dto.fotoOvino());
+        entity.setCompra(compra);
+        entity.setParto(parto);
+        entity.setPesagens(pesagens);
 
-        return ovinoMapper.toDTO(updatedOvino);
+        return ovinoMapper.toDTO(ovinoRepository.save(entity));
     }
 
     @Override

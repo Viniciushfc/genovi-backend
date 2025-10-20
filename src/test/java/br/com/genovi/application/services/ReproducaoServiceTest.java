@@ -135,7 +135,6 @@ class ReproducaoServiceTest {
         when(reproducaoRepository.findById(1L)).thenReturn(Optional.of(reproducao));
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(carneiro));
         when(ovinoRepository.findById(2L)).thenReturn(Optional.of(ovelha));
-        when(reproducaoMapper.toEntity(createReproducaoDTO, carneiro, ovelha)).thenReturn(reproducao);
         when(reproducaoRepository.save(any(Reproducao.class))).thenReturn(reproducao);
         when(reproducaoMapper.toDTO(any(Reproducao.class))).thenReturn(reproducaoDTO);
 

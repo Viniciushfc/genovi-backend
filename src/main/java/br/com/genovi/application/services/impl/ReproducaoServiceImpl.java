@@ -57,16 +57,17 @@ public class ReproducaoServiceImpl implements ReproducaoService {
 
     @Override
     public ReproducaoDTO update(Long id, CreateReproducaoDTO dto) {
-        Reproducao reproducao = findReproducaoById(id);
+        Reproducao entity = findReproducaoById(id);
         Ovino carneiro = findOvinoEntityById(dto.carneiroId());
         Ovino ovelha = findOvinoEntityById(dto.ovelhaId());
 
-        Long existingId = reproducao.getId();
-        Reproducao updatedReproducao = reproducaoMapper.toEntity(dto, carneiro, ovelha);
-        updatedReproducao.setId(existingId);
-        reproducaoRepository.save(updatedReproducao);
+        entity.setCarneiroPai(carneiro);
+        entity.setOvelhaMae(ovelha);
+        entity.setDataReproducao(dto.dataReproducao());
+        entity.setTypeReproducao(dto.typeReproducao());
+        entity.setObservacoes(dto.observacoes());
 
-        return reproducaoMapper.toDTO(updatedReproducao);
+        return reproducaoMapper.toDTO(reproducaoRepository.save(entity));
     }
 
     @Override

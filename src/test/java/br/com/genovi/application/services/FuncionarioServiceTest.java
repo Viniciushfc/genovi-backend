@@ -116,14 +116,12 @@ class FuncionarioServiceTest {
     @Test
     void testUpdate() {
         when(funcionarioRepository.findById(1L)).thenReturn(Optional.of(funcionario));
-        when(funcionarioMapper.toEntity(createFuncionarioDTO)).thenReturn(funcionario);
         when(funcionarioRepository.save(funcionario)).thenReturn(funcionario);
         when(funcionarioMapper.toDTO(funcionario)).thenReturn(funcionarioDTO);
 
         FuncionarioDTO result = funcionarioService.update(1L, createFuncionarioDTO);
 
         assertThat(result).isEqualTo(funcionarioDTO);
-        verify(funcionarioMapper).toEntity(createFuncionarioDTO);
         verify(funcionarioRepository).save(funcionario);
     }
 

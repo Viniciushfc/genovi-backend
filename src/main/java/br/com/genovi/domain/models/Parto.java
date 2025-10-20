@@ -25,15 +25,15 @@ public class Parto {
     )
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ovino_mae")
     private Ovino ovinoMae;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ovino_pai")
     private Ovino ovinoPai;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_gestacao", nullable = true)
     private Gestacao gestacao;
 

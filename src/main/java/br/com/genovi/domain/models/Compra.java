@@ -31,7 +31,7 @@ public class Compra {
     @Column(name = "valor")
     private Double valor;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vendedor_id")
     private Vendedor vendedor;
 }

@@ -59,15 +59,14 @@ public class AscendenciaServiceImpl implements AscendenciaService {
 
     @Override
     public AscendenciaDTO update(Long id, CreateAscendenciaDTO dto) {
-        Ascendencia ascendencia = findAscendenciaEntityById(id);
+        Ascendencia entity = findAscendenciaEntityById(id);
         Ovino ovinoPai = findOvinoEntityById(dto.idOvinoPai());
         Ovino ovinoMae = findOvinoEntityById(dto.idOvinoMae());
 
-        Long existingId = ascendencia.getId();
-        Ascendencia updatedAscendencia = ascendenciaMapper.toEntity(dto, ovinoPai, ovinoMae);
-        updatedAscendencia.setId(existingId);
-        ascendenciaRepository.save(updatedAscendencia);
-        return ascendenciaMapper.toDTO(updatedAscendencia);
+        entity.setPai(ovinoPai);
+        entity.setMae(ovinoMae);
+
+        return ascendenciaMapper.toDTO(ascendenciaRepository.save(entity));
     }
 
     @Override

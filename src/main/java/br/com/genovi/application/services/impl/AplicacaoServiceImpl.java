@@ -67,11 +67,16 @@ public class AplicacaoServiceImpl implements AplicacaoService {
 
     @Override
     public AplicacaoDTO update(Long id, CreateAplicacaoDTO dto) {
+        Aplicacao entity = findAplicacaoById(id);
         Ovino ovino = findOvinoById(dto.ovinoId());
         Medicamento medicamento = findMedicamentoById(dto.medicamentoId());
 
-        Aplicacao aplicacao = aplicacaoMapper.toEntity(dto, ovino, medicamento);
-        return aplicacaoMapper.toDTO(aplicacaoRepository.save(aplicacao));
+        entity.setOvino(ovino);
+        entity.setMedicamento(medicamento);
+        entity.setDataAplicacao(dto.dataAplicacao());
+        entity.setDataProximaDose(dto.dataProximaDose());
+
+        return aplicacaoMapper.toDTO(aplicacaoRepository.save(entity));
     }
 
     @Override

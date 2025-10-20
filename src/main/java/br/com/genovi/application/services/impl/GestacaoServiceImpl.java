@@ -71,7 +71,10 @@ public class GestacaoServiceImpl implements GestacaoService {
         Ovino ovinoPai = findOvinoById(dto.ovelhaPaiId());
         Reproducao reproducao = findReproducaoById(dto.reproducaoId());
 
-        entity = gestacaoMapper.toEntity(dto, ovinoMae, ovinoPai, reproducao);
+        entity.setOvelhaMae(ovinoMae);
+        entity.setOvelhaPai(ovinoPai);
+        entity.setReproducao(reproducao);
+        entity.setDataGestacao(dto.dataGestacao());
 
         return gestacaoMapper.toDTO(gestacaoRepository.save(entity));
     }

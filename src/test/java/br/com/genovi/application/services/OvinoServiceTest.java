@@ -108,13 +108,12 @@ class OvinoServiceTest {
 
     @Test
     void shouldUpdateOvino() {
-        when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino)); // entidade a atualizar
-        when(ovinoRepository.findById(2L)).thenReturn(Optional.of(ovino)); // pai
-        when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino)); // mae
+        when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino)); // entidade a atualizar e mae
+        when(ovinoRepository.findById(2L)).thenReturn(Optional.of(new Ovino())); // pai
         when(compraRepository.findById(1L)).thenReturn(Optional.of(compra));
         when(partoRepository.findById(1L)).thenReturn(Optional.of(parto));
         when(pesagemRepository.findAllById(List.of(1L))).thenReturn(List.of(pesagem));
-        when(ovinoMapper.toEntity(any(), any(), any(), any(), any(), any())).thenReturn(ovino);
+        when(ovinoRepository.save(ovino)).thenReturn(ovino);
         when(ovinoMapper.toDTO(ovino)).thenReturn(mock(OvinoDTO.class));
 
         OvinoDTO updated = ovinoService.update(1L, createOvinoDTO);

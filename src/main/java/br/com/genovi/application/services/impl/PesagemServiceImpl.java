@@ -58,12 +58,11 @@ public class PesagemServiceImpl implements PesagemService {
         Pesagem entity = findPesagemById(id);
         Ovino ovino = findOvinoById(dto.idOvino());
 
-        Long existingId = entity.getId();
-        Pesagem updatedPesagem = pesagemMapper.toEntity(dto, ovino);
-        updatedPesagem.setId(existingId);
-        pesagemRepository.save(updatedPesagem);
+        entity.setOvino(ovino);
+        entity.setDataPesagem(dto.dataPesagem());
+        entity.setPeso(dto.pesagem());
 
-        return pesagemMapper.toDTO(updatedPesagem);
+        return pesagemMapper.toDTO(pesagemRepository.save(entity));
     }
 
     @Override

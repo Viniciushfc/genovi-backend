@@ -11,14 +11,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class PesagemMapper {
 
-    public PesagemMapper() {
-    }
 
     public Pesagem toEntity(CreatePesagemDTO dto, Ovino ovino) {
         return new Pesagem(
                 null,
                 dto.dataPesagem(),
-                ovino);
+                ovino,
+                dto.pesagem());
     }
 
     public PesagemDTO toDTO(Pesagem entity) {
@@ -32,7 +31,8 @@ public class PesagemMapper {
         return new PesagemDTO(
                 entity.getId(),
                 entity.getDataPesagem(),
-                ovinoResumo
+                ovinoResumo,
+                entity.getPeso()
         );
     }
 }

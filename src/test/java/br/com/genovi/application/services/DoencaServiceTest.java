@@ -111,7 +111,6 @@ class DoencaServiceTest {
         DoencaDTO updatedDtoResponse = new DoencaDTO(1L, "Brucelose", "Nova descrição");
 
         when(doencaRepository.findById(1L)).thenReturn(Optional.of(doenca));
-        when(doencaMapper.toEntity(updateDto)).thenReturn(updatedDoenca);
         when(doencaRepository.save(any(Doenca.class))).thenReturn(updatedDoenca);
         when(doencaMapper.toDTO(updatedDoenca)).thenReturn(updatedDtoResponse);
 
@@ -123,7 +122,6 @@ class DoencaServiceTest {
         assertEquals("Brucelose", result.nome());
         verify(doencaRepository, times(1)).findById(1L);
         verify(doencaRepository, times(1)).save(any(Doenca.class));
-        verify(doencaMapper, times(1)).toEntity(updateDto);
     }
 
     @Test

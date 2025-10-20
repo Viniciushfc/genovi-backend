@@ -56,16 +56,17 @@ public class AmamentacaoServiceImpl implements AmamentacaoService {
 
     @Override
     public AmamentacaoDTO update(Long id, CreateAmamentacaoDTO dto) {
-        Amamentacao amamentacao = findAmamentacaoEntityById(id);
+        Amamentacao entity = findAmamentacaoEntityById(id);
         Ovino ovinoMae = findOvinoEntityById(dto.ovelhaMaeId());
         Ovino cordeiro = findOvinoEntityById(dto.cordeiroMamandoId());
 
-        Long existingId = amamentacao.getId();
-        Amamentacao updatedAmamentacao = amamentacaoMapper.toEntity(dto, ovinoMae, cordeiro);
-        updatedAmamentacao.setId(existingId);
-        amamentacaoRepository.save(updatedAmamentacao);
+        entity.setOvelhaMae(ovinoMae);
+        entity.setCordeiroMamando(cordeiro);
+        entity.setDataInicio(dto.dataInicio());
+        entity.setDataFim(dto.dataFim());
+        entity.setObservacoes(dto.observacoes());
 
-        return amamentacaoMapper.toDTO(updatedAmamentacao);
+        return amamentacaoMapper.toDTO(amamentacaoRepository.save(entity));
     }
 
     @Override

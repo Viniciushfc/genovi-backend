@@ -26,15 +26,16 @@ public class Reproducao {
     )
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_carneiro_pai")
     private Ovino carneiroPai;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ovelha_mae")
     private Ovino ovelhaMae;
 
     @Column(name = "reproducao")
+    @Enumerated(EnumType.STRING)
     private TypeReproducao typeReproducao;
 
     @Column(name = "data_reproducao")

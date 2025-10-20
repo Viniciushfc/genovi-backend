@@ -67,7 +67,7 @@ public class Ovino {
     @JoinColumn(name = "id_ovino_pai", nullable = true)
     private Ovino ovinoPai;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private TypeStatus status;
 
@@ -82,6 +82,6 @@ public class Ovino {
     @JoinColumn(name = "id_parto", nullable = true)
     private Parto parto;
 
-    @OneToMany(mappedBy = "ovino", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "ovino", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Pesagem> pesagens = new ArrayList<>();
 }

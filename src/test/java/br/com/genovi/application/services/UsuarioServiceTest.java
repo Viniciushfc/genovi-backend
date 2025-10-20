@@ -120,7 +120,6 @@ class UsuarioServiceTest {
     void shouldUpdateUsuario() {
         when(funcionarioRepository.findById(1L)).thenReturn(Optional.of(funcionario));
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
-        when(usuarioMapper.toEntity(createDTO, usuario.isAtivo(), funcionario)).thenReturn(usuario);
         when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
         when(usuarioMapper.toDTO(any(Usuario.class))).thenReturn(usuarioDTO);
 

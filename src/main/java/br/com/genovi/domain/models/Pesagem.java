@@ -31,4 +31,7 @@ public class Pesagem {
     @ManyToOne
     @JoinColumn(name = "ovino_id", nullable = false)
     private Ovino ovino;
+
+    @Column(name = "peso")
+    private Double peso;
 }

@@ -73,12 +73,12 @@ public class PartoServiceImpl implements PartoService {
         Ovino ovinoPai = findOvinoEntityById(dto.ovelhaPaiId());
         Gestacao gestacao = findGestacaoEntityById(dto.gestacaoId());
 
-        Long existingId = entity.getId();
-        Parto updatedParto = partoMapper.toEntity(dto, ovinoMae, ovinoPai, gestacao);
-        updatedParto.setId(existingId);
-        partoRepository.save(updatedParto);
+        entity.setOvinoMae(ovinoMae);
+        entity.setOvinoPai(ovinoPai);
+        entity.setGestacao(gestacao);
+        entity.setDataParto(dto.dataParto());
 
-        return partoMapper.toDTO(updatedParto);
+        return partoMapper.toDTO(partoRepository.save(entity));
     }
 
     @Override

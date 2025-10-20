@@ -49,12 +49,14 @@ public class VendedorServiceImpl implements VendedorService {
     public VendedorDTO update(Long id, CreateVendedorDTO dto) {
         Vendedor entity = findVendedorById(id);
 
-        Long existingId = entity.getId();
-        Vendedor updatedVendedor = vendedorMapper.toEntity(dto);
-        updatedVendedor.setId(existingId);
-        vendedorRepository.save(updatedVendedor);
+        entity.setNome(dto.nome());
+        entity.setAtivo(dto.ativo());
+        entity.setCpfCnpj(dto.cpfCnpj());
+        entity.setEmail(dto.email());
+        entity.setEndereco(dto.endereco());
+        entity.setTelefone(dto.telefone());
 
-        return vendedorMapper.toDTO(updatedVendedor);
+        return vendedorMapper.toDTO(vendedorRepository.save(entity));
     }
 
     @Override

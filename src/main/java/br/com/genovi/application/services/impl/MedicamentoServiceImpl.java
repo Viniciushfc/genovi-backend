@@ -56,7 +56,7 @@ public class MedicamentoServiceImpl implements MedicamentoService {
 
     @Override
     public MedicamentoDTO update(Long id, CreateMedicamentoDTO dto) {
-        Medicamento medicamento = findMedicamentoById(id);
+        Medicamento entity = findMedicamentoById(id);
 
         List<Doenca> doencas = doencaRepository.findAllById(dto.doencasIds());
 
@@ -64,12 +64,14 @@ public class MedicamentoServiceImpl implements MedicamentoService {
             throw new ResourceNotFoundException("Uma ou mais Doenças não foram encontradas.");
         }
 
-        Long existingId = medicamento.getId();
-        Medicamento updatedMedicamento = medicamentoMapper.toEntity(dto, doencas);
-        updatedMedicamento.setId(existingId);
-        medicamentoRepository.save(updatedMedicamento);
+        entity.setNome(dto.nome());
+        entity.setFabricante(dto.fabricante());
+        entity.setDoencas(doencas);
+        entity.setIntervaloDoses(dto.intervaloDoses());
+        entity.setQuantidadeDoses(dto.quantidadeDoses());
+        entity.setVacina(dto.isVacina());
 
-        return medicamentoMapper.toDTO(updatedMedicamento);
+        return medicamentoMapper.toDTO(medicamentoRepository.save(entity));
     }
 
     @Override

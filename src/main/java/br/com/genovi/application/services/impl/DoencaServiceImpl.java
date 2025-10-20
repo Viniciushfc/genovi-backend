@@ -42,13 +42,12 @@ public class DoencaServiceImpl implements DoencaService {
 
     @Override
     public DoencaDTO update(Long id, CreateDoencaDTO dto) {
-        Doenca doenca = findDoencaEntityById(id);
+        Doenca entity = findDoencaEntityById(id);
 
-        Long existingId = doenca.getId();
-        Doenca updatedDoenca = doencaMapper.toEntity(dto);
-        updatedDoenca.setId(existingId);
-        doencaRepository.save(updatedDoenca);
-        return doencaMapper.toDTO(updatedDoenca);
+        entity.setNome(dto.nome());
+        entity.setDescricao(dto.descricao());
+
+        return doencaMapper.toDTO(doencaRepository.save(entity));
     }
 
     @Override

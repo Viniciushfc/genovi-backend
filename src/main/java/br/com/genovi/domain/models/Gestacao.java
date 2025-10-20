@@ -26,15 +26,15 @@ public class Gestacao {
     )
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ovelha_mae")
     private Ovino ovelhaMae;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ovelha_PAI")
     private Ovino ovelhaPai;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_reproducao", nullable = true)
     private Reproducao reproducao;
 
