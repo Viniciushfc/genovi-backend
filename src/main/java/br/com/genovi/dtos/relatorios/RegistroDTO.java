@@ -11,7 +11,7 @@ import br.com.genovi.dtos.reproducao.ReproducaoDTO;
 import java.time.LocalDateTime;
 
 
-public record RegistroRecord(
+public record RegistroDTO(
         Long idRegistro,
         LocalDateTime dataRegistro,
         FuncionarioDTO funcionario,
