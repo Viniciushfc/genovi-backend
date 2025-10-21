@@ -28,6 +28,9 @@ public class Registro {
     @Column(name = "data_registro", nullable = false)
     private LocalDateTime dataRegistro;
 
+    @Column(name = "is_sugestao")
+    private Boolean isSugestao;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_funcionario", nullable = false)
     private Funcionario funcionario;

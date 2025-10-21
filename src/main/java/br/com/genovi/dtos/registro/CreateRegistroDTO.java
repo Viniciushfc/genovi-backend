@@ -1,4 +1,4 @@
-package br.com.genovi.dtos.relatorios;
+package br.com.genovi.dtos.registro;
 
 import java.time.LocalDateTime;
 

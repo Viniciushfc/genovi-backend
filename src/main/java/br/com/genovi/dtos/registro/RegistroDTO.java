@@ -1,4 +1,4 @@
-package br.com.genovi.dtos.relatorios;
+package br.com.genovi.dtos.registro;
 
 
 import br.com.genovi.dtos.aplicacao.AplicacaoDTO;
@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public record RegistroDTO(
         Long idRegistro,
         LocalDateTime dataRegistro,
+        Boolean isSugestao,
         FuncionarioDTO funcionario,
         ReproducaoDTO reproducao,
         GestacaoDTO gestacao,
