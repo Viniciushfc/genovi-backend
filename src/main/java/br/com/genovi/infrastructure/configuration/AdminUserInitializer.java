@@ -2,7 +2,7 @@ package br.com.genovi.infrastructure.configuration;
 
 import br.com.genovi.domain.enums.Role;
 import br.com.genovi.domain.models.Usuario;
-import br.com.genovi.infrastructure.repositories.UsuarioRepository;
+import br.com.genovi.infrastructure.repository.UsuarioRepository;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

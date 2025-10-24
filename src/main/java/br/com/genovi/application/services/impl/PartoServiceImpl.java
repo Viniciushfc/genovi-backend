@@ -8,9 +8,9 @@ import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundEx
 import br.com.genovi.dtos.parto.CreatePartoDTO;
 import br.com.genovi.dtos.parto.PartoDTO;
 import br.com.genovi.application.mapper.PartoMapper;
-import br.com.genovi.infrastructure.repositories.GestacaoRepository;
-import br.com.genovi.infrastructure.repositories.OvinoRepository;
-import br.com.genovi.infrastructure.repositories.PartoRepository;
+import br.com.genovi.infrastructure.repository.GestacaoRepository;
+import br.com.genovi.infrastructure.repository.OvinoRepository;
+import br.com.genovi.infrastructure.repository.PartoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package br.com.genovi.infrastructure.configuration.security;
 
 import br.com.genovi.domain.models.Usuario;
-import br.com.genovi.infrastructure.repositories.UsuarioRepository;
+import br.com.genovi.infrastructure.repository.UsuarioRepository;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;

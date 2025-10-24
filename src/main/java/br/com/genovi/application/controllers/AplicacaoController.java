@@ -19,7 +19,7 @@ public interface AplicacaoController {
     ResponseEntity<AplicacaoDTO> save(@RequestBody CreateAplicacaoDTO dto);
 
     @PutMapping("/{id}")
-    ResponseEntity<AplicacaoDTO> update(Long id, @RequestBody CreateAplicacaoDTO dto);
+    ResponseEntity<AplicacaoDTO> update(@PathVariable Long id, @RequestBody CreateAplicacaoDTO dto);
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable Long id);

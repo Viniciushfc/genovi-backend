@@ -42,7 +42,7 @@ public class AplicacaoControllerImpl implements AplicacaoController {
     @Override
     @PutMapping("/{id}")
     public ResponseEntity<AplicacaoDTO> update(Long id, @RequestBody CreateAplicacaoDTO dto) {
-        AplicacaoDTO saved = aplicacaoService.save(dto);
+        AplicacaoDTO saved = aplicacaoService.update(id, dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 

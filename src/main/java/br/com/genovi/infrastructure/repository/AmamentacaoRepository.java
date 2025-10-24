@@ -1,4 +1,4 @@
-package br.com.genovi.infrastructure.repositories;
+package br.com.genovi.infrastructure.repository;
 
 import br.com.genovi.domain.models.Amamentacao;
 import org.springframework.data.jpa.repository.JpaRepository;

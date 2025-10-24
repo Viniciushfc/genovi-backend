@@ -7,8 +7,8 @@ import br.com.genovi.dtos.compra.CompraDTO;
 import br.com.genovi.dtos.compra.CreateCompraDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.application.mapper.CompraMapper;
-import br.com.genovi.infrastructure.repositories.CompraRepository;
-import br.com.genovi.infrastructure.repositories.VendedorRepository;
+import br.com.genovi.infrastructure.repository.CompraRepository;
+import br.com.genovi.infrastructure.repository.VendedorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -7,7 +7,7 @@ import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundEx
 import br.com.genovi.dtos.ovino.CreateOvinoDTO;
 import br.com.genovi.dtos.ovino.OvinoDTO;
 import br.com.genovi.application.mapper.OvinoMapper;
-import br.com.genovi.infrastructure.repositories.*;
+import br.com.genovi.infrastructure.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

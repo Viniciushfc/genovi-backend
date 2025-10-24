@@ -6,7 +6,7 @@ import br.com.genovi.dtos.doencas.CreateDoencaDTO;
 import br.com.genovi.dtos.doencas.DoencaDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.application.mapper.DoencaMapper;
-import br.com.genovi.infrastructure.repositories.DoencaRepository;
+import br.com.genovi.infrastructure.repository.DoencaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

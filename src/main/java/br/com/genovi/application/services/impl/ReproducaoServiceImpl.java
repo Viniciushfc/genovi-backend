@@ -7,8 +7,8 @@ import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundEx
 import br.com.genovi.dtos.reproducao.CreateReproducaoDTO;
 import br.com.genovi.dtos.reproducao.ReproducaoDTO;
 import br.com.genovi.application.mapper.ReproducaoMapper;
-import br.com.genovi.infrastructure.repositories.OvinoRepository;
-import br.com.genovi.infrastructure.repositories.ReproducaoRepository;
+import br.com.genovi.infrastructure.repository.OvinoRepository;
+import br.com.genovi.infrastructure.repository.ReproducaoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

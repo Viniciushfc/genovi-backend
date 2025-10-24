@@ -6,7 +6,7 @@ import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundEx
 import br.com.genovi.dtos.vendedor.CreateVendedorDTO;
 import br.com.genovi.dtos.vendedor.VendedorDTO;
 import br.com.genovi.application.mapper.VendedorMapper;
-import br.com.genovi.infrastructure.repositories.VendedorRepository;
+import br.com.genovi.infrastructure.repository.VendedorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

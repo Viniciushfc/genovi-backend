@@ -7,8 +7,8 @@ import br.com.genovi.dtos.ascendencia.AscendenciaDTO;
 import br.com.genovi.dtos.ascendencia.CreateAscendenciaDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.application.mapper.AscendenciaMapper;
-import br.com.genovi.infrastructure.repositories.AscendenciaRepository;
-import br.com.genovi.infrastructure.repositories.OvinoRepository;
+import br.com.genovi.infrastructure.repository.AscendenciaRepository;
+import br.com.genovi.infrastructure.repository.OvinoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

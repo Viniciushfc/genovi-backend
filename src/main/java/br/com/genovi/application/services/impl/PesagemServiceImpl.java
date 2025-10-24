@@ -7,8 +7,8 @@ import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundEx
 import br.com.genovi.dtos.pesagem.CreatePesagemDTO;
 import br.com.genovi.dtos.pesagem.PesagemDTO;
 import br.com.genovi.application.mapper.PesagemMapper;
-import br.com.genovi.infrastructure.repositories.OvinoRepository;
-import br.com.genovi.infrastructure.repositories.PesagemRepository;
+import br.com.genovi.infrastructure.repository.OvinoRepository;
+import br.com.genovi.infrastructure.repository.PesagemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

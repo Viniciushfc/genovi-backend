@@ -7,8 +7,8 @@ import br.com.genovi.dtos.amamentacao.AmamentacaoDTO;
 import br.com.genovi.dtos.amamentacao.CreateAmamentacaoDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.application.mapper.AmamentacaoMapper;
-import br.com.genovi.infrastructure.repositories.AmamentacaoRepository;
-import br.com.genovi.infrastructure.repositories.OvinoRepository;
+import br.com.genovi.infrastructure.repository.AmamentacaoRepository;
+import br.com.genovi.infrastructure.repository.OvinoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
