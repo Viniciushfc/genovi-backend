@@ -6,7 +6,7 @@ import br.com.genovi.domain.utils.CpfCnpjUtils;
 import br.com.genovi.dtos.funcionario.CreateFuncionarioDTO;
 import br.com.genovi.dtos.funcionario.FuncionarioDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.infrastructure.mapper.FuncionarioMapper;
+import br.com.genovi.application.mapper.FuncionarioMapper;
 import br.com.genovi.infrastructure.repositories.FuncionarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

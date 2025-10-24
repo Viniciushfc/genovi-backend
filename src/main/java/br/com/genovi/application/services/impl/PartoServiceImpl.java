@@ -7,7 +7,7 @@ import br.com.genovi.domain.models.Parto;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.parto.CreatePartoDTO;
 import br.com.genovi.dtos.parto.PartoDTO;
-import br.com.genovi.infrastructure.mapper.PartoMapper;
+import br.com.genovi.application.mapper.PartoMapper;
 import br.com.genovi.infrastructure.repositories.GestacaoRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import br.com.genovi.infrastructure.repositories.PartoRepository;

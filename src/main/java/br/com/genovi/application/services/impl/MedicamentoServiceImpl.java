@@ -6,7 +6,7 @@ import br.com.genovi.domain.models.Medicamento;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.medicamento.CreateMedicamentoDTO;
 import br.com.genovi.dtos.medicamento.MedicamentoDTO;
-import br.com.genovi.infrastructure.mapper.MedicamentoMapper;
+import br.com.genovi.application.mapper.MedicamentoMapper;
 import br.com.genovi.infrastructure.repositories.DoencaRepository;
 import br.com.genovi.infrastructure.repositories.MedicamentoRepository;
 import lombok.AllArgsConstructor;

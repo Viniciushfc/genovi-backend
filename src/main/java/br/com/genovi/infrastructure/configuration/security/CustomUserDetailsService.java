@@ -1,4 +1,4 @@
-package br.com.genovi.infrastructure.security;
+package br.com.genovi.infrastructure.configuration.security;
 
 import br.com.genovi.domain.models.Usuario;
 import br.com.genovi.infrastructure.repositories.UsuarioRepository;

@@ -7,7 +7,7 @@ import br.com.genovi.domain.models.Doenca;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.ocorrencia_doenca.CreateOcorrenciaDoencaDTO;
 import br.com.genovi.dtos.ocorrencia_doenca.OcorrenciaDoencaDTO;
-import br.com.genovi.infrastructure.mapper.OcorrenciaDoencaMapper;
+import br.com.genovi.application.mapper.OcorrenciaDoencaMapper;
 import br.com.genovi.infrastructure.repositories.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -6,7 +6,7 @@ import br.com.genovi.domain.models.Pesagem;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.pesagem.CreatePesagemDTO;
 import br.com.genovi.dtos.pesagem.PesagemDTO;
-import br.com.genovi.infrastructure.mapper.PesagemMapper;
+import br.com.genovi.application.mapper.PesagemMapper;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import br.com.genovi.infrastructure.repositories.PesagemRepository;
 import lombok.AllArgsConstructor;

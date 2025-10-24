@@ -6,7 +6,7 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.amamentacao.AmamentacaoDTO;
 import br.com.genovi.dtos.amamentacao.CreateAmamentacaoDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.infrastructure.mapper.AmamentacaoMapper;
+import br.com.genovi.application.mapper.AmamentacaoMapper;
 import br.com.genovi.infrastructure.repositories.AmamentacaoRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import lombok.AllArgsConstructor;

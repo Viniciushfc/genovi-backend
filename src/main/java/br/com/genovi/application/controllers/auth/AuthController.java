@@ -1,7 +1,7 @@
 package br.com.genovi.application.controllers.auth;
 
-import br.com.genovi.infrastructure.security.CustomUserDetailsService;
-import br.com.genovi.infrastructure.security.JwtService;
+import br.com.genovi.infrastructure.configuration.security.CustomUserDetailsService;
+import br.com.genovi.infrastructure.configuration.security.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.userdetails.UserDetails;

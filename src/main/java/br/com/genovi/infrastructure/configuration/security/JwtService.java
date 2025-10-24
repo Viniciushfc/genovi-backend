@@ -1,4 +1,4 @@
-package br.com.genovi.infrastructure.security;
+package br.com.genovi.infrastructure.configuration.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

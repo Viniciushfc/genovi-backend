@@ -7,7 +7,7 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.aplicacao.AplicacaoDTO;
 import br.com.genovi.dtos.aplicacao.CreateAplicacaoDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.infrastructure.mapper.AplicacaoMapper;
+import br.com.genovi.application.mapper.AplicacaoMapper;
 import br.com.genovi.infrastructure.repositories.AplicacaoRepository;
 import br.com.genovi.infrastructure.repositories.MedicamentoRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;

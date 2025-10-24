@@ -6,7 +6,7 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.ascendencia.AscendenciaDTO;
 import br.com.genovi.dtos.ascendencia.CreateAscendenciaDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.infrastructure.mapper.AscendenciaMapper;
+import br.com.genovi.application.mapper.AscendenciaMapper;
 import br.com.genovi.infrastructure.repositories.AscendenciaRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import lombok.AllArgsConstructor;

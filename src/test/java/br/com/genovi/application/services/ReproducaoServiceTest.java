@@ -7,7 +7,7 @@ import br.com.genovi.domain.models.Reproducao;
 import br.com.genovi.dtos.ovino.OvinoResumoDTO;
 import br.com.genovi.dtos.reproducao.CreateReproducaoDTO;
 import br.com.genovi.dtos.reproducao.ReproducaoDTO;
-import br.com.genovi.infrastructure.mapper.ReproducaoMapper;
+import br.com.genovi.application.mapper.ReproducaoMapper;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import br.com.genovi.infrastructure.repositories.ReproducaoRepository;
 import org.junit.jupiter.api.BeforeEach;

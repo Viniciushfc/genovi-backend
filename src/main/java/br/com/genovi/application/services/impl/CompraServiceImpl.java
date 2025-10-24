@@ -6,7 +6,7 @@ import br.com.genovi.domain.models.Vendedor;
 import br.com.genovi.dtos.compra.CompraDTO;
 import br.com.genovi.dtos.compra.CreateCompraDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.infrastructure.mapper.CompraMapper;
+import br.com.genovi.application.mapper.CompraMapper;
 import br.com.genovi.infrastructure.repositories.CompraRepository;
 import br.com.genovi.infrastructure.repositories.VendedorRepository;
 import lombok.AllArgsConstructor;

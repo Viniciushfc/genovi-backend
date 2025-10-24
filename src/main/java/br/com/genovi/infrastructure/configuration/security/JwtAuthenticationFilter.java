@@ -1,4 +1,4 @@
-package br.com.genovi.infrastructure.security;
+package br.com.genovi.infrastructure.configuration.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

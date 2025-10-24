@@ -7,7 +7,7 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Reproducao;
 import br.com.genovi.dtos.gestacao.CreateGestacaoDTO;
 import br.com.genovi.dtos.gestacao.GestacaoDTO;
-import br.com.genovi.infrastructure.mapper.GestacaoMapper;
+import br.com.genovi.application.mapper.GestacaoMapper;
 import br.com.genovi.infrastructure.repositories.GestacaoRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import br.com.genovi.infrastructure.repositories.ReproducaoRepository;

@@ -1,4 +1,4 @@
-package br.com.genovi.infrastructure.mapper;
+package br.com.genovi.application.mapper;
 
 import br.com.genovi.domain.models.Doenca;
 import br.com.genovi.domain.models.OcorrenciaDoenca;

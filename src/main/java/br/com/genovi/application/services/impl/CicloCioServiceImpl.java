@@ -6,7 +6,7 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.ciclo_cio.CicloCioDTO;
 import br.com.genovi.dtos.ciclo_cio.CreateCicloCioDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.infrastructure.mapper.CicloCioMapper;
+import br.com.genovi.application.mapper.CicloCioMapper;
 import br.com.genovi.infrastructure.repositories.CicloCioRepository;
 import br.com.genovi.infrastructure.repositories.OvinoRepository;
 import lombok.AllArgsConstructor;

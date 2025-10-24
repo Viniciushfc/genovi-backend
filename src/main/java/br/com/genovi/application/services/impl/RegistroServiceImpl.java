@@ -5,7 +5,7 @@ import br.com.genovi.domain.models.*;
 import br.com.genovi.dtos.registro.CreateRegistroDTO;
 import br.com.genovi.dtos.registro.RegistroDTO;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
-import br.com.genovi.infrastructure.mapper.RegistroMapper;
+import br.com.genovi.application.mapper.RegistroMapper;
 import br.com.genovi.infrastructure.repositories.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

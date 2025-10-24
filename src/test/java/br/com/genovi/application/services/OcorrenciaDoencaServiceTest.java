@@ -7,7 +7,7 @@ import br.com.genovi.domain.models.OcorrenciaDoenca;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.ocorrencia_doenca.CreateOcorrenciaDoencaDTO;
 import br.com.genovi.dtos.ocorrencia_doenca.OcorrenciaDoencaDTO;
-import br.com.genovi.infrastructure.mapper.OcorrenciaDoencaMapper;
+import br.com.genovi.application.mapper.OcorrenciaDoencaMapper;
 import br.com.genovi.infrastructure.repositories.DoencaRepository;
 import br.com.genovi.infrastructure.repositories.FuncionarioRepository;
 import br.com.genovi.infrastructure.repositories.OcorrenciaDoencaRepository;

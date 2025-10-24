@@ -6,7 +6,7 @@ import br.com.genovi.domain.models.Usuario;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.usuario.CreateUsuarioDTO;
 import br.com.genovi.dtos.usuario.UsuarioDTO;
-import br.com.genovi.infrastructure.mapper.UsuarioMapper;
+import br.com.genovi.application.mapper.UsuarioMapper;
 import br.com.genovi.infrastructure.repositories.FuncionarioRepository;
 import br.com.genovi.infrastructure.repositories.UsuarioRepository;
 import lombok.AllArgsConstructor;
