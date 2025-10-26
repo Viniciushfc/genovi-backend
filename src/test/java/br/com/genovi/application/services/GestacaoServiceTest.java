@@ -10,7 +10,7 @@ import br.com.genovi.application.mapper.GestacaoMapper;
 import br.com.genovi.infrastructure.repository.GestacaoRepository;
 import br.com.genovi.infrastructure.repository.OvinoRepository;
 import br.com.genovi.infrastructure.repository.ReproducaoRepository;
-import br.com.genovi.dtos.ovino.OvinoResumoDTO;
+import br.com.genovi.dtos.ovino.OvinoResumeDTO;
 import br.com.genovi.dtos.reproducao.ReproducaoDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -72,8 +72,8 @@ class GestacaoServiceTest {
 
         createGestacaoDTO = new CreateGestacaoDTO(1L, 2L, 3L, LocalDateTime.now());
 
-        OvinoResumoDTO maeResumo = new OvinoResumoDTO(1L, 101L, "Mae", "fbb1");
-        OvinoResumoDTO paiResumo = new OvinoResumoDTO(2L, 102L, "Pai", "fbb2");
+        OvinoResumeDTO maeResumo = new OvinoResumeDTO(1L, 101L, "Mae", "fbb1");
+        OvinoResumeDTO paiResumo = new OvinoResumeDTO(2L, 102L, "Pai", "fbb2");
         ReproducaoDTO reproducaoDTO = new ReproducaoDTO(3L, LocalDateTime.now(), paiResumo, maeResumo, null, null);
         gestacaoDTO = new GestacaoDTO(10L, maeResumo, paiResumo, reproducaoDTO, LocalDateTime.now());
     }

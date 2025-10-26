@@ -3,7 +3,7 @@ package br.com.genovi.application.mapper;
 import br.com.genovi.domain.models.Gestacao;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Parto;
-import br.com.genovi.dtos.ovino.OvinoResumoDTO;
+import br.com.genovi.dtos.ovino.OvinoResumeDTO;
 import br.com.genovi.dtos.parto.CreatePartoDTO;
 import br.com.genovi.dtos.parto.PartoDTO;
 import lombok.AllArgsConstructor;
@@ -30,12 +30,12 @@ public class PartoMapper {
             return null;
         }
 
-        OvinoResumoDTO maeResumo = entity.getOvinoMae() != null
-                ? new OvinoResumoDTO(entity.getOvinoMae().getId(), entity.getOvinoMae().getRfid(), entity.getOvinoMae().getNome(), entity.getOvinoMae().getFbb())
+        OvinoResumeDTO maeResumo = entity.getOvinoMae() != null
+                ? new OvinoResumeDTO(entity.getOvinoMae().getId(), entity.getOvinoMae().getRfid(), entity.getOvinoMae().getNome(), entity.getOvinoMae().getFbb())
                 : null;
 
-        OvinoResumoDTO paiResumo = entity.getOvinoPai() != null
-                ? new OvinoResumoDTO(entity.getOvinoPai().getId(), entity.getOvinoPai().getRfid(), entity.getOvinoPai().getNome(), entity.getOvinoPai().getFbb())
+        OvinoResumeDTO paiResumo = entity.getOvinoPai() != null
+                ? new OvinoResumeDTO(entity.getOvinoPai().getId(), entity.getOvinoPai().getRfid(), entity.getOvinoPai().getNome(), entity.getOvinoPai().getFbb())
                 : null;
 
         return new PartoDTO(

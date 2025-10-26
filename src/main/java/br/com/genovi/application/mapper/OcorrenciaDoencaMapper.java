@@ -38,7 +38,7 @@ public class OcorrenciaDoencaMapper {
                 doencaMapper.toDTO(entity.getDoenca()),
                 entity.getDataInicio(),
                 entity.getDataFinal(),
-                entity.isCurada()
+                entity.getCurada()
         );
     }
 }

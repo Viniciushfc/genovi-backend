@@ -24,11 +24,7 @@ public class Ovino {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(
-            name = "gen_ovino",
-            sequenceName = "seq_ovino",
-            allocationSize = 1
-    )
+    @SequenceGenerator(name = "gen_ovino", sequenceName = "seq_ovino", allocationSize = 1)
     private Long id;
 
     @Column(unique = true, name = "RFID")
@@ -37,7 +33,7 @@ public class Ovino {
     @Column(name = "nome")
     private String nome;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "raca")
     private TypeRaca raca;
 
@@ -47,15 +43,14 @@ public class Ovino {
     @Column(name = "data_nascimento", nullable = true)
     private LocalDateTime dataNascimento;
 
-    //Se tiver compra pega da compra se nao pega do parto se nao manualmente
     @Column(name = "data_cadastro", nullable = true)
     private LocalDateTime dataCadastro;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "grau_pureza")
     private TypeGrauPureza typeGrauPureza;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "sexo")
     private TypeSexo sexo;
 
@@ -82,6 +77,6 @@ public class Ovino {
     @JoinColumn(name = "id_parto", nullable = true)
     private Parto parto;
 
-    @OneToMany(mappedBy = "ovino", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "ovino", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Pesagem> pesagens = new ArrayList<>();
 }

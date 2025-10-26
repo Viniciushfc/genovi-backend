@@ -4,12 +4,7 @@ import br.com.genovi.domain.enums.TypeGrauPureza;
 import br.com.genovi.domain.enums.TypeRaca;
 import br.com.genovi.domain.enums.TypeSexo;
 import br.com.genovi.domain.enums.TypeStatus;
-import br.com.genovi.domain.models.Compra;
-import br.com.genovi.domain.models.Ovino;
-import br.com.genovi.domain.models.Parto;
-import br.com.genovi.dtos.ascendencia.AscendenciaDTO;
 import br.com.genovi.dtos.compra.CompraDTO;
-import br.com.genovi.dtos.funcionario.FuncionarioDTO;
 import br.com.genovi.dtos.parto.PartoDTO;
 import br.com.genovi.dtos.pesagem.PesagemDTO;
 
@@ -26,8 +21,8 @@ public record OvinoDTO(
         LocalDateTime dataCadastro,
         TypeGrauPureza typeGrauPureza,
         TypeSexo sexo,
-        Ovino maeOvino,
-        Ovino paiOvino,
+        OvinoResumeDTO maeOvino,
+        OvinoResumeDTO paiOvino,
         TypeStatus status,
         String fotoOvino,
         CompraDTO compra,

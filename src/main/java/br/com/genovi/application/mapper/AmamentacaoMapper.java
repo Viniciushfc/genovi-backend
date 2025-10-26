@@ -4,7 +4,7 @@ import br.com.genovi.domain.models.Amamentacao;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.amamentacao.AmamentacaoDTO;
 import br.com.genovi.dtos.amamentacao.CreateAmamentacaoDTO;
-import br.com.genovi.dtos.ovino.OvinoResumoDTO;
+import br.com.genovi.dtos.ovino.OvinoResumeDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -30,12 +30,12 @@ public class AmamentacaoMapper {
             return null;
         }
 
-        OvinoResumoDTO maeResumo = entity.getOvelhaMae() != null
-                ? new OvinoResumoDTO(entity.getOvelhaMae().getId(), entity.getOvelhaMae().getRfid(), entity.getOvelhaMae().getNome(), entity.getOvelhaMae().getFbb())
+        OvinoResumeDTO maeResumo = entity.getOvelhaMae() != null
+                ? new OvinoResumeDTO(entity.getOvelhaMae().getId(), entity.getOvelhaMae().getRfid(), entity.getOvelhaMae().getNome(), entity.getOvelhaMae().getFbb())
                 : null;
 
-        OvinoResumoDTO cordeiroResumo = entity.getCordeiroMamando() != null
-                ? new OvinoResumoDTO(entity.getCordeiroMamando().getId(), entity.getCordeiroMamando().getRfid(), entity.getCordeiroMamando().getNome(), entity.getCordeiroMamando().getFbb())
+        OvinoResumeDTO cordeiroResumo = entity.getCordeiroMamando() != null
+                ? new OvinoResumeDTO(entity.getCordeiroMamando().getId(), entity.getCordeiroMamando().getRfid(), entity.getCordeiroMamando().getNome(), entity.getCordeiroMamando().getFbb())
                 : null;
 
         return new AmamentacaoDTO(

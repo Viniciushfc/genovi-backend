@@ -2,7 +2,7 @@ package br.com.genovi.application.mapper;
 
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Reproducao;
-import br.com.genovi.dtos.ovino.OvinoResumoDTO;
+import br.com.genovi.dtos.ovino.OvinoResumeDTO;
 import br.com.genovi.dtos.reproducao.CreateReproducaoDTO;
 import br.com.genovi.dtos.reproducao.ReproducaoDTO;
 import lombok.AllArgsConstructor;
@@ -28,12 +28,12 @@ public class ReproducaoMapper {
             return null;
         }
 
-        OvinoResumoDTO paiResumo = entity.getCarneiroPai() != null
-                ? new OvinoResumoDTO(entity.getCarneiroPai().getId(), entity.getCarneiroPai().getRfid(), entity.getCarneiroPai().getNome(), entity.getCarneiroPai().getFbb())
+        OvinoResumeDTO paiResumo = entity.getCarneiroPai() != null
+                ? new OvinoResumeDTO(entity.getCarneiroPai().getId(), entity.getCarneiroPai().getRfid(), entity.getCarneiroPai().getNome(), entity.getCarneiroPai().getFbb())
                 : null;
 
-        OvinoResumoDTO maeResumo = entity.getOvelhaMae() != null
-                ? new OvinoResumoDTO(entity.getOvelhaMae().getId(), entity.getOvelhaMae().getRfid(), entity.getOvelhaMae().getNome(), entity.getOvelhaMae().getFbb())
+        OvinoResumeDTO maeResumo = entity.getOvelhaMae() != null
+                ? new OvinoResumeDTO(entity.getOvelhaMae().getId(), entity.getOvelhaMae().getRfid(), entity.getOvelhaMae().getNome(), entity.getOvelhaMae().getFbb())
                 : null;
 
         return new ReproducaoDTO(

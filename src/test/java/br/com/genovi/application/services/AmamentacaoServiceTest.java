@@ -5,7 +5,7 @@ import br.com.genovi.domain.models.Amamentacao;
 import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.dtos.amamentacao.AmamentacaoDTO;
 import br.com.genovi.dtos.amamentacao.CreateAmamentacaoDTO;
-import br.com.genovi.dtos.ovino.OvinoResumoDTO;
+import br.com.genovi.dtos.ovino.OvinoResumeDTO;
 import br.com.genovi.application.mapper.AmamentacaoMapper;
 import br.com.genovi.infrastructure.repository.AmamentacaoRepository;
 import br.com.genovi.infrastructure.repository.OvinoRepository;
@@ -63,8 +63,8 @@ class AmamentacaoServiceTest {
         LocalDateTime dataTeste = LocalDateTime.of(2024, 1, 1, 14, 30);
 
         amamentacao = new Amamentacao();
-        OvinoResumoDTO maeResumo = new OvinoResumoDTO(1L, 101L, "Mae", "fbb1");
-        OvinoResumoDTO cordeiroResumo = new OvinoResumoDTO(2L, 102L, "Cordeiro", "fbb2");
+        OvinoResumeDTO maeResumo = new OvinoResumeDTO(1L, 101L, "Mae", "fbb1");
+        OvinoResumeDTO cordeiroResumo = new OvinoResumeDTO(2L, 102L, "Cordeiro", "fbb2");
         amamentacaoDTO = new AmamentacaoDTO(maeResumo, cordeiroResumo, dataTeste, dataTeste.plusHours(10), "Observações testes");
 
         createDto = new CreateAmamentacaoDTO(1L, 2L, dataTeste, dataTeste.plusHours(10), "Observações testes");

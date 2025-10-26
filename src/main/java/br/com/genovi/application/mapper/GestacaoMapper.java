@@ -5,7 +5,7 @@ import br.com.genovi.domain.models.Ovino;
 import br.com.genovi.domain.models.Reproducao;
 import br.com.genovi.dtos.gestacao.CreateGestacaoDTO;
 import br.com.genovi.dtos.gestacao.GestacaoDTO;
-import br.com.genovi.dtos.ovino.OvinoResumoDTO;
+import br.com.genovi.dtos.ovino.OvinoResumeDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -30,12 +30,12 @@ public class GestacaoMapper {
             return null;
         }
 
-        OvinoResumoDTO maeResumo = entity.getOvelhaMae() != null
-                ? new OvinoResumoDTO(entity.getOvelhaMae().getId(), entity.getOvelhaMae().getRfid(), entity.getOvelhaMae().getNome(), entity.getOvelhaMae().getFbb())
+        OvinoResumeDTO maeResumo = entity.getOvelhaMae() != null
+                ? new OvinoResumeDTO(entity.getOvelhaMae().getId(), entity.getOvelhaMae().getRfid(), entity.getOvelhaMae().getNome(), entity.getOvelhaMae().getFbb())
                 : null;
 
-        OvinoResumoDTO paiResumo = entity.getOvelhaPai() != null
-                ? new OvinoResumoDTO(entity.getOvelhaPai().getId(), entity.getOvelhaPai().getRfid(), entity.getOvelhaPai().getNome(), entity.getOvelhaPai().getFbb())
+        OvinoResumeDTO paiResumo = entity.getOvelhaPai() != null
+                ? new OvinoResumeDTO(entity.getOvelhaPai().getId(), entity.getOvelhaPai().getRfid(), entity.getOvelhaPai().getNome(), entity.getOvelhaPai().getFbb())
                 : null;
 
         return new GestacaoDTO(

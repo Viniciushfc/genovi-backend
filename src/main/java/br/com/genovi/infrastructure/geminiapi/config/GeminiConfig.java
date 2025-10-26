@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class GeminiConfig {
 
     private String apiKey;
-    private String apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+    private String apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
     private double temperature = 0.7;
     private int maxTokens = 1000;
     private int timeoutSeconds = 30;

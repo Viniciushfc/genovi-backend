@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 import java.time.LocalDateTime;
 
 @Setter
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "ocorrencia_Doenca")
+@Table(name = "ocorrencia_doenca")
 public class OcorrenciaDoenca {
 
     @Id
@@ -39,6 +40,6 @@ public class OcorrenciaDoenca {
     @Column(name = "data_final", nullable = true)
     private LocalDateTime dataFinal;
 
-    @Column(name = "curada")
-    private boolean curada;
+    @Column(name = "is_curada", nullable = true)
+    private Boolean curada;
 }
