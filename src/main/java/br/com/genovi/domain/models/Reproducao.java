@@ -1,6 +1,6 @@
 package br.com.genovi.domain.models;
 
-import br.com.genovi.domain.enums.TypeReproducao;
+import br.com.genovi.domain.enums.EnumReproducao;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,7 +36,7 @@ public class Reproducao {
 
     @Column(name = "reproducao")
     @Enumerated(EnumType.STRING)
-    private TypeReproducao typeReproducao;
+    private EnumReproducao enumReproducao;
 
     @Column(name = "data_reproducao")
     private LocalDateTime dataReproducao;

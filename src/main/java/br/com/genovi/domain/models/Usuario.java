@@ -1,6 +1,6 @@
 package br.com.genovi.domain.models;
 
-import br.com.genovi.domain.enums.Role;
+import br.com.genovi.domain.enums.EnumRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,7 +41,7 @@ public class Usuario {
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    private Set<Role> roles;
+    private Set<EnumRole> enumRoles;
 
     @OneToOne
     @JoinColumn(name = "id_funcionario")

@@ -1,12 +1,12 @@
 package br.com.genovi.dtos.reproducao;
 
-import br.com.genovi.domain.enums.TypeReproducao;
+import br.com.genovi.domain.enums.EnumReproducao;
 
 import java.time.LocalDateTime;
 
 public record CreateReproducaoDTO(LocalDateTime dataReproducao,
                                   Long carneiroId,
                                   Long ovelhaId,
-                                  TypeReproducao typeReproducao,
+                                  EnumReproducao enumReproducao,
                                   String observacoes) {
 }

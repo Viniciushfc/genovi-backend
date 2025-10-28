@@ -39,6 +39,7 @@ public class AmamentacaoMapper {
                 : null;
 
         return new AmamentacaoDTO(
+                entity.getId(),
                 maeResumo,
                 cordeiroResumo,
                 entity.getDataInicio(),

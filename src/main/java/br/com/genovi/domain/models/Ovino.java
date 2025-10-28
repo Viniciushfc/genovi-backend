@@ -1,9 +1,10 @@
 package br.com.genovi.domain.models;
 
-import br.com.genovi.domain.enums.TypeGrauPureza;
-import br.com.genovi.domain.enums.TypeRaca;
-import br.com.genovi.domain.enums.TypeSexo;
-import br.com.genovi.domain.enums.TypeStatus;
+import br.com.genovi.domain.enums.EnumGrauPureza;
+import br.com.genovi.domain.enums.EnumRaca;
+import br.com.genovi.domain.enums.EnumSexo;
+import br.com.genovi.domain.enums.EnumStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,24 +36,26 @@ public class Ovino {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "raca")
-    private TypeRaca raca;
+    private EnumRaca raca;
 
     @Column(name = "fbb")
     private String fbb;
 
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "data_nascimento", nullable = true)
     private LocalDateTime dataNascimento;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "data_cadastro", nullable = true)
     private LocalDateTime dataCadastro;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "grau_pureza")
-    private TypeGrauPureza typeGrauPureza;
+    private EnumGrauPureza enumGrauPureza;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sexo")
-    private TypeSexo sexo;
+    private EnumSexo sexo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ovino_mae", nullable = true)
@@ -64,7 +67,7 @@ public class Ovino {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private TypeStatus status;
+    private EnumStatus status;
 
     @Column(name = "foto_ovino", nullable = true)
     private String fotoOvino;

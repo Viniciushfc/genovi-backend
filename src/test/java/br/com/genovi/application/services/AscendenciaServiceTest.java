@@ -70,6 +70,7 @@ class AscendenciaServiceTest {
         ascendencia.setMae(mae);
 
         ascendenciaDTO = new AscendenciaDTO(
+                1L,
                 ovinoMapper.toDTO(pai),
                 ovinoMapper.toDTO(mae));
         createDto = new CreateAscendenciaDTO(

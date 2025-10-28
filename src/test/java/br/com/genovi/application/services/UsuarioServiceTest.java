@@ -19,7 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static br.com.genovi.domain.enums.Role.ROLE_USER;
+import static br.com.genovi.domain.enums.EnumRole.ROLE_USER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -126,7 +126,7 @@ class UsuarioServiceTest {
         UsuarioDTO result = usuarioService.update(1L, createDTO);
 
         assertThat(result).isNotNull();
-        assertThat(usuario.getRoles()).contains(ROLE_USER);
+        assertThat(usuario.getEnumRoles()).contains(ROLE_USER);
         verify(usuarioRepository).save(any(Usuario.class));
     }
 

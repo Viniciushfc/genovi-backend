@@ -5,8 +5,10 @@ import br.com.genovi.dtos.ovino.OvinoDTO;
 
 import java.time.LocalDateTime;
 
-public record CicloCioDTO(OvinoDTO ovelha,
-                          LocalDateTime dataInicio,
-                          LocalDateTime dataFim,
-                          String observacoes) {
+public record CicloCioDTO(
+        Long id,
+        OvinoDTO ovelha,
+        LocalDateTime dataInicio,
+        LocalDateTime dataFim,
+        String observacoes) {
 }

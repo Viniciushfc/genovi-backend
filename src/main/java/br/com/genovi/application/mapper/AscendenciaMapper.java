@@ -26,6 +26,7 @@ public class AscendenciaMapper {
             return null;
         }
         return new AscendenciaDTO(
+                entity.getId(),
                 entity.getPai() != null ? ovinoMapper.toDTO(entity.getPai()) : null,
                 entity.getMae() != null ? ovinoMapper.toDTO(entity.getMae()) : null
         );

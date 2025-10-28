@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
-import static br.com.genovi.domain.enums.Role.ROLE_USER;
+import static br.com.genovi.domain.enums.EnumRole.ROLE_USER;
 
 @AllArgsConstructor
 @Service
@@ -65,7 +65,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         entity.setEmail(dto.email());
         entity.setSenha(dto.senha());
         entity.setAutenticacao2fa(dto.autenticacao2fa());
-        entity.setRoles(Collections.singleton(ROLE_USER));
+        entity.setEnumRoles(Collections.singleton(ROLE_USER));
 
         return usuarioMapper.toDTO(usuarioRepository.save(entity));
     }

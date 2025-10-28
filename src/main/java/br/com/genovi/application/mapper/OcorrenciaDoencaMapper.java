@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class OcorrenciaDoencaMapper {
 
-    private final FuncionarioMapper funcionarioMapper;
     private final OvinoMapper ovinoMapper;
     private final DoencaMapper doencaMapper;
 
@@ -34,6 +33,7 @@ public class OcorrenciaDoencaMapper {
         }
 
         return new OcorrenciaDoencaDTO(
+                entity.getId(),
                 ovinoMapper.toDTO(entity.getOvino()),
                 doencaMapper.toDTO(entity.getDoenca()),
                 entity.getDataInicio(),

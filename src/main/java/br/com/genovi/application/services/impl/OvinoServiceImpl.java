@@ -1,7 +1,7 @@
 package br.com.genovi.application.services.impl;
 
 import br.com.genovi.application.services.OvinoService;
-import br.com.genovi.domain.enums.TypeStatus;
+import br.com.genovi.domain.enums.EnumStatus;
 import br.com.genovi.domain.models.*;
 import br.com.genovi.infrastructure.exception.exceptionCustom.ResourceNotFoundException;
 import br.com.genovi.dtos.ovino.CreateOvinoDTO;
@@ -105,7 +105,7 @@ public class OvinoServiceImpl implements OvinoService {
         entity.setFbb(dto.fbb());
         entity.setDataNascimento(dto.dataNascimento());
         entity.setDataCadastro(dto.dataCadastro());
-        entity.setTypeGrauPureza(dto.typeGrauPureza());
+        entity.setEnumGrauPureza(dto.enumGrauPureza());
         entity.setSexo(dto.sexo());
         entity.setOvinoMae(mae);
         entity.setOvinoPai(pai);
@@ -121,7 +121,7 @@ public class OvinoServiceImpl implements OvinoService {
     @Override
     public void disable(Long id) {
         Ovino ovino = findOvinoEntityById(id);
-        ovino.setStatus(TypeStatus.DESATIVADO);
+        ovino.setStatus(EnumStatus.DESATIVADO);
         ovinoRepository.save(ovino);
     }
 }

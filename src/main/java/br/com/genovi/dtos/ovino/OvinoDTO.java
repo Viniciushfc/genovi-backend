@@ -1,9 +1,9 @@
 package br.com.genovi.dtos.ovino;
 
-import br.com.genovi.domain.enums.TypeGrauPureza;
-import br.com.genovi.domain.enums.TypeRaca;
-import br.com.genovi.domain.enums.TypeSexo;
-import br.com.genovi.domain.enums.TypeStatus;
+import br.com.genovi.domain.enums.EnumGrauPureza;
+import br.com.genovi.domain.enums.EnumRaca;
+import br.com.genovi.domain.enums.EnumSexo;
+import br.com.genovi.domain.enums.EnumStatus;
 import br.com.genovi.dtos.compra.CompraDTO;
 import br.com.genovi.dtos.parto.PartoDTO;
 import br.com.genovi.dtos.pesagem.PesagemDTO;
@@ -15,15 +15,15 @@ public record OvinoDTO(
         Long id,
         Long rfid,
         String nome,
-        TypeRaca raca,
+        EnumRaca raca,
         String fbb,
         LocalDateTime dataNascimento,
         LocalDateTime dataCadastro,
-        TypeGrauPureza typeGrauPureza,
-        TypeSexo sexo,
+        EnumGrauPureza grauPureza,
+        EnumSexo sexo,
         OvinoResumeDTO maeOvino,
         OvinoResumeDTO paiOvino,
-        TypeStatus status,
+        EnumStatus status,
         String fotoOvino,
         CompraDTO compra,
         PartoDTO parto,

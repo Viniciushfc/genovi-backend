@@ -27,8 +27,9 @@ public class CicloCioMapper {
         if (entity == null) {
             return null;
         }
-        
+
         return new CicloCioDTO(
+                entity.getId(),
                 ovinoMapper.toDTO(entity.getOvelha()),
                 entity.getDataInicio(),
                 entity.getDataFim(),

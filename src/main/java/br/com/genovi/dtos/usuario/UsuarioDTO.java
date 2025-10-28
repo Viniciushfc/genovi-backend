@@ -1,7 +1,5 @@
 package br.com.genovi.dtos.usuario;
 
-import br.com.genovi.domain.enums.TypeUsuario;
-import br.com.genovi.domain.models.Funcionario;
 import br.com.genovi.dtos.funcionario.FuncionarioDTO;
 
 public record UsuarioDTO(

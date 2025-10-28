@@ -65,7 +65,7 @@ class AmamentacaoServiceTest {
         amamentacao = new Amamentacao();
         OvinoResumeDTO maeResumo = new OvinoResumeDTO(1L, 101L, "Mae", "fbb1");
         OvinoResumeDTO cordeiroResumo = new OvinoResumeDTO(2L, 102L, "Cordeiro", "fbb2");
-        amamentacaoDTO = new AmamentacaoDTO(maeResumo, cordeiroResumo, dataTeste, dataTeste.plusHours(10), "Observações testes");
+        amamentacaoDTO = new AmamentacaoDTO(1L, maeResumo, cordeiroResumo, dataTeste, dataTeste.plusHours(10), "Observações testes");
 
         createDto = new CreateAmamentacaoDTO(1L, 2L, dataTeste, dataTeste.plusHours(10), "Observações testes");
     }

@@ -39,7 +39,7 @@ public class RelatorioServiceImpl implements RelatorioService {
         parametros.put("nascimento", ovino.dataNascimento() != null ? ovino.dataNascimento().format(formatter) : "N/A");
 
         parametros.put("rfid", ovino.rfid() != null ? String.valueOf(ovino.rfid()) : "N/A");
-        parametros.put("pureza", ovino.typeGrauPureza() != null ? ovino.typeGrauPureza().name() : "N/A");
+        parametros.put("pureza", ovino.grauPureza() != null ? ovino.grauPureza().name() : "N/A");
         parametros.put("raca", ovino.raca() != null ? ovino.raca() : "N/A");
 
 

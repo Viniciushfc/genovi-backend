@@ -8,9 +8,11 @@ import br.com.genovi.dtos.usuario.UsuarioDTO;
 
 import java.time.LocalDateTime;
 
-public record OcorrenciaDoencaDTO(OvinoDTO ovino,
-                                  DoencaDTO doenca,
-                                  LocalDateTime dataInicio,
-                                  LocalDateTime dataFinal,
-                                  Boolean curado) {
+public record OcorrenciaDoencaDTO(
+        Long id,
+        OvinoDTO ovino,
+        DoencaDTO doenca,
+        LocalDateTime dataInicio,
+        LocalDateTime dataFinal,
+        Boolean curado) {
 }

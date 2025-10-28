@@ -62,6 +62,7 @@ class CicloCioServiceTest {
         cicloCio.setId(1L);
 
         cicloCioDTO = new CicloCioDTO(
+                1L,
                 ovinoMapper.toDTO(ovelha),
                 LocalDateTime.now(),
                 LocalDateTime.now().plusHours(5),

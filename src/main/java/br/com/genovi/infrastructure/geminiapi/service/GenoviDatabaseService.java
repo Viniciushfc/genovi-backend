@@ -26,7 +26,7 @@ public class GenoviDatabaseService {
         response.addProperty("rfid", ovino.getRfid());
         response.addProperty("nome", ovino.getNome());
         response.addProperty("raca", ovino.getRaca().name());
-        response.addProperty("grauPureza", ovino.getTypeGrauPureza().name());
+        response.addProperty("grauPureza", ovino.getEnumGrauPureza().name());
         response.addProperty("sexo", ovino.getSexo().name());
         response.addProperty("status", ovino.getStatus().name());
         response.addProperty("dataNascimento", ovino.getDataNascimento() != null ? ovino.getDataNascimento().toLocalDate().toString() : "Desconhecida");

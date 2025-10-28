@@ -23,14 +23,19 @@ public class OvinoMapper {
     private final CompraMapper compraMapper;
 
     public Ovino toEntity(CreateOvinoDTO dto, Ovino ovinoMae, Ovino ovinoPai, Compra compra, Parto parto, List<Pesagem> pesagens) {
+        LocalDateTime dataCadastro;
         LocalDateTime dataNascimento;
 
-        if (compra != null && compra.getDataCompra() != null) {
-            dataNascimento = compra.getDataCompra();
-        } else if (parto != null && parto.getDataParto() != null) {
+        if (parto != null && parto.getDataParto() != null) {
+            dataCadastro = parto.getDataParto();
             dataNascimento = parto.getDataParto();
         } else {
-            dataNascimento = LocalDateTime.now();
+            dataCadastro = (compra != null && compra.getDataCompra() != null) ? compra.getDataCompra() : LocalDateTime.now();
+
+            if (dto.dataNascimento() == null) {
+                throw new IllegalArgumentException("A data de nascimento é obrigatória quando o ovino não é de um parto registrado.");
+            }
+            dataNascimento = dto.dataNascimento();
         }
 
         return new Ovino(
@@ -40,8 +45,8 @@ public class OvinoMapper {
                 dto.raca(),
                 dto.fbb(),
                 dataNascimento,
-                dto.dataCadastro(),
-                dto.typeGrauPureza(),
+                dataCadastro,
+                dto.enumGrauPureza(),
                 dto.sexo(),
                 ovinoMae,
                 ovinoPai,
@@ -65,7 +70,7 @@ public class OvinoMapper {
                 entity.getFbb(),
                 entity.getDataNascimento(),
                 entity.getDataCadastro(),
-                entity.getTypeGrauPureza(),
+                entity.getEnumGrauPureza(),
                 entity.getSexo(),
                 toResumoDTO(entity.getOvinoMae()),
                 toResumoDTO(entity.getOvinoPai()),

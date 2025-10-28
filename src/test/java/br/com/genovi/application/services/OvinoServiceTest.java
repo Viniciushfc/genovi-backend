@@ -1,7 +1,7 @@
 package br.com.genovi.application.services;
 
 import br.com.genovi.application.services.impl.OvinoServiceImpl;
-import br.com.genovi.domain.enums.TypeStatus;
+import br.com.genovi.domain.enums.EnumStatus;
 import br.com.genovi.domain.models.*;
 import br.com.genovi.dtos.ovino.CreateOvinoDTO;
 import br.com.genovi.dtos.ovino.OvinoDTO;
@@ -81,7 +81,7 @@ class OvinoServiceTest {
                 null, // sexo
                 1L, // maeId
                 2L, // paiId
-                TypeStatus.ATIVO,
+                EnumStatus.ATIVO,
                 null, // foto
                 1L, // compra
                 1L, // parto
@@ -138,7 +138,7 @@ class OvinoServiceTest {
 
         ovinoService.disable(1L);
 
-        assertEquals(TypeStatus.DESATIVADO, ovino.getStatus());
+        assertEquals(EnumStatus.DESATIVADO, ovino.getStatus());
         verify(ovinoRepository).save(ovino);
     }
 

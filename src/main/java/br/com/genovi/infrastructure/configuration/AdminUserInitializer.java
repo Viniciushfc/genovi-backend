@@ -1,6 +1,6 @@
 package br.com.genovi.infrastructure.configuration;
 
-import br.com.genovi.domain.enums.Role;
+import br.com.genovi.domain.enums.EnumRole;
 import br.com.genovi.domain.models.Usuario;
 import br.com.genovi.infrastructure.repository.UsuarioRepository;
 import org.springframework.boot.ApplicationRunner;
@@ -20,7 +20,7 @@ public class AdminUserInitializer {
                 Usuario admin = new Usuario();
                 admin.setEmail("admin@admin.com");
                 admin.setSenha(passwordEncoder.encode("1234"));
-                admin.setRoles(Set.of(Role.ROLE_ADMIN, Role.ROLE_USER));
+                admin.setEnumRoles(Set.of(EnumRole.ROLE_ADMIN, EnumRole.ROLE_USER));
 
                 usuarioRepository.save(admin);
                 System.out.println("✔️ Admin user created with email 'admin@admin.com' and password '1234'");
