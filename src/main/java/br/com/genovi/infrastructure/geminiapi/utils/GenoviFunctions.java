@@ -10,7 +10,7 @@ public class GenoviFunctions {
     public static JsonObject getAnimalDataSchema() {
         JsonObject functionDeclaration = new JsonObject();
         functionDeclaration.addProperty("name", "getOvinoByRfid");
-        functionDeclaration.addProperty("description", "Busca informações detalhadas de um (ovino, ovelha, carneiro, cordeiro) no sistema Genovi usando o número do rfid.");
+        functionDeclaration.addProperty("description", "Busca informações detalhadas de um único ovino (ovelha, carneiro, cordeiro) no sistema Genovi. Use esta função quando o usuário pedir dados de apenas um animal pelo rfid.");
 
         JsonObject parameters = new JsonObject();
         parameters.addProperty("type", "object");
@@ -32,7 +32,7 @@ public class GenoviFunctions {
     public static JsonObject getAnaliseReprodutiva() {
         JsonObject functionDeclaration = new JsonObject();
         functionDeclaration.addProperty("name", "getAnaliseReprodutiva");
-        functionDeclaration.addProperty("description", "Realiza uma análise de compatibilidade reprodutiva entre dois ovinos (ovelha, carneiro, etc.) usando seus RFIDs. A função busca os dados genéticos e de ascendência de ambos os animais no sistema Genovi e retorna uma análise sobre a viabilidade e os resultados esperados do cruzamento.");
+        functionDeclaration.addProperty("description", "Realiza uma análise de compatibilidade reprodutiva entre dois ovinos para um possível cruzamento. A função compara os dados genéticos e de ascendência de ambos os animais e retorna uma análise sobre a viabilidade e os resultados esperados.");
 
         JsonObject parameters = new JsonObject();
         parameters.addProperty("type", "object");

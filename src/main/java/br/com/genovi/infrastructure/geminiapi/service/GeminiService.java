@@ -165,12 +165,22 @@ public class GeminiService {
         JsonObject payload = new JsonObject();
         JsonArray contents = new JsonArray();
 
+        String functionName = functionCall.get("name").getAsString();
+        String fullUserPrompt;
+
+        if ("getAnaliseReprodutiva".equals(functionName)) {
+            String analysisPrompt = "Analise a compatibilidade reprodutiva dos ovinos a seguir. Forneça análise detalhada (forças, fraquezas, riscos). Se houver dados ausentes, cite-os e explique o impacto na recomendação. Dê a melhor recomendação possível, mesmo com dados incompletos. Conclua explicitamente se a cruza é recomendada ou não.\n\n" +
+                    "Dados dos Ovinos para Análise:\n" +
+                    functionResult.toString();
+            fullUserPrompt = systemPrompt + "\n\nPergunta: " + userPrompt + "\n\n" + analysisPrompt;
+        } else {
+            fullUserPrompt = systemPrompt + "\n\nPergunta: " + userPrompt;
+        }
+
         JsonObject userMessage = new JsonObject();
         userMessage.addProperty("role", "user");
         JsonArray userParts = new JsonArray();
         JsonObject userPart = new JsonObject();
-
-        String fullUserPrompt = systemPrompt + "\n\nPergunta: " + userPrompt;
         userPart.addProperty("text", fullUserPrompt);
 
         userParts.add(userPart);
@@ -233,17 +243,7 @@ public class GeminiService {
         if ("getAnaliseReprodutiva".equals(functionName)) {
             String rfid1 = args.get("rfid1").getAsString();
             String rfid2 = args.get("rfid2").getAsString();
-            JsonObject ovinosData = databaseService.fetchOvinosForAnalise(rfid1, rfid2);
-
-            String prompt = "Por favor, analise a compatibilidade reprodutiva dos dois ovinos a seguir e me diga se é uma boa ideia cruzá-los. Forneça uma análise detalhada, incluindo pontos fortes, fracos e riscos. Se alguma informação relevante estiver faltando para uma análise completa, por favor, cite-a explicitamente e explique como a falta dessa informação pode impactar a recomendação. Mesmo com informações incompletas, tente fornecer a melhor recomendação possível.\n\n" +
-                    "Ovino 1:\n" + ovinosData.get("ovino1").toString() + "\n\n" +
-                    "Ovino 2:\n" + ovinosData.get("ovino2").toString();
-
-            String analise = askGemini(prompt);
-
-            JsonObject response = new JsonObject();
-            response.addProperty("analise", analise);
-            return response;
+            return databaseService.fetchOvinosForAnalise(rfid1, rfid2);
         }
 
         JsonObject error = new JsonObject();
