@@ -47,20 +47,20 @@ public class GeminiService {
                 O foco é o melhoramento genético, identificando características desejáveis para aumentar a eficiência e qualidade da criação.
                 Embora existam tecnologias semelhantes para bovinos, este sistema é voltado exclusivamente para ovinos.
                 
-                Seu papel é responder perguntas sobre ovinos e temas relacionados, mesmo que o usuário use termos incorretos, traduções estranhas ou grafia incompleta.
-                Sempre tente interpretar a intenção da pergunta antes de recusar.
+                                Seu papel é responder perguntas sobre ovinos e temas relacionados, mesmo que o usuário use termos incorretos, traduções estranhas ou grafia incompleta.
+                                Sempre tente interpretar a intenção da pergunta antes de recusar.
+                                **PRIORIZE O USO DAS FERRAMENTAS DISPONÍVEIS para obter informações do sistema Genovi antes de responder a perguntas que exijam dados específicos de ovinos (como RFID, raça, histórico de saúde, etc.). Não peça ao usuário por informações que podem ser obtidas através das ferramentas.**
                 
-                Assuntos aceitos:
-                - Raças de ovinos
-                - Cuidados e manejo
-                - Alimentação
-                - Reprodução
-                - Doenças e saúde
-                - Tosquia e lã
-                - Produtos derivados (carne, leite, lã)
-                - Estudos genéticos sobre ovinos
-                - Curiosidades sobre ovinos
-                
+                                Assuntos aceitos:
+                                - Raças de ovinos
+                                - Cuidados e manejo
+                                - Alimentação
+                                - Reprodução
+                                - Doenças e saúde
+                                - Tosquia e lã
+                                - Produtos derivados (carne, leite, lã)
+                                - Estudos genéticos sobre ovinos
+                                - Curiosidades sobre ovinos                
                 Caso a pergunta não tenha nenhuma relação com ovinos, responda:
                 "Desculpe, eu só respondo perguntas sobre ovinos e o sistema Genovi! 🐑"
                 
@@ -77,10 +77,12 @@ public class GeminiService {
         try {
             logger.info("Iniciando a requisição para o Gemini");
 
-            JsonObject toolDeclaration = GenoviFunctions.getAnimalDataSchema();
+            JsonArray functionDeclarations = new JsonArray();
+            functionDeclarations.add(GenoviFunctions.getAnimalDataSchema());
+            functionDeclarations.add(GenoviFunctions.getAnaliseReprodutiva());
 
             String fullPrompt = systemPrompt + "\n\nPergunta: " + request.getMessage().trim();
-            JsonObject payload = createPayload(fullPrompt, toolDeclaration);
+            JsonObject payload = createPayload(fullPrompt, functionDeclarations);
 
             HttpResponse<String> response = sendRequest(payload);
             JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
@@ -128,7 +130,7 @@ public class GeminiService {
         return httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
     }
 
-    private JsonObject createPayload(String prompt, JsonObject functionDeclaration) {
+    private JsonObject createPayload(String prompt, JsonArray functionDeclarations) {
         JsonObject payload = new JsonObject();
         JsonArray contents = new JsonArray();
         JsonObject content = new JsonObject();
@@ -142,8 +144,6 @@ public class GeminiService {
 
         JsonArray tools = new JsonArray();
         JsonObject tool = new JsonObject();
-        JsonArray functionDeclarations = new JsonArray();
-        functionDeclarations.add(functionDeclaration);
         tool.add("functionDeclarations", functionDeclarations);
         tools.add(tool);
         payload.add("tools", tools);
@@ -228,6 +228,22 @@ public class GeminiService {
         if ("getOvinoByRfid".equals(functionName)) {
             String rfid = args.get("rfid").getAsString();
             return databaseService.fetchAnimalData(rfid);
+        }
+
+        if ("getAnaliseReprodutiva".equals(functionName)) {
+            String rfid1 = args.get("rfid1").getAsString();
+            String rfid2 = args.get("rfid2").getAsString();
+            JsonObject ovinosData = databaseService.fetchOvinosForAnalise(rfid1, rfid2);
+
+            String prompt = "Por favor, analise a compatibilidade reprodutiva dos dois ovinos a seguir e me diga se é uma boa ideia cruzá-los. Forneça uma análise detalhada, incluindo pontos fortes, fracos e riscos. Se alguma informação relevante estiver faltando para uma análise completa, por favor, cite-a explicitamente e explique como a falta dessa informação pode impactar a recomendação. Mesmo com informações incompletas, tente fornecer a melhor recomendação possível.\n\n" +
+                    "Ovino 1:\n" + ovinosData.get("ovino1").toString() + "\n\n" +
+                    "Ovino 2:\n" + ovinosData.get("ovino2").toString();
+
+            String analise = askGemini(prompt);
+
+            JsonObject response = new JsonObject();
+            response.addProperty("analise", analise);
+            return response;
         }
 
         JsonObject error = new JsonObject();

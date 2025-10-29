@@ -21,8 +21,6 @@ public enum EnumGrauPureza implements IEnum<String, String> {
         return key;
     }
 
-    @Override
-    @JsonValue
     public String getValue() {
         return value;
     }

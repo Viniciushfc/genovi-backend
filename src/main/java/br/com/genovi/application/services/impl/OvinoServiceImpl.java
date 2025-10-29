@@ -105,7 +105,7 @@ public class OvinoServiceImpl implements OvinoService {
         entity.setFbb(dto.fbb());
         entity.setDataNascimento(dto.dataNascimento());
         entity.setDataCadastro(dto.dataCadastro());
-        entity.setEnumGrauPureza(dto.enumGrauPureza());
+        entity.setEnumGrauPureza(dto.grauPureza());
         entity.setSexo(dto.sexo());
         entity.setOvinoMae(mae);
         entity.setOvinoPai(pai);

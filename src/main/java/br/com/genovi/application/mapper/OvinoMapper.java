@@ -46,7 +46,7 @@ public class OvinoMapper {
                 dto.fbb(),
                 dataNascimento,
                 dataCadastro,
-                dto.enumGrauPureza(),
+                dto.grauPureza(),
                 dto.sexo(),
                 ovinoMae,
                 ovinoPai,
