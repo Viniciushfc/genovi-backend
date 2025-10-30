@@ -10,6 +10,7 @@ import br.com.genovi.application.mapper.UsuarioMapper;
 import br.com.genovi.infrastructure.repository.FuncionarioRepository;
 import br.com.genovi.infrastructure.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -24,6 +25,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final FuncionarioRepository funcionarioRepository;
     private final UsuarioMapper usuarioMapper;
+    private final PasswordEncoder passwordEncoder;
 
     private Funcionario findFuncionarioById(Long id) {
         if (id == null) return null;
@@ -49,11 +51,15 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioDTO save(CreateUsuarioDTO dto) {
         Funcionario funcionario = findFuncionarioById(dto.funcionarioId());
 
-        Usuario usuario = usuarioMapper.toEntity(dto, true, funcionario);
+        Usuario entity = new Usuario();
+        entity.setAtivo(true);
+        entity.setFuncionario(funcionario);
+        entity.setEmail(dto.email());
+        entity.setSenha(passwordEncoder.encode(dto.senha()));
+        entity.setAutenticacao2fa(dto.autenticacao2fa());
+        entity.setEnumRoles(Collections.singleton(ROLE_USER));
 
-        usuarioRepository.save(usuario);
-
-        return usuarioMapper.toDTO(usuario);
+        return usuarioMapper.toDTO(usuarioRepository.save(entity));
     }
 
     @Override
@@ -63,7 +69,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         entity.setFuncionario(funcionario);
         entity.setEmail(dto.email());
-        entity.setSenha(dto.senha());
+        entity.setSenha(passwordEncoder.encode(dto.senha()));
         entity.setAutenticacao2fa(dto.autenticacao2fa());
         entity.setEnumRoles(Collections.singleton(ROLE_USER));
 
