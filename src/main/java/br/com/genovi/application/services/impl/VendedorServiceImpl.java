@@ -37,12 +37,19 @@ public class VendedorServiceImpl implements VendedorService {
 
     @Override
     public VendedorDTO save(CreateVendedorDTO dto) {
-        Vendedor vendedor = vendedorMapper.toEntity(dto);
+        if (dto == null) {
+            throw new RuntimeException("Vendedor está nulo!");
+        }
+
+        Vendedor vendedor = new Vendedor();
+        vendedor.setNome(dto.nome());
+        vendedor.setCpfCnpj(dto.cpfCnpj());
+        vendedor.setEmail(dto.email());
+        vendedor.setEndereco(dto.endereco());
+        vendedor.setTelefone(dto.telefone());
         vendedor.setAtivo(true);
 
-        vendedor = vendedorRepository.save(vendedor);
-
-        return vendedorMapper.toDTO(vendedor);
+        return vendedorMapper.toDTO(vendedorRepository.save(vendedor));
     }
 
     @Override

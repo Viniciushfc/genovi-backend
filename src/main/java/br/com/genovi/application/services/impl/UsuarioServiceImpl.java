@@ -49,31 +49,39 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO save(CreateUsuarioDTO dto) {
+        if (dto == null) {
+            throw new RuntimeException("Usuario está nulo!");
+        }
+
         Funcionario funcionario = findFuncionarioById(dto.funcionarioId());
 
-        Usuario entity = new Usuario();
-        entity.setAtivo(true);
-        entity.setFuncionario(funcionario);
-        entity.setEmail(dto.email());
-        entity.setSenha(passwordEncoder.encode(dto.senha()));
-        entity.setAutenticacao2fa(dto.autenticacao2fa());
-        entity.setEnumRoles(Collections.singleton(ROLE_USER));
+        Usuario usuario = new Usuario();
+        usuario.setAtivo(true);
+        usuario.setFuncionario(funcionario);
+        usuario.setEmail(dto.email());
+        usuario.setSenha(passwordEncoder.encode(dto.senha()));
+        usuario.setAutenticacao2fa(dto.autenticacao2fa());
+        usuario.setEnumRoles(Collections.singleton(ROLE_USER));
 
-        return usuarioMapper.toDTO(usuarioRepository.save(entity));
+        return usuarioMapper.toDTO(usuarioRepository.save(usuario));
     }
 
     @Override
     public UsuarioDTO update(Long id, CreateUsuarioDTO dto) {
-        Usuario entity = findUsuarioById(id);
+        if (dto == null) {
+            throw new RuntimeException("Usuario está nulo!");
+        }
+
+        Usuario usuario = findUsuarioById(id);
         Funcionario funcionario = findFuncionarioById(dto.funcionarioId());
 
-        entity.setFuncionario(funcionario);
-        entity.setEmail(dto.email());
-        entity.setSenha(passwordEncoder.encode(dto.senha()));
-        entity.setAutenticacao2fa(dto.autenticacao2fa());
-        entity.setEnumRoles(Collections.singleton(ROLE_USER));
+        usuario.setFuncionario(funcionario);
+        usuario.setEmail(dto.email());
+        usuario.setSenha(passwordEncoder.encode(dto.senha()));
+        usuario.setAutenticacao2fa(dto.autenticacao2fa());
+        usuario.setEnumRoles(Collections.singleton(ROLE_USER));
 
-        return usuarioMapper.toDTO(usuarioRepository.save(entity));
+        return usuarioMapper.toDTO(usuarioRepository.save(usuario));
     }
 
     @Override
