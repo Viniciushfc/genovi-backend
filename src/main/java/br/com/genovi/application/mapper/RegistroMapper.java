@@ -44,7 +44,7 @@ public class RegistroMapper {
 
         Registro registro = new Registro();
         registro.setDataRegistro(dto.dataRegistro());
-        registro.setIsSugestao(null);
+        registro.setIsSugestao(dto.isSugestao());
         registro.setFuncionario(funcionario);
         registro.setReproducao(reproducao);
         registro.setGestacao(gestacao);

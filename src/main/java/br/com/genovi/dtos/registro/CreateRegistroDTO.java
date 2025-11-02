@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public record CreateRegistroDTO(
         LocalDateTime dataRegistro,
+        Boolean isSugestao,
         Long idFuncionario,
         Long idReproducao,
         Long idGestacao,
