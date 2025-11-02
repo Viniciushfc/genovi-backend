@@ -20,7 +20,7 @@ public class UsuarioMapper {
                 dto.email(),
                 dto.senha(),
                 dto.autenticacao2fa(),
-                null,
+                dto.enumRoles(),
                 funcionario
         );
     }

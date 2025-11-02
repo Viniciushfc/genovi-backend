@@ -61,7 +61,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setEmail(dto.email());
         usuario.setSenha(passwordEncoder.encode(dto.senha()));
         usuario.setAutenticacao2fa(dto.autenticacao2fa());
-        usuario.setEnumRoles(Collections.singleton(ROLE_USER));
+        usuario.setEnumRoles(dto.enumRoles());
 
         return usuarioMapper.toDTO(usuarioRepository.save(usuario));
     }
@@ -79,8 +79,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setEmail(dto.email());
         usuario.setSenha(passwordEncoder.encode(dto.senha()));
         usuario.setAutenticacao2fa(dto.autenticacao2fa());
-        usuario.setEnumRoles(Collections.singleton(ROLE_USER));
-
+        usuario.setEnumRoles(dto.enumRoles());
+        
         return usuarioMapper.toDTO(usuarioRepository.save(usuario));
     }
 

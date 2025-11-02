@@ -59,7 +59,7 @@ class UsuarioServiceTest {
         usuario.setId(1L);
         usuario.setAtivo(true);
 
-        createDTO = new CreateUsuarioDTO(1L, true, "teste", "teste123", true, 1L);
+        createDTO = new CreateUsuarioDTO(1L, true, "teste", "teste123", true, Set.of(ROLE_USER), 1L);
         usuarioDTO = new UsuarioDTO(1L, true, "teste", "teste123", true, Set.of(ROLE_USER), funcionarioMapper.toDTO(funcionario));
     }
 
