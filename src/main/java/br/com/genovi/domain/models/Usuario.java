@@ -39,6 +39,7 @@ public class Usuario {
     private Boolean autenticacao2fa;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "usuario_roles")
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Set<EnumRole> enumRoles;

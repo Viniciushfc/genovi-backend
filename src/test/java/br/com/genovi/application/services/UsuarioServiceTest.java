@@ -1,6 +1,7 @@
 package br.com.genovi.application.services;
 
 import br.com.genovi.application.services.impl.UsuarioServiceImpl;
+import br.com.genovi.domain.enums.EnumRole;
 import br.com.genovi.domain.models.Funcionario;
 import br.com.genovi.domain.models.Usuario;
 import br.com.genovi.dtos.usuario.CreateUsuarioDTO;
@@ -18,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static br.com.genovi.domain.enums.EnumRole.ROLE_USER;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -58,7 +60,7 @@ class UsuarioServiceTest {
         usuario.setAtivo(true);
 
         createDTO = new CreateUsuarioDTO(1L, true, "teste", "teste123", true, 1L);
-        usuarioDTO = new UsuarioDTO(1L, true, "teste", "teste123", true, funcionarioMapper.toDTO(funcionario));
+        usuarioDTO = new UsuarioDTO(1L, true, "teste", "teste123", true, Set.of(ROLE_USER), funcionarioMapper.toDTO(funcionario));
     }
 
     @Test

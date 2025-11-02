@@ -36,6 +36,7 @@ public class UsuarioMapper {
                 entity.getEmail(),
                 entity.getSenha(),
                 entity.getAutenticacao2fa(),
+                entity.getEnumRoles(),
                 funcionarioMapper.toDTO(entity.getFuncionario())
         );
     }
