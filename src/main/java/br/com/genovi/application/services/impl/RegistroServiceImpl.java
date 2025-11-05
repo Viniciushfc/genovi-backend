@@ -102,6 +102,7 @@ public class RegistroServiceImpl implements RegistroService {
         OcorrenciaDoenca ocorrenciaDoenca = findOcorrenciaDoencaById(dto.idOcorrenciaDoencas());
 
         entity.setDataRegistro(dto.dataRegistro());
+        entity.setIsSugestao(dto.isSugestao());
         entity.setFuncionario(funcionario);
         entity.setReproducao(reproducao);
         entity.setGestacao(gestacao);
