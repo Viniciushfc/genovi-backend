@@ -1,8 +1,10 @@
 package br.com.genovi.domain.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum EnumRaca implements IEnum<String, String> {
+    ILE_DE_FRANCE("ILE_DE_FRANCE", "Ile de France"),
     MERINO("MERINO", "Merino"),
     SUFFOLK("SUFFOLK", "Suffolk"),
     HAMPSHIRE("HAMPSHIRE", "Hampshire"),
