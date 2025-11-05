@@ -61,5 +61,46 @@ public class GenoviFunctions {
         return functionDeclaration;
     }
 
-    // outra function para dar possivel tratamento/diagnostivo com a doença que o ovino tal tem!
+    public static JsonObject getPesoIdeal() {
+        JsonObject functionDeclaration = new JsonObject();
+        functionDeclaration.addProperty("name", "getPesoIdeal");
+        functionDeclaration.addProperty("description", "Analisa o peso ideal de um ovino com base na raça, sexo e idade em meses. Retorna uma faixa de peso considerada saudável e uma avaliação do peso atual se fornecido.");
+
+        JsonObject parameters = new JsonObject();
+        parameters.addProperty("type", "object");
+
+        JsonObject properties = new JsonObject();
+
+        JsonObject raca = new JsonObject();
+        raca.addProperty("type", "string");
+        raca.addProperty("description", "A raça do ovino (ex: 'Dorper', 'Santa Inês').");
+        properties.add("raca", raca);
+
+        JsonObject sexo = new JsonObject();
+        sexo.addProperty("type", "string");
+        sexo.addProperty("description", "O sexo do ovino ('MACHO' ou 'FEMEA').");
+        properties.add("sexo", sexo);
+
+        JsonObject idadeMeses = new JsonObject();
+        idadeMeses.addProperty("type", "integer");
+        idadeMeses.addProperty("description", "A idade do ovino em meses.");
+        properties.add("idadeMeses", idadeMeses);
+
+        JsonObject pesoAtual = new JsonObject();
+        pesoAtual.addProperty("type", "number");
+        pesoAtual.addProperty("description", "O peso atual do ovino em quilogramas (opcional).");
+        properties.add("pesoAtual", pesoAtual);
+
+        parameters.add("properties", properties);
+
+        JsonArray required = new JsonArray();
+        required.add("raca");
+        required.add("sexo");
+        required.add("idadeMeses");
+        parameters.add("required", required);
+
+        functionDeclaration.add("parameters", parameters);
+
+        return functionDeclaration;
+    }
 }

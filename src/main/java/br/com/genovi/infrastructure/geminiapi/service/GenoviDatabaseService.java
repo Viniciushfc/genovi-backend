@@ -66,7 +66,6 @@ public class GenoviDatabaseService {
             ovinoJson.addProperty("pesoAtualKg", ultimaPesagem.getPeso());
         }
 
-        // Ancestry (one level deep to avoid infinite recursion)
         if (ovino.getOvinoMae() != null) {
             JsonObject maeJson = new JsonObject();
             maeJson.addProperty("rfid", ovino.getOvinoMae().getRfid());

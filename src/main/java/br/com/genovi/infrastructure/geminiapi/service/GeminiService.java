@@ -1,11 +1,13 @@
 package br.com.genovi.infrastructure.geminiapi.service;
 
+import br.com.genovi.application.services.PesoIdealService;
 import br.com.genovi.infrastructure.geminiapi.config.GeminiConfig;
 import br.com.genovi.infrastructure.geminiapi.model.ChatRequest;
 import br.com.genovi.infrastructure.geminiapi.model.ChatResponse;
 import br.com.genovi.infrastructure.geminiapi.utils.GenoviFunctions;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,14 +31,16 @@ public class GeminiService {
     private final GeminiConfig config;
     private final String systemPrompt;
     private final GenoviDatabaseService databaseService;
+    private final PesoIdealService pesoIdealService;
 
     @Autowired
-    public GeminiService(GeminiConfig config, GenoviDatabaseService databaseService) {
+    public GeminiService(GeminiConfig config, GenoviDatabaseService databaseService, PesoIdealService pesoIdealService) {
         this.config = config;
         this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(config.getTimeoutSeconds()))
                 .build();
         this.databaseService = databaseService;
+        this.pesoIdealService = pesoIdealService;
         this.gson = new Gson();
         this.systemPrompt = """
                 Você é um especialista em ovinos e ovinocultura que trabalha dentro do sistema Genovi.
@@ -60,7 +64,7 @@ public class GeminiService {
                                 - Tosquia e lã
                                 - Produtos derivados (carne, leite, lã)
                                 - Estudos genéticos sobre ovinos
-                                - Curiosidades sobre ovinos                
+                                - Curiosidades sobre ovinos
                 Caso a pergunta não tenha nenhuma relação com ovinos, responda:
                 "Desculpe, eu só respondo perguntas sobre ovinos e o sistema Genovi! 🐑"
                 
@@ -80,11 +84,14 @@ public class GeminiService {
             JsonArray functionDeclarations = new JsonArray();
             functionDeclarations.add(GenoviFunctions.getAnimalDataSchema());
             functionDeclarations.add(GenoviFunctions.getAnaliseReprodutiva());
+            functionDeclarations.add(GenoviFunctions.getPesoIdeal());
+
 
             String fullPrompt = systemPrompt + "\n\nPergunta: " + request.getMessage().trim();
             JsonObject payload = createPayload(fullPrompt, functionDeclarations);
 
             HttpResponse<String> response = sendRequest(payload);
+            logger.info("Resposta recebida do Gemini: {}", response.body());
             JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
 
             JsonObject functionCall = extractFunctionCall(jsonResponse);
@@ -120,6 +127,7 @@ public class GeminiService {
     }
 
     private HttpResponse<String> sendRequest(JsonObject payload) throws IOException, InterruptedException {
+        logger.info("Enviando payload para o Gemini: {}", payload.toString());
         HttpRequest httpRequest = HttpRequest.newBuilder()
                 .uri(URI.create(config.getApiUrl() + "?key=" + config.getApiKey()))
                 .header("Content-Type", "application/json")
@@ -166,15 +174,16 @@ public class GeminiService {
         JsonArray contents = new JsonArray();
 
         String functionName = functionCall.get("name").getAsString();
-        String fullUserPrompt;
+        String fullUserPrompt = systemPrompt + "\n\nPergunta: " + userPrompt;
 
-        if ("getAnaliseReprodutiva".equals(functionName)) {
+        if ("getOvinoByRfid".equals(functionName) && (userPrompt.toLowerCase().contains("peso") || userPrompt.toLowerCase().contains("gordo") || userPrompt.toLowerCase().contains("magro"))) {
+            String analysisPrompt = "\n\nAnalise o peso do ovino com base nos dados retornados e me diga se ele está no peso ideal, abaixo ou acima.";
+            fullUserPrompt += analysisPrompt;
+        } else if ("getAnaliseReprodutiva".equals(functionName)) {
             String analysisPrompt = "Analise a compatibilidade reprodutiva dos ovinos a seguir. Forneça análise detalhada (forças, fraquezas, riscos). Se houver dados ausentes, cite-os e explique o impacto na recomendação. Dê a melhor recomendação possível, mesmo com dados incompletos. Conclua explicitamente se a cruza é recomendada ou não.\n\n" +
                     "Dados dos Ovinos para Análise:\n" +
                     functionResult.toString();
             fullUserPrompt = systemPrompt + "\n\nPergunta: " + userPrompt + "\n\n" + analysisPrompt;
-        } else {
-            fullUserPrompt = systemPrompt + "\n\nPergunta: " + userPrompt;
         }
 
         JsonObject userMessage = new JsonObject();
@@ -235,20 +244,35 @@ public class GeminiService {
         String functionName = functionCall.get("name").getAsString();
         JsonObject args = functionCall.getAsJsonObject("args");
 
-        if ("getOvinoByRfid".equals(functionName)) {
-            String rfid = args.get("rfid").getAsString();
-            return databaseService.fetchAnimalData(rfid);
+        switch (functionName) {
+            case "getOvinoByRfid": {
+                String rfid = args.get("rfid").getAsString();
+                return databaseService.fetchAnimalData(rfid);
+            }
+            case "getAnaliseReprodutiva": {
+                String rfid1 = args.get("rfid1").getAsString();
+                String rfid2 = args.get("rfid2").getAsString();
+                return databaseService.fetchOvinosForAnalise(rfid1, rfid2);
+            }
+            case "getPesoIdeal": {
+                String raca = args.get("raca").getAsString();
+                String sexo = args.get("sexo").getAsString();
+                int idadeMeses = args.get("idadeMeses").getAsInt();
+                Double pesoAtual = null;
+                if (args.has("pesoAtual")) {
+                    JsonElement pesoAtualElement = args.get("pesoAtual");
+                    if (!pesoAtualElement.isJsonNull()) {
+                        pesoAtual = pesoAtualElement.getAsDouble();
+                    }
+                }
+                return pesoIdealService.analisarPeso(raca, sexo, idadeMeses, pesoAtual);
+            }
+            default: {
+                JsonObject error = new JsonObject();
+                error.addProperty("error", "Função desconhecida ou inválida.");
+                return error;
+            }
         }
-
-        if ("getAnaliseReprodutiva".equals(functionName)) {
-            String rfid1 = args.get("rfid1").getAsString();
-            String rfid2 = args.get("rfid2").getAsString();
-            return databaseService.fetchOvinosForAnalise(rfid1, rfid2);
-        }
-
-        JsonObject error = new JsonObject();
-        error.addProperty("error", "Função desconhecida ou inválida.");
-        return error;
     }
 
     public String askGemini(String question) {
@@ -273,10 +297,10 @@ public class GeminiService {
             String answer = parseResponse(response.body());
             return new ChatResponse(answer);
         } else if (response.statusCode() == 429) {
-            logger.warn("Rate limit atingido - Status: 429");
+            logger.warn("Rate limit atingido - Status: 429, Body: {}", response.body());
             return new ChatResponse("Muitas perguntas! Aguarde um momento e tente novamente. 🐑", true);
         } else if (response.statusCode() >= 500) {
-            logger.error("Erro do servidor Gemini - Status: {}", response.statusCode());
+            logger.error("Erro do servidor Gemini - Status: {}, Body: {}", response.statusCode(), response.body());
             return new ChatResponse("Serviço temporariamente indisponível. Tente novamente em alguns minutos. 🐑", true);
         } else {
             logger.error("Erro na API Gemini - Status: {}, Body: {}",
@@ -286,6 +310,7 @@ public class GeminiService {
     }
 
     private String parseResponse(String responseBody) {
+        logger.info("Parsing response body: {}", responseBody);
         if (responseBody == null || responseBody.trim().isEmpty()) {
             logger.warn("Resposta vazia da API");
             return "Resposta vazia do serviço. Tente reformular sua pergunta. 🐑";
