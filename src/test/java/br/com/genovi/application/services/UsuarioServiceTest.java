@@ -17,6 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -25,6 +27,7 @@ import static br.com.genovi.domain.enums.EnumRole.ROLE_USER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,6 +45,9 @@ class UsuarioServiceTest {
     @Mock
     private FuncionarioMapper funcionarioMapper;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @InjectMocks
     private UsuarioServiceImpl usuarioService;
 
@@ -58,6 +64,12 @@ class UsuarioServiceTest {
         usuario = new Usuario();
         usuario.setId(1L);
         usuario.setAtivo(true);
+        usuario.setFuncionario(funcionario);
+        usuario.setEmail("teste");
+        usuario.setSenha("encodedPassword");
+        usuario.setAutenticacao2fa(true);
+        usuario.setEnumRoles(Set.of(ROLE_USER));
+
 
         createDTO = new CreateUsuarioDTO(1L, true, "teste", "teste123", true, Set.of(ROLE_USER), 1L);
         usuarioDTO = new UsuarioDTO(1L, true, "teste", "teste123", true, Set.of(ROLE_USER), funcionarioMapper.toDTO(funcionario));
@@ -98,14 +110,15 @@ class UsuarioServiceTest {
     @Test
     void shouldSaveUsuario() {
         when(funcionarioRepository.findById(1L)).thenReturn(Optional.of(funcionario));
-        when(usuarioMapper.toEntity(createDTO, true, funcionario)).thenReturn(usuario);
-        when(usuarioMapper.toDTO(usuario)).thenReturn(usuarioDTO);
-        when(usuarioRepository.save(any())).thenReturn(usuario);
+        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
+        when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
+        when(usuarioMapper.toDTO(any(Usuario.class))).thenReturn(usuarioDTO);
 
         UsuarioDTO result = usuarioService.save(createDTO);
 
         assertThat(result).isNotNull();
-        verify(usuarioRepository).save(usuario);
+        verify(usuarioRepository).save(any(Usuario.class));
+        verify(passwordEncoder).encode("teste123");
     }
 
     @Test
@@ -122,14 +135,15 @@ class UsuarioServiceTest {
     void shouldUpdateUsuario() {
         when(funcionarioRepository.findById(1L)).thenReturn(Optional.of(funcionario));
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
+        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
         when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
         when(usuarioMapper.toDTO(any(Usuario.class))).thenReturn(usuarioDTO);
 
         UsuarioDTO result = usuarioService.update(1L, createDTO);
 
         assertThat(result).isNotNull();
-        assertThat(usuario.getEnumRoles()).contains(ROLE_USER);
-        verify(usuarioRepository).save(any(Usuario.class));
+        verify(usuarioRepository).save(usuario);
+        verify(passwordEncoder).encode("teste123");
     }
 
     @Test
