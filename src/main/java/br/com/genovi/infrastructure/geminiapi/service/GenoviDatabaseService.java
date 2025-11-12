@@ -52,7 +52,6 @@ public class GenoviDatabaseService {
         ovinoJson.addProperty("sexo", ovino.getSexo().name());
         ovinoJson.addProperty("status", ovino.getStatus().name());
         ovinoJson.addProperty("dataNascimento", ovino.getDataNascimento() != null ? ovino.getDataNascimento().toLocalDate().toString() : "Desconhecida");
-        ovinoJson.addProperty("pesoAtual", ovino.getPesagens() != null ? ovino.getPesagens().getLast().toString() : "N/A");
 
         if (ovino.getDataNascimento() != null) {
             long meses = ChronoUnit.MONTHS.between(
