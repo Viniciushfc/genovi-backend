@@ -1,6 +1,8 @@
 package br.com.genovi.infrastructure.geminiapi.service;
 
-import br.com.genovi.application.services.PesoIdealService;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import br.com.genovi.infrastructure.geminiapi.config.GeminiConfig;
 import br.com.genovi.infrastructure.geminiapi.model.ChatRequest;
 import br.com.genovi.infrastructure.geminiapi.model.ChatResponse;
@@ -31,16 +33,14 @@ public class GeminiService {
     private final GeminiConfig config;
     private final String systemPrompt;
     private final GenoviDatabaseService databaseService;
-    private final PesoIdealService pesoIdealService;
 
     @Autowired
-    public GeminiService(GeminiConfig config, GenoviDatabaseService databaseService, PesoIdealService pesoIdealService) {
+    public GeminiService(GeminiConfig config, GenoviDatabaseService databaseService) {
         this.config = config;
         this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(config.getTimeoutSeconds()))
                 .build();
         this.databaseService = databaseService;
-        this.pesoIdealService = pesoIdealService;
         this.gson = new Gson();
         this.systemPrompt = """
                 Você é um especialista em ovinos e ovinocultura que trabalha dentro do sistema Genovi.
@@ -177,14 +177,19 @@ public class GeminiService {
         String fullUserPrompt = systemPrompt + "\n\nPergunta: " + userPrompt;
 
         if ("getOvinoByRfid".equals(functionName) && (userPrompt.toLowerCase().contains("peso") || userPrompt.toLowerCase().contains("gordo") || userPrompt.toLowerCase().contains("magro"))) {
-            String analysisPrompt = "\n\nAnalise o peso do ovino com base nos dados retornados e me diga se ele está no peso ideal, abaixo ou acima.";
+            String analysisPrompt = "\n\nVocê é um especialista em ovinocultura. Com base nos seus conhecimentos sobre as diferentes raças de ovinos, e utilizando os dados retornados pela ferramenta a seguir, faça uma análise completa do peso do animal. Determine a faixa de peso ideal para um ovino com essa raça, sexo e idade. Em seguida, compare com o peso atual e dê um veredito claro: 'Peso Ideal', 'Abaixo do Peso' ou 'Acima do Peso'. Justifique sua análise de forma breve.";
             fullUserPrompt += analysisPrompt;
         } else if ("getAnaliseReprodutiva".equals(functionName)) {
             String analysisPrompt = "Analise a compatibilidade reprodutiva dos ovinos a seguir. Forneça análise detalhada (forças, fraquezas, riscos). Se houver dados ausentes, cite-os e explique o impacto na recomendação. Dê a melhor recomendação possível, mesmo com dados incompletos. Conclua explicitamente se a cruza é recomendada ou não.\n\n" +
                     "Dados dos Ovinos para Análise:\n" +
                     functionResult.toString();
             fullUserPrompt = systemPrompt + "\n\nPergunta: " + userPrompt + "\n\n" + analysisPrompt;
+        } else if ("getPesoIdeal".equals(functionName)) {
+            String analysisPrompt = "Com base nos dados a seguir, analise o peso do ovino e dê um veredito se ele está no peso ideal, acima ou abaixo do peso, fornecendo uma breve explicação. Dados do Ovino:\n" +
+                    functionResult.toString();
+            fullUserPrompt = systemPrompt + "\n\nPergunta: " + userPrompt + "\n\n" + analysisPrompt;
         }
+
 
         JsonObject userMessage = new JsonObject();
         userMessage.addProperty("role", "user");
@@ -257,7 +262,18 @@ public class GeminiService {
             case "getPesoIdeal": {
                 String raca = args.get("raca").getAsString();
                 String sexo = args.get("sexo").getAsString();
-                int idadeMeses = args.get("idadeMeses").getAsInt();
+                String dataNascimentoStr = args.get("dataNascimento").getAsString();
+                long idadeEmMeses;
+
+                try {
+                    LocalDate dataNascimento = LocalDate.parse(dataNascimentoStr);
+                    idadeEmMeses = ChronoUnit.MONTHS.between(dataNascimento, LocalDate.now());
+                } catch (DateTimeParseException e) {
+                    JsonObject error = new JsonObject();
+                    error.addProperty("error", "Formato de data inválido. Por favor, use AAAA-MM-DD.");
+                    return error;
+                }
+
                 Double pesoAtual = null;
                 if (args.has("pesoAtual")) {
                     JsonElement pesoAtualElement = args.get("pesoAtual");
@@ -265,7 +281,21 @@ public class GeminiService {
                         pesoAtual = pesoAtualElement.getAsDouble();
                     }
                 }
-                return pesoIdealService.analisarPeso(raca, sexo, idadeMeses, pesoAtual);
+
+                JsonObject dadosOvino = new JsonObject();
+                dadosOvino.addProperty("raca", raca);
+                dadosOvino.addProperty("sexo", sexo);
+                dadosOvino.addProperty("idadeEmMesesCalculada", idadeEmMeses);
+                dadosOvino.addProperty("dataNascimentoFornecida", dataNascimentoStr);
+
+
+                if (pesoAtual != null) {
+                    dadosOvino.addProperty("pesoAtualEmKg", pesoAtual);
+                } else {
+                    dadosOvino.addProperty("pesoAtualEmKg", "Não informado");
+                }
+
+                return dadosOvino;
             }
             default: {
                 JsonObject error = new JsonObject();

@@ -64,7 +64,7 @@ public class GenoviFunctions {
     public static JsonObject getPesoIdeal() {
         JsonObject functionDeclaration = new JsonObject();
         functionDeclaration.addProperty("name", "getPesoIdeal");
-        functionDeclaration.addProperty("description", "Analisa o peso ideal de um ovino com base na raça, sexo e idade em meses. Retorna uma faixa de peso considerada saudável e uma avaliação do peso atual se fornecido.");
+        functionDeclaration.addProperty("description", "Analisa o peso ideal de um ovino com base na raça, sexo e data de nascimento. A aplicação calculará a idade em meses. Retorna uma faixa de peso considerada saudável e uma avaliação do peso atual se fornecido.");
 
         JsonObject parameters = new JsonObject();
         parameters.addProperty("type", "object");
@@ -81,10 +81,10 @@ public class GenoviFunctions {
         sexo.addProperty("description", "O sexo do ovino ('MACHO' ou 'FEMEA').");
         properties.add("sexo", sexo);
 
-        JsonObject idadeMeses = new JsonObject();
-        idadeMeses.addProperty("type", "integer");
-        idadeMeses.addProperty("description", "A idade do ovino em meses.");
-        properties.add("idadeMeses", idadeMeses);
+        JsonObject dataNascimento = new JsonObject();
+        dataNascimento.addProperty("type", "string");
+        dataNascimento.addProperty("description", "A data de nascimento do ovino no formato AAAA-MM-DD.");
+        properties.add("dataNascimento", dataNascimento);
 
         JsonObject pesoAtual = new JsonObject();
         pesoAtual.addProperty("type", "number");
@@ -96,7 +96,7 @@ public class GenoviFunctions {
         JsonArray required = new JsonArray();
         required.add("raca");
         required.add("sexo");
-        required.add("idadeMeses");
+        required.add("dataNascimento");
         parameters.add("required", required);
 
         functionDeclaration.add("parameters", parameters);
