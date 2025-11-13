@@ -1,5 +1,6 @@
 package br.com.genovi.infrastructure.geminiapi.controller;
 
+import br.com.genovi.infrastructure.geminiapi.model.ChatMessage;
 import br.com.genovi.infrastructure.geminiapi.model.ChatRequest;
 import br.com.genovi.infrastructure.geminiapi.model.ChatResponse;
 import br.com.genovi.infrastructure.geminiapi.service.GeminiService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -57,7 +59,8 @@ public class GeminiController {
         try {
             logger.info("Nova requisição simple chat recebida");
 
-            ChatRequest request = new ChatRequest(message);
+            ChatMessage chatMessage = new ChatMessage("user", message);
+            ChatRequest request = new ChatRequest(List.of(chatMessage));
             ChatResponse response = geminiService.processChat(request);
 
             if (response.isSuccess()) {
@@ -113,7 +116,8 @@ public class GeminiController {
     @GetMapping("/test")
     public ResponseEntity<ChatResponse> test() {
         try {
-            ChatRequest testRequest = new ChatRequest("O que são ovelhas?");
+            ChatMessage testMessage = new ChatMessage("user", "O que são ovelhas?");
+            ChatRequest testRequest = new ChatRequest(List.of(testMessage));
             ChatResponse response = geminiService.processChat(testRequest);
 
             logger.info("Teste da API executado - Success: {}", response.isSuccess());

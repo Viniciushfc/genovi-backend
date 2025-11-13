@@ -1,9 +1,7 @@
 package br.com.genovi.infrastructure.geminiapi.service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.time.temporal.ChronoUnit;
 import br.com.genovi.infrastructure.geminiapi.config.GeminiConfig;
+import br.com.genovi.infrastructure.geminiapi.model.ChatMessage;
 import br.com.genovi.infrastructure.geminiapi.model.ChatRequest;
 import br.com.genovi.infrastructure.geminiapi.model.ChatResponse;
 import br.com.genovi.infrastructure.geminiapi.utils.GenoviFunctions;
@@ -22,6 +20,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 public class GeminiService {
@@ -74,21 +76,22 @@ public class GeminiService {
     }
 
     public ChatResponse processChat(ChatRequest request) {
-        if (request == null || request.getMessage() == null || request.getMessage().trim().isEmpty()) {
+        if (request == null || request.getContents() == null || request.getContents().isEmpty()) {
             return new ChatResponse("Por favor, faça uma pergunta sobre ovinos ou o sistema Genovi! 🐑", true);
         }
 
+        List<ChatMessage> messagesWithRoles = request.getContents();
+
+
         try {
-            logger.info("Iniciando a requisição para o Gemini");
+            logger.info("Iniciando a requisição para o Gemini com histórico de {} mensagens", messagesWithRoles.size());
 
             JsonArray functionDeclarations = new JsonArray();
             functionDeclarations.add(GenoviFunctions.getAnimalDataSchema());
             functionDeclarations.add(GenoviFunctions.getAnaliseReprodutiva());
             functionDeclarations.add(GenoviFunctions.getPesoIdeal());
 
-
-            String fullPrompt = systemPrompt + "\n\nPergunta: " + request.getMessage().trim();
-            JsonObject payload = createPayload(fullPrompt, functionDeclarations);
+            JsonObject payload = createPayload(messagesWithRoles, functionDeclarations);
 
             HttpResponse<String> response = sendRequest(payload);
             logger.info("Resposta recebida do Gemini: {}", response.body());
@@ -101,9 +104,10 @@ public class GeminiService {
                 JsonObject functionResult = executeFunction(functionCall);
 
                 JsonObject secondPayload = createFunctionResponsePayload(
-                        request.getMessage(),
+                        messagesWithRoles,
                         functionCall,
-                        functionResult
+                        functionResult,
+                        functionDeclarations
                 );
 
                 HttpResponse<String> finalResponse = sendRequest(secondPayload);
@@ -138,17 +142,31 @@ public class GeminiService {
         return httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
     }
 
-    private JsonObject createPayload(String prompt, JsonArray functionDeclarations) {
+    private JsonObject createPayload(List<ChatMessage> messages, JsonArray functionDeclarations) {
         JsonObject payload = new JsonObject();
         JsonArray contents = new JsonArray();
-        JsonObject content = new JsonObject();
-        JsonObject part = new JsonObject();
-        part.addProperty("text", prompt);
-        JsonArray parts = new JsonArray();
-        parts.add(part);
-        content.add("parts", parts);
-        contents.add(content);
+
+        for (ChatMessage message : messages) {
+            JsonObject content = new JsonObject();
+            content.addProperty("role", message.getRole());
+            JsonArray parts = new JsonArray();
+            JsonObject part = new JsonObject();
+            part.addProperty("text", message.getText());
+            parts.add(part);
+            content.add("parts", parts);
+            contents.add(content);
+        }
+
         payload.add("contents", contents);
+
+        JsonObject systemInstruction = new JsonObject();
+        JsonArray systemParts = new JsonArray();
+        JsonObject systemPart = new JsonObject();
+        systemPart.addProperty("text", systemPrompt);
+        systemParts.add(systemPart);
+        systemInstruction.add("parts", systemParts);
+        payload.add("systemInstruction", systemInstruction);
+
 
         JsonArray tools = new JsonArray();
         JsonObject tool = new JsonObject();
@@ -169,49 +187,32 @@ public class GeminiService {
         return payload;
     }
 
-    private JsonObject createFunctionResponsePayload(String userPrompt, JsonObject functionCall, JsonObject functionResult) {
+    private JsonObject createFunctionResponsePayload(List<ChatMessage> history, JsonObject functionCall, JsonObject functionResult, JsonArray functionDeclarations) {
         JsonObject payload = new JsonObject();
         JsonArray contents = new JsonArray();
 
-        String functionName = functionCall.get("name").getAsString();
-        String fullUserPrompt = systemPrompt + "\n\nPergunta: " + userPrompt;
-
-        if ("getOvinoByRfid".equals(functionName) && (userPrompt.toLowerCase().contains("peso") || userPrompt.toLowerCase().contains("gordo") || userPrompt.toLowerCase().contains("magro"))) {
-            String analysisPrompt = "\n\nVocê é um especialista em ovinocultura. Com base nos seus conhecimentos sobre as diferentes raças de ovinos, e utilizando os dados retornados pela ferramenta a seguir, faça uma análise completa do peso do animal. Determine a faixa de peso ideal para um ovino com essa raça, sexo e idade. Em seguida, compare com o peso atual e dê um veredito claro: 'Peso Ideal', 'Abaixo do Peso' ou 'Acima do Peso'. Justifique sua análise de forma breve.";
-            fullUserPrompt += analysisPrompt;
-        } else if ("getAnaliseReprodutiva".equals(functionName)) {
-            String analysisPrompt = "Analise a compatibilidade reprodutiva dos ovinos a seguir. Forneça análise detalhada (forças, fraquezas, riscos). Se houver dados ausentes, cite-os e explique o impacto na recomendação. Dê a melhor recomendação possível, mesmo com dados incompletos. Conclua explicitamente se a cruza é recomendada ou não.\n\n" +
-                    "Dados dos Ovinos para Análise:\n" +
-                    functionResult.toString();
-            fullUserPrompt = systemPrompt + "\n\nPergunta: " + userPrompt + "\n\n" + analysisPrompt;
-        } else if ("getPesoIdeal".equals(functionName)) {
-            String analysisPrompt = "Com base nos dados a seguir, analise o peso do ovino e dê um veredito se ele está no peso ideal, acima ou abaixo do peso, fornecendo uma breve explicação. Dados do Ovino:\n" +
-                    functionResult.toString();
-            fullUserPrompt = systemPrompt + "\n\nPergunta: " + userPrompt + "\n\n" + analysisPrompt;
+        for (ChatMessage message : history) {
+            JsonObject content = new JsonObject();
+            content.addProperty("role", message.getRole());
+            JsonArray parts = new JsonArray();
+            JsonObject part = new JsonObject();
+            part.addProperty("text", message.getText());
+            parts.add(part);
+            content.add("parts", parts);
+            contents.add(content);
         }
 
-
-        JsonObject userMessage = new JsonObject();
-        userMessage.addProperty("role", "user");
-        JsonArray userParts = new JsonArray();
-        JsonObject userPart = new JsonObject();
-        userPart.addProperty("text", fullUserPrompt);
-
-        userParts.add(userPart);
-        userMessage.add("parts", userParts);
-        contents.add(userMessage);
-
-        JsonObject modelFunctionCall = new JsonObject();
-        modelFunctionCall.addProperty("role", "model");
+        JsonObject modelFunctionCallMessage = new JsonObject();
+        modelFunctionCallMessage.addProperty("role", "model");
         JsonArray modelParts = new JsonArray();
         JsonObject modelPart = new JsonObject();
         modelPart.add("functionCall", functionCall);
         modelParts.add(modelPart);
-        modelFunctionCall.add("parts", modelParts);
-        contents.add(modelFunctionCall);
+        modelFunctionCallMessage.add("parts", modelParts);
+        contents.add(modelFunctionCallMessage);
 
-        JsonObject functionResponse = new JsonObject();
-        functionResponse.addProperty("role", "tool");
+        JsonObject functionResponseMessage = new JsonObject();
+        functionResponseMessage.addProperty("role", "tool");
         JsonArray toolParts = new JsonArray();
         JsonObject toolPart = new JsonObject();
         JsonObject functionResponseContent = new JsonObject();
@@ -219,25 +220,51 @@ public class GeminiService {
         functionResponseContent.add("response", functionResult);
         toolPart.add("functionResponse", functionResponseContent);
         toolParts.add(toolPart);
-        functionResponse.add("parts", toolParts);
-        contents.add(functionResponse);
+        functionResponseMessage.add("parts", toolParts);
+        contents.add(functionResponseMessage);
 
         payload.add("contents", contents);
 
-        logger.info("Segundo payload enviado para o Gemini: {}", payload.toString());
+        JsonObject systemInstruction = new JsonObject();
+        JsonArray systemParts = new JsonArray();
+        JsonObject systemPart = new JsonObject();
+        systemPart.addProperty("text", systemPrompt);
+        systemParts.add(systemPart);
+        systemInstruction.add("parts", systemParts);
+        payload.add("systemInstruction", systemInstruction);
+
+        JsonArray tools = new JsonArray();
+        JsonObject tool = new JsonObject();
+        tool.add("functionDeclarations", functionDeclarations);
+        tools.add(tool);
+        payload.add("tools", tools);
+
+        JsonObject generationConfig = new JsonObject();
+        generationConfig.addProperty("temperature", config.getTemperature());
+        generationConfig.addProperty("maxOutputTokens", config.getMaxTokens());
+        payload.add("generationConfig", generationConfig);
+
+
+        logger.info("Segundo payload (com histórico) enviado para o Gemini: {}", payload.toString());
 
         return payload;
     }
-
+	
     private JsonObject extractFunctionCall(JsonObject jsonResponse) {
         if (jsonResponse.has("candidates")) {
-            JsonObject candidate = jsonResponse.getAsJsonArray("candidates").get(0).getAsJsonObject();
-            if (candidate.has("content")) {
-                JsonObject content = candidate.getAsJsonObject("content");
-                if (content.has("parts")) {
-                    JsonObject firstPart = content.getAsJsonArray("parts").get(0).getAsJsonObject();
-                    if (firstPart.has("functionCall")) {
-                        return firstPart.getAsJsonObject("functionCall");
+            JsonArray candidates = jsonResponse.getAsJsonArray("candidates");
+            if (candidates.size() > 0) {
+                JsonObject candidate = candidates.get(0).getAsJsonObject();
+                if (candidate.has("content")) {
+                    JsonObject content = candidate.getAsJsonObject("content");
+                    if (content.has("parts")) {
+                        JsonArray parts = content.getAsJsonArray("parts");
+                        if (parts.size() > 0) {
+                            JsonObject firstPart = parts.get(0).getAsJsonObject();
+                            if (firstPart.has("functionCall")) {
+                                return firstPart.getAsJsonObject("functionCall");
+                            }
+                        }
                     }
                 }
             }
@@ -306,19 +333,10 @@ public class GeminiService {
     }
 
     public String askGemini(String question) {
-        ChatRequest request = new ChatRequest(question);
+        ChatMessage message = new ChatMessage("user", question);
+        ChatRequest request = new ChatRequest(List.of(message));
         ChatResponse response = processChat(request);
         return response.isSuccess() ? response.getResponse() : response.getError();
-    }
-
-    private HttpRequest buildRequest(JsonObject payload) {
-        return HttpRequest.newBuilder()
-                .uri(URI.create(config.getApiUrl() + "?key=" + config.getApiKey()))
-                .header("Content-Type", "application/json")
-                .header("User-Agent", "GenoviApp/1.0")
-                .timeout(Duration.ofSeconds(config.getTimeoutSeconds()))
-                .POST(HttpRequest.BodyPublishers.ofString(payload.toString()))
-                .build();
     }
 
     private ChatResponse handleResponse(HttpResponse<String> response) {
@@ -359,6 +377,15 @@ public class GeminiService {
 
             JsonArray candidates = jsonResponse.getAsJsonArray("candidates");
             if (candidates == null || candidates.size() == 0) {
+                // Check for promptFeedback
+                if (jsonResponse.has("promptFeedback")) {
+                    JsonObject feedback = jsonResponse.getAsJsonObject("promptFeedback");
+                    if (feedback.has("blockReason")) {
+                        String reason = feedback.get("blockReason").getAsString();
+                        logger.warn("Prompt bloqueado. Razão: {}", reason);
+                        return "Sua pergunta foi bloqueada por nossas políticas de segurança. Por favor, reformule. 🐑";
+                    }
+                }
                 logger.warn("Nenhum candidato de resposta encontrado");
                 return "Não consegui gerar uma resposta. Tente reformular sua pergunta. 🐑";
             }
@@ -366,14 +393,22 @@ public class GeminiService {
             JsonObject firstCandidate = candidates.get(0).getAsJsonObject();
 
             if (firstCandidate.has("finishReason") &&
-                    "SAFETY".equals(firstCandidate.get("finishReason").getAsString())) {
-                logger.warn("Resposta bloqueada por políticas de segurança");
-                return "Não posso responder a essa pergunta. Faça uma pergunta sobre ovelhas! 🐑";
+                    !"STOP".equals(firstCandidate.get("finishReason").getAsString()) &&
+                    !"MAX_TOKENS".equals(firstCandidate.get("finishReason").getAsString())) {
+                logger.warn("Resposta finalizada por motivo inesperado: {}", firstCandidate.get("finishReason").getAsString());
+                if ("SAFETY".equals(firstCandidate.get("finishReason").getAsString())) {
+                    return "Não posso responder a essa pergunta. Faça uma pergunta sobre ovelhas! 🐑";
+                }
+            }
+
+            if (!firstCandidate.has("content") || firstCandidate.getAsJsonObject("content").isJsonNull()) {
+                logger.warn("Candidato não possui conteúdo.");
+                return "Resposta incompleta recebida. Tente novamente. 🐑";
             }
 
             JsonObject content = firstCandidate.getAsJsonObject("content");
-            if (content == null) {
-                logger.warn("Conteúdo da resposta é nulo");
+            if (content == null || !content.has("parts") || content.getAsJsonArray("parts").isJsonNull()) {
+                logger.warn("Conteúdo da resposta é nulo ou não possui partes");
                 return "Resposta incompleta. Tente novamente. 🐑";
             }
 
@@ -383,6 +418,11 @@ public class GeminiService {
                 return "Resposta mal formada. Tente uma pergunta diferente. 🐑";
             }
 
+            if (!parts.get(0).getAsJsonObject().has("text")) {
+                logger.warn("Parte da resposta não contém texto");
+                return "Resposta sem texto recebida. Tente novamente. 🐑";
+            }
+
             String text = parts.get(0).getAsJsonObject().get("text").getAsString();
             logger.info("Resposta processada com sucesso - {} caracteres", text.length());
 
@@ -390,6 +430,7 @@ public class GeminiService {
 
         } catch (Exception e) {
             logger.error("Erro ao fazer parse da resposta JSON", e);
+            logger.error("Corpo da resposta com erro: {}", responseBody);
             return "Erro ao processar resposta. Tente novamente em alguns instantes. 🐑";
         }
     }

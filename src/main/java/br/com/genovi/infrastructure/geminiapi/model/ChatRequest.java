@@ -1,32 +1,32 @@
 package br.com.genovi.infrastructure.geminiapi.model;
 
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import java.util.List;
 
 public class ChatRequest {
 
-    @NotBlank(message = "A mensagem não pode estar vazia")
-    @Size(max = 1000, message = "A mensagem não pode ter mais que 1000 caracteres")
-    private String message;
+    @NotEmpty(message = "O conteúdo não pode estar vazio")
+    @Valid
+    private List<ChatMessage> contents;
 
     public ChatRequest() {
     }
 
-    public ChatRequest(String message) {
-        this.message = message;
+    public ChatRequest(List<ChatMessage> contents) {
+        this.contents = contents;
     }
 
-    public String getMessage() {
-        return message;
+    public List<ChatMessage> getContents() {
+        return contents;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setContents(List<ChatMessage> contents) {
+        this.contents = contents;
     }
 
     @Override
     public String toString() {
-        return "ChatRequest{message='" + message + "'}";
+        return "ChatRequest{contents=" + contents + "}";
     }
 }
