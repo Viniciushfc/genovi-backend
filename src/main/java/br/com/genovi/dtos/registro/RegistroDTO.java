@@ -6,6 +6,7 @@ import br.com.genovi.dtos.funcionario.FuncionarioDTO;
 import br.com.genovi.dtos.gestacao.GestacaoDTO;
 import br.com.genovi.dtos.ocorrencia_doenca.OcorrenciaDoencaDTO;
 import br.com.genovi.dtos.parto.PartoDTO;
+import br.com.genovi.dtos.pesagem.PesagemDTO;
 import br.com.genovi.dtos.reproducao.ReproducaoDTO;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ public record RegistroDTO(
         GestacaoDTO gestacao,
         PartoDTO parto,
         AplicacaoDTO aplicacao,
-        OcorrenciaDoencaDTO ocorrenciaDoenca) {
+        OcorrenciaDoencaDTO ocorrenciaDoenca,
+        PesagemDTO pesagem) {
 
 }

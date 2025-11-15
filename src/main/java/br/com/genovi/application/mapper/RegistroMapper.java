@@ -1,9 +1,7 @@
 package br.com.genovi.application.mapper;
 
-import br.com.genovi.domain.models.Registro;
 import br.com.genovi.domain.models.*;
 import br.com.genovi.dtos.registro.CreateRegistroDTO;
-
 import br.com.genovi.dtos.registro.RegistroDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,6 +16,7 @@ public class RegistroMapper {
     private final AplicacaoMapper aplicacaoMapper;
     private final OcorrenciaDoencaMapper ocorrenciaDoencaMapper;
     private final FuncionarioMapper funcionarioMapper;
+    private final PesagemMapper pesagemMapper;
 
     public RegistroDTO toDTO(Registro registro) {
 
@@ -30,7 +29,8 @@ public class RegistroMapper {
                 gestacaoMapper.toDTO(registro.getGestacao()),
                 partoMapper.toDTO(registro.getParto()),
                 aplicacaoMapper.toDTO(registro.getAplicacao()),
-                ocorrenciaDoencaMapper.toDTO(registro.getOcorrenciaDoenca())
+                ocorrenciaDoencaMapper.toDTO(registro.getOcorrenciaDoenca()),
+                pesagemMapper.toDTO(registro.getPesagem())
         );
     }
 
@@ -40,7 +40,8 @@ public class RegistroMapper {
                              Gestacao gestacao,
                              Parto parto,
                              Aplicacao aplicacao,
-                             OcorrenciaDoenca ocorrenciaDoenca) {
+                             OcorrenciaDoenca ocorrenciaDoenca,
+                             Pesagem pesagem) {
 
         Registro registro = new Registro();
         registro.setDataRegistro(dto.dataRegistro());
@@ -51,6 +52,8 @@ public class RegistroMapper {
         registro.setParto(parto);
         registro.setAplicacao(aplicacao);
         registro.setOcorrenciaDoenca(ocorrenciaDoenca);
+        registro.setPesagem(pesagem);
+        
         return registro;
     }
 }

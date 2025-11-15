@@ -10,5 +10,6 @@ public record CreateRegistroDTO(
         Long idGestacao,
         Long idParto,
         Long idAplicacoes,
-        Long idOcorrenciaDoencas) {
+        Long idOcorrenciaDoencas,
+        Long idPessagem) {
 }

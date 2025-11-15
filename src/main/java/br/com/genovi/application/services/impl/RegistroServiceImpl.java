@@ -1,5 +1,6 @@
 package br.com.genovi.application.services.impl;
 
+import br.com.genovi.application.mapper.PesagemMapper;
 import br.com.genovi.application.services.RegistroService;
 import br.com.genovi.domain.models.*;
 import br.com.genovi.dtos.registro.CreateRegistroDTO;
@@ -23,6 +24,7 @@ public class RegistroServiceImpl implements RegistroService {
     private final PartoRepository partoRepository;
     private final AplicacaoRepository aplicacaoRepository;
     private final OcorrenciaDoencaRepository ocorrenciaDoencaRepository;
+    private final PesagemRepository pesagemRepository;
     private final RegistroMapper registroMapper;
 
     private Registro findRegistroById(Long id) {
@@ -67,6 +69,12 @@ public class RegistroServiceImpl implements RegistroService {
                 .orElseThrow(() -> new ResourceNotFoundException("Ocorrência de Doença não encontrada"));
     }
 
+    private Pesagem findPesagemById(Long id) {
+        if (id == null) return null;
+        return pesagemRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pesagem não encontrada"));
+    }
+
     @Override
     public List<RegistroDTO> findAll() {
         return registroRepository.findAll().stream().map(registroMapper::toDTO).toList();
@@ -85,8 +93,9 @@ public class RegistroServiceImpl implements RegistroService {
         Parto parto = findPartoById(dto.idParto());
         Aplicacao aplicacao = findAplicacaoById(dto.idAplicacoes());
         OcorrenciaDoenca ocorrenciaDoenca = findOcorrenciaDoencaById(dto.idOcorrenciaDoencas());
+        Pesagem pesagem = findPesagemById(dto.idPessagem());
 
-        Registro registro = registroMapper.toEntity(dto, funcionario, reproducao, gestacao, parto, aplicacao, ocorrenciaDoenca);
+        Registro registro = registroMapper.toEntity(dto, funcionario, reproducao, gestacao, parto, aplicacao, ocorrenciaDoenca, pesagem);
 
         return registroMapper.toDTO(registroRepository.save(registro));
     }
@@ -100,6 +109,7 @@ public class RegistroServiceImpl implements RegistroService {
         Parto parto = findPartoById(dto.idParto());
         Aplicacao aplicacao = findAplicacaoById(dto.idAplicacoes());
         OcorrenciaDoenca ocorrenciaDoenca = findOcorrenciaDoencaById(dto.idOcorrenciaDoencas());
+        Pesagem pesagem = findPesagemById(dto.idPessagem());
 
         entity.setDataRegistro(dto.dataRegistro());
         entity.setIsSugestao(dto.isSugestao());
@@ -109,6 +119,7 @@ public class RegistroServiceImpl implements RegistroService {
         entity.setParto(parto);
         entity.setAplicacao(aplicacao);
         entity.setOcorrenciaDoenca(ocorrenciaDoenca);
+        entity.setPesagem(pesagem);
 
         return registroMapper.toDTO(registroRepository.save(entity));
     }

@@ -54,4 +54,8 @@ public class Registro {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_ocorrencia_doenca", nullable = true)
     private OcorrenciaDoenca ocorrenciaDoenca;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pesagem")
+    private Pesagem pesagem;
 }
