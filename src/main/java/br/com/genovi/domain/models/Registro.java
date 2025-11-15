@@ -56,6 +56,6 @@ public class Registro {
     private OcorrenciaDoenca ocorrenciaDoenca;
 
     @ManyToOne
-    @JoinColumn(name = "id_pesagem")
+    @JoinColumn(name = "id_pesagem", nullable = true)
     private Pesagem pesagem;
 }
