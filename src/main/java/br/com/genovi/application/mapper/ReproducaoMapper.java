@@ -18,8 +18,7 @@ public class ReproducaoMapper {
                 carneiroPai,
                 ovelhaMae,
                 dto.enumReproducao(),
-                dto.dataReproducao(),
-                dto.observacoes()
+                dto.dataReproducao()
         );
     }
 
@@ -41,8 +40,7 @@ public class ReproducaoMapper {
                 entity.getDataReproducao(),
                 paiResumo,
                 maeResumo,
-                entity.getEnumReproducao(),
-                entity.getObservacoes()
+                entity.getEnumReproducao()
         );
     }
 }

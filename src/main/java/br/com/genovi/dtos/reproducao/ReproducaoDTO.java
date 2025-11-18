@@ -10,6 +10,5 @@ public record ReproducaoDTO(
         LocalDateTime dataReproducao,
         OvinoResumeDTO carneiro,
         OvinoResumeDTO ovelha,
-        EnumReproducao enumReproducao,
-        String observacoes) {
+        EnumReproducao enumReproducao) {
 }

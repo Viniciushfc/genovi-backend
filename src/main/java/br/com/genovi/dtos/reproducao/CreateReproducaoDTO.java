@@ -7,6 +7,5 @@ import java.time.LocalDateTime;
 public record CreateReproducaoDTO(LocalDateTime dataReproducao,
                                   Long carneiroId,
                                   Long ovelhaId,
-                                  EnumReproducao enumReproducao,
-                                  String observacoes) {
+                                  EnumReproducao enumReproducao) {
 }

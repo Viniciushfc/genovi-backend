@@ -62,9 +62,9 @@ class ReproducaoServiceTest {
 
         OvinoResumeDTO carneiroResumo = new OvinoResumeDTO(carneiro.getId(), carneiro.getRfid(), carneiro.getNome(), carneiro.getFbb());
         OvinoResumeDTO ovelhaResumo = new OvinoResumeDTO(ovelha.getId(), ovelha.getRfid(), ovelha.getNome(), ovelha.getFbb());
-        reproducaoDTO = new ReproducaoDTO(1L, LocalDateTime.now(), carneiroResumo, ovelhaResumo, EnumReproducao.INSEMINACAO_ARTIFICIAL, "Observacoes Test");
+        reproducaoDTO = new ReproducaoDTO(1L, LocalDateTime.now(), carneiroResumo, ovelhaResumo, EnumReproducao.INSEMINACAO_ARTIFICIAL);
 
-        createReproducaoDTO = new CreateReproducaoDTO(LocalDateTime.now(), 1L, 2L, EnumReproducao.INSEMINACAO_ARTIFICIAL, "Observacoes Test");
+        createReproducaoDTO = new CreateReproducaoDTO(LocalDateTime.now(), 1L, 2L, EnumReproducao.INSEMINACAO_ARTIFICIAL);
     }
 
     @Test

@@ -74,7 +74,7 @@ class GestacaoServiceTest {
 
         OvinoResumeDTO maeResumo = new OvinoResumeDTO(1L, 101L, "Mae", "fbb1");
         OvinoResumeDTO paiResumo = new OvinoResumeDTO(2L, 102L, "Pai", "fbb2");
-        ReproducaoDTO reproducaoDTO = new ReproducaoDTO(3L, LocalDateTime.now(), paiResumo, maeResumo, null, null);
+        ReproducaoDTO reproducaoDTO = new ReproducaoDTO(3L, LocalDateTime.now(), paiResumo, maeResumo, null);
         gestacaoDTO = new GestacaoDTO(10L, maeResumo, paiResumo, reproducaoDTO, LocalDateTime.now());
     }
 
@@ -274,7 +274,7 @@ class GestacaoServiceTest {
         gestacao2.setId(11L);
         List<Gestacao> gestacoes = Arrays.asList(gestacao, gestacao2);
 
-        ReproducaoDTO reproducaoDTO2 = new ReproducaoDTO(4L, LocalDateTime.now(), null, null, null, null);
+        ReproducaoDTO reproducaoDTO2 = new ReproducaoDTO(4L, LocalDateTime.now(), null, null, null);
         GestacaoDTO gestacaoDTO2 = new GestacaoDTO(11L, null, null, reproducaoDTO2, LocalDateTime.now());
 
         when(gestacaoRepository.findAll()).thenReturn(gestacoes);

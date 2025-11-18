@@ -65,7 +65,6 @@ public class ReproducaoServiceImpl implements ReproducaoService {
         entity.setOvelhaMae(ovelha);
         entity.setDataReproducao(dto.dataReproducao());
         entity.setEnumReproducao(dto.enumReproducao());
-        entity.setObservacoes(dto.observacoes());
 
         return reproducaoMapper.toDTO(reproducaoRepository.save(entity));
     }

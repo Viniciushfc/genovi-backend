@@ -40,8 +40,4 @@ public class Reproducao {
 
     @Column(name = "data_reproducao")
     private LocalDateTime dataReproducao;
-
-    @Column(name = "observacoes")
-    private String observacoes;
-
 }
