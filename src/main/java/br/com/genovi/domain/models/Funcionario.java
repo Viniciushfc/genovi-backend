@@ -17,12 +17,8 @@ import java.time.LocalDateTime;
 public class Funcionario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(
-            name = "gen_funcionario",
-            sequenceName = "seq_funcionario",
-            allocationSize = 1
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_funcionario")
+    @SequenceGenerator(name = "gen_funcionario", sequenceName = "gen_id_funcionario", allocationSize = 1)
     private Long id;
 
     @Column(name = "nome")

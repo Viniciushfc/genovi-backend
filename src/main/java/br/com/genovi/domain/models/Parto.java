@@ -17,12 +17,8 @@ import java.time.LocalDateTime;
 public class Parto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(
-            name = "gen_parto",
-            sequenceName = "seq_parto",
-            allocationSize = 1
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_parto")
+    @SequenceGenerator(name = "gen_parto", sequenceName = "gen_id_parto", allocationSize = 1)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

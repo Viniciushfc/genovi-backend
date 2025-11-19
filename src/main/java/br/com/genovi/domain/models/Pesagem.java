@@ -17,12 +17,8 @@ import java.time.LocalDateTime;
 public class Pesagem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(
-            name = "gen_pesagem",
-            sequenceName = "seq_pesagem",
-            allocationSize = 1
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_pesagem")
+    @SequenceGenerator(name = "gen_pesagem", sequenceName = "gen_id_pesagem", allocationSize = 1)
     private Long id;
 
     @Column(name = "data_pesagem")

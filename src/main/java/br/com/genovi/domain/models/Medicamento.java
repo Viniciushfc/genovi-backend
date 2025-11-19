@@ -17,12 +17,8 @@ import java.util.List;
 public class Medicamento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(
-            name = "gen_medicamento",
-            sequenceName = "seq_medicamento",
-            allocationSize = 1
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_medicamento")
+    @SequenceGenerator(name = "gen_medicamento", sequenceName = "gen_id_medicamento", allocationSize = 1)
     private Long id;
 
     @Column(name = "nome")

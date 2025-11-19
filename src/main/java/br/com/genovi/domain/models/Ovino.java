@@ -24,8 +24,8 @@ import java.util.List;
 public class Ovino {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "gen_ovino", sequenceName = "seq_ovino", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_ovino")
+    @SequenceGenerator(name = "gen_ovino", sequenceName = "gen_id_ovino", allocationSize = 1)
     private Long id;
 
     @Column(unique = true, name = "RFID")

@@ -15,12 +15,8 @@ import lombok.Setter;
 public class Ascendencia {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(
-            name = "gen_acendencia",
-            sequenceName = "seq_acendencia",
-            allocationSize = 1
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_ascendencia")
+    @SequenceGenerator(name = "gen_ascendencia", sequenceName = "gen_id_ascendencia", allocationSize = 1)
     private Long id;
 
     @ManyToOne(optional = true)

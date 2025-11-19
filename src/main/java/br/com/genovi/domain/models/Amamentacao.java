@@ -17,12 +17,8 @@ import java.time.LocalDateTime;
 public class Amamentacao {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(
-            name = "gen_amamentacao",
-            sequenceName = "seq_amamentacao",
-            allocationSize = 1
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_amamentacao")
+    @SequenceGenerator(name = "gen_amamentacao", sequenceName = "gen_id_amamentacao", allocationSize = 1)
     private Long id;
 
     @ManyToOne

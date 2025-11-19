@@ -17,12 +17,8 @@ import java.time.LocalDateTime;
 public class CicloCio {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(
-            name = "gen_ciclo_cio",
-            sequenceName = "seq_ciclo_cio",
-            allocationSize = 1
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_ciclo_cio")
+    @SequenceGenerator(name = "gen_ciclo_cio", sequenceName = "gen_id_ciclo_cio", allocationSize = 1)
     private Long id;
 
     @ManyToOne
