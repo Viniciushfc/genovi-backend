@@ -24,6 +24,6 @@ public interface RegistroController {
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable Long id);
 
-    @PatchMapping("/sugestao")
+    @PatchMapping("/{id}/sugestao")
     ResponseEntity<RegistroDTO> sugestaoParaRegistro(@PathVariable Long id, @RequestBody Boolean isSugestao);
 }
