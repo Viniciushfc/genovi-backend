@@ -48,10 +48,17 @@ public class MedicamentoServiceImpl implements MedicamentoService {
             throw new RuntimeException("Uma ou mais Doenças não foram encontradas.");
         }
 
-        Medicamento medicamento = medicamentoMapper.toEntity(dto, doencas);
-        medicamentoRepository.save(medicamento);
+        Medicamento entity = new Medicamento();
+        entity.setNome(dto.nome());
+        entity.setFabricante(dto.fabricante());
+        entity.setDoencas(doencas);
+        entity.setIntervaloDoses(dto.intervaloDoses());
+        entity.setQuantidadeDoses(dto.quantidadeDoses());
+        entity.setVacina(dto.isVacina());
 
-        return medicamentoMapper.toDTO(medicamento);
+        medicamentoRepository.save(entity);
+
+        return medicamentoMapper.toDTO(entity);
     }
 
     @Override
@@ -70,6 +77,8 @@ public class MedicamentoServiceImpl implements MedicamentoService {
         entity.setIntervaloDoses(dto.intervaloDoses());
         entity.setQuantidadeDoses(dto.quantidadeDoses());
         entity.setVacina(dto.isVacina());
+
+        medicamentoRepository.save(entity);
 
         return medicamentoMapper.toDTO(medicamentoRepository.save(entity));
     }

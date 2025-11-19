@@ -60,9 +60,15 @@ public class AplicacaoServiceImpl implements AplicacaoService {
         Ovino ovino = findOvinoById(dto.ovinoId());
         Medicamento medicamento = findMedicamentoById(dto.medicamentoId());
 
-        Aplicacao aplicacao = aplicacaoMapper.toEntity(dto, ovino, medicamento);
-        aplicacaoRepository.save(aplicacao);
-        return aplicacaoMapper.toDTO(aplicacao);
+        Aplicacao entity = new Aplicacao();
+        entity.setOvino(ovino);
+        entity.setMedicamento(medicamento);
+        entity.setDataAplicacao(dto.dataAplicacao());
+        entity.setDataProximaDose(dto.dataProximaDose());
+
+        aplicacaoRepository.save(entity);
+
+        return aplicacaoMapper.toDTO(entity);
     }
 
     @Override
@@ -76,7 +82,9 @@ public class AplicacaoServiceImpl implements AplicacaoService {
         entity.setDataAplicacao(dto.dataAplicacao());
         entity.setDataProximaDose(dto.dataProximaDose());
 
-        return aplicacaoMapper.toDTO(aplicacaoRepository.save(entity));
+        aplicacaoRepository.save(entity);
+        
+        return aplicacaoMapper.toDTO(entity);
     }
 
     @Override

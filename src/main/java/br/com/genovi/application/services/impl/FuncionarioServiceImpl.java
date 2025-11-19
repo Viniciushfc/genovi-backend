@@ -41,9 +41,16 @@ public class FuncionarioServiceImpl implements FuncionarioService {
             throw new IllegalArgumentException("CPF ou CNPJ inválido");
         }
 
-        Funcionario funcionario = funcionarioMapper.toEntity(dto);
-        funcionarioRepository.save(funcionario);
-        return funcionarioMapper.toDTO(funcionario);
+        Funcionario entity = new Funcionario();
+        entity.setNome(dto.nome());
+        entity.setCpfCnpj(dto.cpfCnpj());
+        entity.setEndereco(dto.endereco());
+        entity.setTelefone(dto.telefone());
+        entity.setDataAdmissao(dto.dataAdmissao());
+        entity.setDataRecisao(dto.dataRecisao());
+
+        funcionarioRepository.save(entity);
+        return funcionarioMapper.toDTO(entity);
     }
 
     @Override
@@ -61,7 +68,9 @@ public class FuncionarioServiceImpl implements FuncionarioService {
         entity.setDataAdmissao(dto.dataAdmissao());
         entity.setDataRecisao(dto.dataRecisao());
 
-        return funcionarioMapper.toDTO(funcionarioRepository.save(entity));
+        funcionarioRepository.save(entity);
+
+        return funcionarioMapper.toDTO(entity);
     }
 
     @Override

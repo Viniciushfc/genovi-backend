@@ -21,7 +21,8 @@ public class DoencaServiceImpl implements DoencaService {
 
     private Doenca findDoencaEntityById(Long id) {
         if (id == null) return null;
-        return doencaRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Doença não encontrada"));
+        return doencaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Doença não encontrada"));
     }
 
     @Override
@@ -36,16 +37,22 @@ public class DoencaServiceImpl implements DoencaService {
 
     @Override
     public DoencaDTO save(CreateDoencaDTO dto) {
-        Doenca doenca = doencaMapper.toEntity(dto);
-        return doencaMapper.toDTO(doencaRepository.save(doenca));
+        Doenca entity = new Doenca();
+        entity.setNome(dto.nome());
+        entity.setDescricao(dto.descricao());
+
+        doencaRepository.save(entity);
+
+        return doencaMapper.toDTO(doencaRepository.save(entity));
     }
 
     @Override
     public DoencaDTO update(Long id, CreateDoencaDTO dto) {
         Doenca entity = findDoencaEntityById(id);
-
         entity.setNome(dto.nome());
         entity.setDescricao(dto.descricao());
+
+        doencaRepository.save(entity);
 
         return doencaMapper.toDTO(doencaRepository.save(entity));
     }

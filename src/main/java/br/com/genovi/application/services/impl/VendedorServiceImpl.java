@@ -41,15 +41,17 @@ public class VendedorServiceImpl implements VendedorService {
             throw new RuntimeException("Vendedor está nulo!");
         }
 
-        Vendedor vendedor = new Vendedor();
-        vendedor.setNome(dto.nome());
-        vendedor.setCpfCnpj(dto.cpfCnpj());
-        vendedor.setEmail(dto.email());
-        vendedor.setEndereco(dto.endereco());
-        vendedor.setTelefone(dto.telefone());
-        vendedor.setAtivo(true);
+        Vendedor entity = new Vendedor();
+        entity.setNome(dto.nome());
+        entity.setCpfCnpj(dto.cpfCnpj());
+        entity.setEmail(dto.email());
+        entity.setEndereco(dto.endereco());
+        entity.setTelefone(dto.telefone());
+        entity.setAtivo(true);
 
-        return vendedorMapper.toDTO(vendedorRepository.save(vendedor));
+        vendedorRepository.save(entity);
+
+        return vendedorMapper.toDTO(entity);
     }
 
     @Override
@@ -63,7 +65,9 @@ public class VendedorServiceImpl implements VendedorService {
         entity.setEndereco(dto.endereco());
         entity.setTelefone(dto.telefone());
 
-        return vendedorMapper.toDTO(vendedorRepository.save(entity));
+        vendedorRepository.save(entity);
+
+        return vendedorMapper.toDTO(entity);
     }
 
     @Override

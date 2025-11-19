@@ -48,11 +48,15 @@ public class ReproducaoServiceImpl implements ReproducaoService {
         Ovino carneiro = findOvinoEntityById(dto.carneiroId());
         Ovino ovelha = findOvinoEntityById(dto.ovelhaId());
 
-        Reproducao reproducao = reproducaoMapper.toEntity(dto, carneiro, ovelha);
+        Reproducao entity = new Reproducao();
+        entity.setCarneiroPai(carneiro);
+        entity.setOvelhaMae(ovelha);
+        entity.setDataReproducao(dto.dataReproducao());
+        entity.setEnumReproducao(dto.enumReproducao());
 
-        reproducao = reproducaoRepository.save(reproducao);
+        reproducaoRepository.save(entity);
 
-        return reproducaoMapper.toDTO(reproducao);
+        return reproducaoMapper.toDTO(entity);
     }
 
     @Override
@@ -66,7 +70,9 @@ public class ReproducaoServiceImpl implements ReproducaoService {
         entity.setDataReproducao(dto.dataReproducao());
         entity.setEnumReproducao(dto.enumReproducao());
 
-        return reproducaoMapper.toDTO(reproducaoRepository.save(entity));
+        reproducaoRepository.save(entity);
+
+        return reproducaoMapper.toDTO(entity);
     }
 
     @Override

@@ -59,9 +59,15 @@ public class GestacaoServiceImpl implements GestacaoService {
         Ovino ovinoPai = findOvinoById(dto.ovelhaPaiId());
         Reproducao reproducao = findReproducaoById(dto.reproducaoId());
 
-        Gestacao gestacao = gestacaoMapper.toEntity(dto, ovinoMae, ovinoPai, reproducao);
+        Gestacao entity = new Gestacao();
+        entity.setOvelhaMae(ovinoMae);
+        entity.setOvelhaPai(ovinoPai);
+        entity.setReproducao(reproducao);
+        entity.setDataGestacao(dto.dataGestacao());
 
-        return gestacaoMapper.toDTO(gestacaoRepository.save(gestacao));
+        gestacaoRepository.save(entity);
+
+        return gestacaoMapper.toDTO(entity);
     }
 
     @Override
@@ -76,7 +82,9 @@ public class GestacaoServiceImpl implements GestacaoService {
         entity.setReproducao(reproducao);
         entity.setDataGestacao(dto.dataGestacao());
 
-        return gestacaoMapper.toDTO(gestacaoRepository.save(entity));
+        gestacaoRepository.save(entity);
+
+        return gestacaoMapper.toDTO(entity);
     }
 
     @Override

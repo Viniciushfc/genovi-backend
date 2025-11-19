@@ -47,10 +47,14 @@ public class CicloCioServiceImpl implements CicloCioService {
     public CicloCioDTO save(CreateCicloCioDTO dto) {
         Ovino ovino = findOvinoEntityById(dto.ovelhaId());
 
-        CicloCio cicloCio = cicloCioMapper.toEntity(dto, ovino);
+        CicloCio entity = new CicloCio();
+        entity.setOvelha(ovino);
+        entity.setDataInicio(dto.dataInicio());
+        entity.setDataFim(dto.dataFim());
+        entity.setObservacoes(dto.observacoes());
 
-        cicloCioRepository.save(cicloCio);
-        return cicloCioMapper.toDTO(cicloCio);
+        cicloCioRepository.save(entity);
+        return cicloCioMapper.toDTO(entity);
     }
 
     @Override
@@ -63,7 +67,9 @@ public class CicloCioServiceImpl implements CicloCioService {
         entity.setDataFim(dto.dataFim());
         entity.setObservacoes(dto.observacoes());
 
-        return cicloCioMapper.toDTO(cicloCioRepository.save(entity));
+        cicloCioRepository.save(entity);
+
+        return cicloCioMapper.toDTO(entity);
     }
 
     @Override

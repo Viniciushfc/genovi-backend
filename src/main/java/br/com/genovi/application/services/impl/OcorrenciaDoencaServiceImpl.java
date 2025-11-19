@@ -56,11 +56,16 @@ public class OcorrenciaDoencaServiceImpl implements OcorrenciaDoencaService {
         Ovino ovino = findOvinoEntityById(dto.ovinoId());
         Doenca doenca = findDoencaEntityById(dto.doencaId());
 
-        OcorrenciaDoenca ocorrenciaDoenca = ocorrenciaDoencaMapper.toEntity(dto, ovino, doenca);
+        OcorrenciaDoenca entity = new OcorrenciaDoenca();
+        entity.setOvino(ovino);
+        entity.setDoenca(doenca);
+        entity.setDataInicio(dto.dataInicio());
+        entity.setDataFinal(dto.dataFinal());
+        entity.setCurada(dto.curado());
 
-        ocorrenciaDoencaRepository.save(ocorrenciaDoenca);
+        ocorrenciaDoencaRepository.save(entity);
 
-        return ocorrenciaDoencaMapper.toDTO(ocorrenciaDoenca);
+        return ocorrenciaDoencaMapper.toDTO(entity);
     }
 
     @Override
@@ -75,7 +80,9 @@ public class OcorrenciaDoencaServiceImpl implements OcorrenciaDoencaService {
         entity.setDataFinal(dto.dataFinal());
         entity.setCurada(dto.curado());
 
-        return ocorrenciaDoencaMapper.toDTO(ocorrenciaDoencaRepository.save(entity));
+        ocorrenciaDoencaRepository.save(entity);
+
+        return ocorrenciaDoencaMapper.toDTO(entity);
     }
 
     @Override

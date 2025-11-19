@@ -95,9 +95,20 @@ public class RegistroServiceImpl implements RegistroService {
         OcorrenciaDoenca ocorrenciaDoenca = findOcorrenciaDoencaById(dto.idOcorrenciaDoencas());
         Pesagem pesagem = findPesagemById(dto.idPessagem());
 
-        Registro registro = registroMapper.toEntity(dto, funcionario, reproducao, gestacao, parto, aplicacao, ocorrenciaDoenca, pesagem);
+        Registro entity = new Registro();
+        entity.setDataRegistro(dto.dataRegistro());
+        entity.setIsSugestao(dto.isSugestao());
+        entity.setFuncionario(funcionario);
+        entity.setReproducao(reproducao);
+        entity.setGestacao(gestacao);
+        entity.setParto(parto);
+        entity.setAplicacao(aplicacao);
+        entity.setOcorrenciaDoenca(ocorrenciaDoenca);
+        entity.setPesagem(pesagem);
 
-        return registroMapper.toDTO(registroRepository.save(registro));
+        registroRepository.save(entity);
+
+        return registroMapper.toDTO(entity);
     }
 
     @Override
@@ -121,7 +132,9 @@ public class RegistroServiceImpl implements RegistroService {
         entity.setOcorrenciaDoenca(ocorrenciaDoenca);
         entity.setPesagem(pesagem);
 
-        return registroMapper.toDTO(registroRepository.save(entity));
+        registroRepository.save(entity);
+
+        return registroMapper.toDTO(entity);
     }
 
     @Override

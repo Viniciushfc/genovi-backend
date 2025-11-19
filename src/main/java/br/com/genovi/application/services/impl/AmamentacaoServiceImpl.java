@@ -26,6 +26,7 @@ public class AmamentacaoServiceImpl implements AmamentacaoService {
         if (id == null) return null;
         return amamentacaoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Amamentação não encontrada"));
     }
+
     private Ovino findOvinoEntityById(Long id) {
         if (id == null) return null;
         return ovinoRepository.findById(id)
@@ -47,11 +48,16 @@ public class AmamentacaoServiceImpl implements AmamentacaoService {
         Ovino ovinoMae = findOvinoEntityById(dto.ovelhaMaeId());
         Ovino cordeiro = findOvinoEntityById(dto.cordeiroMamandoId());
 
-        Amamentacao amamentacao = amamentacaoMapper.toEntity(dto, ovinoMae, cordeiro);
+        Amamentacao entity = new Amamentacao();
+        entity.setOvelhaMae(ovinoMae);
+        entity.setCordeiroMamando(cordeiro);
+        entity.setDataInicio(dto.dataInicio());
+        entity.setDataFim(dto.dataFim());
+        entity.setObservacoes(dto.observacoes());
 
-        amamentacaoRepository.save(amamentacao);
+        amamentacaoRepository.save(entity);
 
-        return amamentacaoMapper.toDTO(amamentacao);
+        return amamentacaoMapper.toDTO(entity);
     }
 
     @Override
@@ -66,7 +72,9 @@ public class AmamentacaoServiceImpl implements AmamentacaoService {
         entity.setDataFim(dto.dataFim());
         entity.setObservacoes(dto.observacoes());
 
-        return amamentacaoMapper.toDTO(amamentacaoRepository.save(entity));
+        amamentacaoRepository.save(entity);
+
+        return amamentacaoMapper.toDTO(entity);
     }
 
     @Override

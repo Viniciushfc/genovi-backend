@@ -63,7 +63,9 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setAutenticacao2fa(dto.autenticacao2fa());
         usuario.setEnumRoles(dto.enumRoles());
 
-        return usuarioMapper.toDTO(usuarioRepository.save(usuario));
+        usuarioRepository.save(usuario);
+
+        return usuarioMapper.toDTO(usuario);
     }
 
     @Override
@@ -80,8 +82,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setSenha(passwordEncoder.encode(dto.senha()));
         usuario.setAutenticacao2fa(dto.autenticacao2fa());
         usuario.setEnumRoles(dto.enumRoles());
-        
-        return usuarioMapper.toDTO(usuarioRepository.save(usuario));
+
+        usuarioRepository.save(usuario);
+
+        return usuarioMapper.toDTO(usuario);
     }
 
     @Override
