@@ -7,6 +7,7 @@ import br.com.genovi.domain.models.Reproducao;
 import br.com.genovi.dtos.gestacao.CreateGestacaoDTO;
 import br.com.genovi.dtos.gestacao.GestacaoDTO;
 import br.com.genovi.application.mapper.GestacaoMapper;
+import br.com.genovi.application.services.impl.RegistroServiceImpl;
 import br.com.genovi.infrastructure.repository.GestacaoRepository;
 import br.com.genovi.infrastructure.repository.OvinoRepository;
 import br.com.genovi.infrastructure.repository.ReproducaoRepository;
@@ -45,6 +46,8 @@ class GestacaoServiceTest {
 
     @Mock
     private GestacaoMapper gestacaoMapper;
+    @Mock
+    private RegistroServiceImpl registroService;
 
     @InjectMocks
     private GestacaoServiceImpl gestacaoService;
@@ -70,7 +73,7 @@ class GestacaoServiceTest {
         gestacao = new Gestacao();
         gestacao.setId(10L);
 
-        createGestacaoDTO = new CreateGestacaoDTO(1L, 2L, 3L, LocalDateTime.now());
+        createGestacaoDTO = new CreateGestacaoDTO(1L, 2L, 3L, LocalDateTime.now(), 3L);
 
         OvinoResumeDTO maeResumo = new OvinoResumeDTO(1L, 101L, "Mae", "fbb1");
         OvinoResumeDTO paiResumo = new OvinoResumeDTO(2L, 102L, "Pai", "fbb2");

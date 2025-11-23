@@ -8,6 +8,7 @@ import br.com.genovi.dtos.ovino.OvinoResumeDTO;
 import br.com.genovi.dtos.reproducao.CreateReproducaoDTO;
 import br.com.genovi.dtos.reproducao.ReproducaoDTO;
 import br.com.genovi.application.mapper.ReproducaoMapper;
+import br.com.genovi.application.services.impl.RegistroServiceImpl;
 import br.com.genovi.infrastructure.repository.OvinoRepository;
 import br.com.genovi.infrastructure.repository.ReproducaoRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +34,8 @@ class ReproducaoServiceTest {
     private OvinoRepository ovinoRepository;
     @Mock
     private ReproducaoMapper reproducaoMapper;
+    @Mock
+    private RegistroServiceImpl registroService;
 
     private Reproducao reproducao;
 
@@ -62,7 +65,7 @@ class ReproducaoServiceTest {
         OvinoResumeDTO ovelhaResumo = new OvinoResumeDTO(ovelha.getId(), ovelha.getRfid(), ovelha.getNome(), ovelha.getFbb());
         reproducaoDTO = new ReproducaoDTO(1L, LocalDateTime.now(), carneiroResumo, ovelhaResumo, EnumReproducao.INSEMINACAO_ARTIFICIAL);
 
-        createReproducaoDTO = new CreateReproducaoDTO(LocalDateTime.now(), 1L, 2L, EnumReproducao.INSEMINACAO_ARTIFICIAL);
+        createReproducaoDTO = new CreateReproducaoDTO(LocalDateTime.now(), 1L, 2L, EnumReproducao.INSEMINACAO_ARTIFICIAL, 3L);
     }
 
     @Test

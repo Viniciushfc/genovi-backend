@@ -11,6 +11,7 @@ import br.com.genovi.application.mapper.AplicacaoMapper;
 import br.com.genovi.application.mapper.MedicamentoMapper;
 import br.com.genovi.application.mapper.OvinoMapper;
 import br.com.genovi.application.mapper.UsuarioMapper;
+import br.com.genovi.application.services.impl.RegistroServiceImpl;
 import br.com.genovi.infrastructure.repository.AplicacaoRepository;
 import br.com.genovi.infrastructure.repository.MedicamentoRepository;
 import br.com.genovi.infrastructure.repository.OvinoRepository;
@@ -50,6 +51,8 @@ class AplicacaoServiceTest {
 
     @Mock
     private UsuarioMapper usuarioMapper;
+    @Mock
+    private RegistroServiceImpl registroService;
 
     @InjectMocks
     private AplicacaoServiceImpl aplicacaoService;
@@ -87,7 +90,8 @@ class AplicacaoServiceTest {
                 LocalDateTime.of(2024, 1, 1, 10, 0),
                 1L, // ovinoId
                 2L, // medicamentoId
-                LocalDateTime.of(2024, 1, 1, 10, 0)
+                LocalDateTime.of(2024, 1, 1, 10, 0),
+                3L // usuarioId
         );
     }
 
