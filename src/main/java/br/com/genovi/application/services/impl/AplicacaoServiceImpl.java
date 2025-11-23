@@ -11,6 +11,7 @@ import br.com.genovi.application.mapper.AplicacaoMapper;
 import br.com.genovi.infrastructure.repository.AplicacaoRepository;
 import br.com.genovi.infrastructure.repository.MedicamentoRepository;
 import br.com.genovi.infrastructure.repository.OvinoRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class AplicacaoServiceImpl implements AplicacaoService {
     private final OvinoRepository ovinoRepository;
     private final MedicamentoRepository medicamentoRepository;
     private final AplicacaoMapper aplicacaoMapper;
+    private final RegistroServiceImpl registroService;
 
     private Ovino findOvinoById(Long id) {
         if (id == null) return null;
@@ -56,6 +58,7 @@ public class AplicacaoServiceImpl implements AplicacaoService {
     }
 
     @Override
+    @Transactional
     public AplicacaoDTO save(CreateAplicacaoDTO dto) {
         Ovino ovino = findOvinoById(dto.ovinoId());
         Medicamento medicamento = findMedicamentoById(dto.medicamentoId());
@@ -67,6 +70,7 @@ public class AplicacaoServiceImpl implements AplicacaoService {
         entity.setDataProximaDose(dto.dataProximaDose());
 
         aplicacaoRepository.save(entity);
+        registroService.createAplicacaoRegistro(entity, dto.idFuncionario());
 
         return aplicacaoMapper.toDTO(entity);
     }

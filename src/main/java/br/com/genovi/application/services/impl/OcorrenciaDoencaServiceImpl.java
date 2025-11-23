@@ -9,6 +9,7 @@ import br.com.genovi.dtos.ocorrencia_doenca.CreateOcorrenciaDoencaDTO;
 import br.com.genovi.dtos.ocorrencia_doenca.OcorrenciaDoencaDTO;
 import br.com.genovi.application.mapper.OcorrenciaDoencaMapper;
 import br.com.genovi.infrastructure.repository.*;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class OcorrenciaDoencaServiceImpl implements OcorrenciaDoencaService {
     private final DoencaRepository doencaRepository;
     private final FuncionarioRepository funcionarioRepository;
     private final OcorrenciaDoencaMapper ocorrenciaDoencaMapper;
+    private final RegistroServiceImpl registroService;
 
     private OcorrenciaDoenca findOcorrenciaDoencaById(Long id) {
         if (id == null) return null;
@@ -69,6 +71,7 @@ public class OcorrenciaDoencaServiceImpl implements OcorrenciaDoencaService {
     }
 
     @Override
+    @Transactional
     public OcorrenciaDoencaDTO update(Long id, CreateOcorrenciaDoencaDTO dto) {
         OcorrenciaDoenca entity = findOcorrenciaDoencaById(id);
         Ovino ovino = findOvinoEntityById(dto.ovinoId());
@@ -81,6 +84,7 @@ public class OcorrenciaDoencaServiceImpl implements OcorrenciaDoencaService {
         entity.setCurada(dto.curado());
 
         ocorrenciaDoencaRepository.save(entity);
+        registroService.createOcorrenciaDoencaRegistro(entity, dto.idFuncionario());
 
         return ocorrenciaDoencaMapper.toDTO(entity);
     }

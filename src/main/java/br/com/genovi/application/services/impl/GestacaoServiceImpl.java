@@ -11,6 +11,7 @@ import br.com.genovi.application.mapper.GestacaoMapper;
 import br.com.genovi.infrastructure.repository.GestacaoRepository;
 import br.com.genovi.infrastructure.repository.OvinoRepository;
 import br.com.genovi.infrastructure.repository.ReproducaoRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class GestacaoServiceImpl implements GestacaoService {
     private final OvinoRepository ovinoRepository;
     private final ReproducaoRepository reproducaoRepository;
     private final GestacaoMapper gestacaoMapper;
+    private final RegistroServiceImpl registroService;
 
     private Gestacao findGestacaoById(Long id) {
         if (id == null) return null;
@@ -54,6 +56,7 @@ public class GestacaoServiceImpl implements GestacaoService {
     }
 
     @Override
+    @Transactional
     public GestacaoDTO save(CreateGestacaoDTO dto) {
         Ovino ovinoMae = findOvinoById(dto.ovelhaMaeId());
         Ovino ovinoPai = findOvinoById(dto.ovelhaPaiId());
@@ -66,6 +69,7 @@ public class GestacaoServiceImpl implements GestacaoService {
         entity.setDataGestacao(dto.dataGestacao());
 
         gestacaoRepository.save(entity);
+        registroService.createGestacaoRegistro(entity, dto.idFuncionario());
 
         return gestacaoMapper.toDTO(entity);
     }

@@ -11,6 +11,7 @@ import br.com.genovi.application.mapper.PartoMapper;
 import br.com.genovi.infrastructure.repository.GestacaoRepository;
 import br.com.genovi.infrastructure.repository.OvinoRepository;
 import br.com.genovi.infrastructure.repository.PartoRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class PartoServiceImpl implements PartoService {
     private final OvinoRepository ovinoRepository;
     private final GestacaoRepository gestacaoRepository;
     private final PartoMapper partoMapper;
+    private final RegistroServiceImpl registroService;
 
     private Parto findPartoEntityById(Long id) {
         if (id == null) return null;
@@ -54,6 +56,7 @@ public class PartoServiceImpl implements PartoService {
     }
 
     @Override
+    @Transactional
     public PartoDTO save(CreatePartoDTO dto) {
         Ovino ovinoMae = findOvinoEntityById(dto.ovelhaMaeId());
         Ovino ovinoPai = findOvinoEntityById(dto.ovelhaPaiId());
@@ -66,6 +69,7 @@ public class PartoServiceImpl implements PartoService {
         entity.setDataParto(dto.dataParto());
 
         partoRepository.save(entity);
+        registroService.createPartoRegistro(entity, dto.idFuncionario());
 
         return partoMapper.toDTO(entity);
     }

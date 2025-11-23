@@ -9,6 +9,7 @@ import br.com.genovi.dtos.pesagem.PesagemDTO;
 import br.com.genovi.application.mapper.PesagemMapper;
 import br.com.genovi.infrastructure.repository.OvinoRepository;
 import br.com.genovi.infrastructure.repository.PesagemRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class PesagemServiceImpl implements PesagemService {
     private final PesagemRepository pesagemRepository;
     private final OvinoRepository ovinoRepository;
     private final PesagemMapper pesagemMapper;
+    private final RegistroServiceImpl registroService;
 
     private Pesagem findPesagemById(Long id) {
         if (id == null) return null;
@@ -45,6 +47,7 @@ public class PesagemServiceImpl implements PesagemService {
     }
 
     @Override
+    @Transactional
     public PesagemDTO save(CreatePesagemDTO dto) {
         Ovino ovino = findOvinoById(dto.idOvino());
 
@@ -54,6 +57,7 @@ public class PesagemServiceImpl implements PesagemService {
         entity.setPeso(dto.pesagem());
 
         pesagemRepository.save(entity);
+        registroService.createPesagemRegistro(entity, dto.idFuncionario());
 
         return pesagemMapper.toDTO(entity);
     }

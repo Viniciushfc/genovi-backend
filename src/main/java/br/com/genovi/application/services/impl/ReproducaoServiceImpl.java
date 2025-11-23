@@ -9,6 +9,7 @@ import br.com.genovi.dtos.reproducao.ReproducaoDTO;
 import br.com.genovi.application.mapper.ReproducaoMapper;
 import br.com.genovi.infrastructure.repository.OvinoRepository;
 import br.com.genovi.infrastructure.repository.ReproducaoRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class ReproducaoServiceImpl implements ReproducaoService {
     private final ReproducaoRepository reproducaoRepository;
     private final OvinoRepository ovinoRepository;
     private final ReproducaoMapper reproducaoMapper;
+    private final RegistroServiceImpl registroService;
 
     private Reproducao findReproducaoById(Long id) {
         if (id == null) return null;
@@ -44,6 +46,7 @@ public class ReproducaoServiceImpl implements ReproducaoService {
     }
 
     @Override
+    @Transactional
     public ReproducaoDTO save(CreateReproducaoDTO dto) {
         Ovino carneiro = findOvinoEntityById(dto.carneiroId());
         Ovino ovelha = findOvinoEntityById(dto.ovelhaId());
@@ -55,6 +58,7 @@ public class ReproducaoServiceImpl implements ReproducaoService {
         entity.setEnumReproducao(dto.enumReproducao());
 
         reproducaoRepository.save(entity);
+        registroService.createReproducaoRegistro(entity, dto.idFuncionario());
 
         return reproducaoMapper.toDTO(entity);
     }
