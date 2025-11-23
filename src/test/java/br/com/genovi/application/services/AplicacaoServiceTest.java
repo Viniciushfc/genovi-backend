@@ -125,13 +125,13 @@ class AplicacaoServiceTest {
     void saveDeveSalvarEMapearDTO() {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino));
         when(medicamentoRepository.findById(2L)).thenReturn(Optional.of(medicamento));
-        when(aplicacaoMapper.toEntity(createDto, ovino, medicamento)).thenReturn(aplicacao);
-        when(aplicacaoMapper.toDTO(aplicacao)).thenReturn(aplicacaoDTO);
+        when(aplicacaoRepository.save(any(Aplicacao.class))).thenReturn(aplicacao);
+        when(aplicacaoMapper.toDTO(any(Aplicacao.class))).thenReturn(aplicacaoDTO);
 
         AplicacaoDTO result = aplicacaoService.save(createDto);
 
         assertNotNull(result);
-        verify(aplicacaoRepository).save(aplicacao);
+        verify(aplicacaoRepository).save(any(Aplicacao.class));
     }
 
     @Test

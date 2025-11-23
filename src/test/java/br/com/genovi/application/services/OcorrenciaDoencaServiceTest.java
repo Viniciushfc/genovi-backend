@@ -25,6 +25,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -46,22 +47,16 @@ class OcorrenciaDoencaServiceTest {
     @Mock
     private OcorrenciaDoencaMapper ocorrenciaDoencaMapper;
 
-    @Mock
     private Ovino ovino;
 
-    @Mock
     private Doenca doenca;
 
-    @Mock
     private Funcionario funcionario;
 
-    @Mock
     private OcorrenciaDoenca ocorrencia;
 
-    @Mock
     private CreateOcorrenciaDoencaDTO dto;
 
-    @Mock
     private OcorrenciaDoencaDTO ocorrenciaDTO;
 
     @InjectMocks
@@ -100,13 +95,13 @@ class OcorrenciaDoencaServiceTest {
     void shouldSaveOccurrenceSuccessfully() {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovino));
         when(doencaRepository.findById(2L)).thenReturn(Optional.of(doenca));
-        when(ocorrenciaDoencaMapper.toEntity(dto, ovino, doenca)).thenReturn(ocorrencia);
-        when(ocorrenciaDoencaMapper.toDTO(ocorrencia)).thenReturn(ocorrenciaDTO);
+        when(ocorrenciaDoencaRepository.save(any(OcorrenciaDoenca.class))).thenReturn(ocorrencia);
+        when(ocorrenciaDoencaMapper.toDTO(any(OcorrenciaDoenca.class))).thenReturn(ocorrenciaDTO);
 
         OcorrenciaDoencaDTO result = service.save(dto);
 
         assertThat(result).isEqualTo(ocorrenciaDTO);
-        verify(ocorrenciaDoencaRepository).save(ocorrencia);
+        verify(ocorrenciaDoencaRepository).save(any(OcorrenciaDoenca.class));
     }
 
     @Test

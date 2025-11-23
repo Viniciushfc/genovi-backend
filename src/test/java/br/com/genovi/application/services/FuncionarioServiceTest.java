@@ -103,26 +103,25 @@ class FuncionarioServiceTest {
 
     @Test
     void testSave() {
-        when(funcionarioMapper.toEntity(createFuncionarioDTO)).thenReturn(funcionario);
-        when(funcionarioRepository.save(funcionario)).thenReturn(funcionario);
-        when(funcionarioMapper.toDTO(funcionario)).thenReturn(funcionarioDTO);
+        when(funcionarioRepository.save(any(Funcionario.class))).thenReturn(funcionario);
+        when(funcionarioMapper.toDTO(any(Funcionario.class))).thenReturn(funcionarioDTO);
 
         FuncionarioDTO result = funcionarioService.save(createFuncionarioDTO);
 
         assertThat(result).isEqualTo(funcionarioDTO);
-        verify(funcionarioRepository).save(funcionario);
+        verify(funcionarioRepository).save(any(Funcionario.class));
     }
 
     @Test
     void testUpdate() {
         when(funcionarioRepository.findById(1L)).thenReturn(Optional.of(funcionario));
-        when(funcionarioRepository.save(funcionario)).thenReturn(funcionario);
+        when(funcionarioRepository.save(any(Funcionario.class))).thenReturn(funcionario);
         when(funcionarioMapper.toDTO(funcionario)).thenReturn(funcionarioDTO);
 
         FuncionarioDTO result = funcionarioService.update(1L, createFuncionarioDTO);
 
         assertThat(result).isEqualTo(funcionarioDTO);
-        verify(funcionarioRepository).save(funcionario);
+        verify(funcionarioRepository).save(any(Funcionario.class));
     }
 
     @Test

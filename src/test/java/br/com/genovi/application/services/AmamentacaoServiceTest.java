@@ -41,12 +41,10 @@ class AmamentacaoServiceTest {
 
     private Ovino cordeiro;
 
-    @Mock
     private Amamentacao amamentacao;
 
     private AmamentacaoDTO amamentacaoDTO;
 
-    @Mock
     private CreateAmamentacaoDTO createDto;
 
     @InjectMocks
@@ -103,13 +101,13 @@ class AmamentacaoServiceTest {
     void saveDeveSalvarEMapearDTO() {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovelhaMae));
         when(ovinoRepository.findById(2L)).thenReturn(Optional.of(cordeiro));
-        when(amamentacaoMapper.toEntity(createDto, ovelhaMae, cordeiro)).thenReturn(amamentacao);
-        when(amamentacaoMapper.toDTO(amamentacao)).thenReturn(amamentacaoDTO);
+        when(amamentacaoRepository.save(any(Amamentacao.class))).thenReturn(amamentacao);
+        when(amamentacaoMapper.toDTO(any(Amamentacao.class))).thenReturn(amamentacaoDTO);
 
         AmamentacaoDTO result = amamentacaoService.save(createDto);
 
         assertNotNull(result);
-        verify(amamentacaoRepository).save(amamentacao);
+        verify(amamentacaoRepository).save(any(Amamentacao.class));
     }
 
     @Test

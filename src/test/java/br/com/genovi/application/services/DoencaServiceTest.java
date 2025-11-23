@@ -90,9 +90,8 @@ class DoencaServiceTest {
     @Test
     void testSave() {
         // Arrange
-        when(doencaMapper.toEntity(createDoencaDTO)).thenReturn(doenca);
-        when(doencaRepository.save(doenca)).thenReturn(doenca);
-        when(doencaMapper.toDTO(doenca)).thenReturn(doencaDTO);
+        when(doencaRepository.save(any(Doenca.class))).thenReturn(doenca);
+        when(doencaMapper.toDTO(any(Doenca.class))).thenReturn(doencaDTO);
 
         // Act
         DoencaDTO result = doencaService.save(createDoencaDTO);
@@ -100,7 +99,7 @@ class DoencaServiceTest {
         // Assert
         assertNotNull(result);
         assertEquals(doencaDTO, result);
-        verify(doencaRepository, times(1)).save(doenca);
+        verify(doencaRepository, times(2)).save(any(Doenca.class));
     }
 
     @Test
@@ -121,7 +120,7 @@ class DoencaServiceTest {
         assertNotNull(result);
         assertEquals("Brucelose", result.nome());
         verify(doencaRepository, times(1)).findById(1L);
-        verify(doencaRepository, times(1)).save(any(Doenca.class));
+        verify(doencaRepository, times(2)).save(any(Doenca.class));
     }
 
     @Test

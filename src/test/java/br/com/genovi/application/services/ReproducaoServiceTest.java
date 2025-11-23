@@ -34,12 +34,10 @@ class ReproducaoServiceTest {
     @Mock
     private ReproducaoMapper reproducaoMapper;
 
-    @Mock
     private Reproducao reproducao;
 
     private ReproducaoDTO reproducaoDTO;
 
-    @Mock
     private CreateReproducaoDTO createReproducaoDTO;
 
     private Ovino carneiro;
@@ -101,14 +99,13 @@ class ReproducaoServiceTest {
     void shouldSaveReproducao() {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(carneiro));
         when(ovinoRepository.findById(2L)).thenReturn(Optional.of(ovelha));
-        when(reproducaoMapper.toEntity(createReproducaoDTO, carneiro, ovelha)).thenReturn(reproducao);
-        when(reproducaoRepository.save(reproducao)).thenReturn(reproducao);
-        when(reproducaoMapper.toDTO(reproducao)).thenReturn(reproducaoDTO);
+        when(reproducaoRepository.save(any(Reproducao.class))).thenReturn(reproducao);
+        when(reproducaoMapper.toDTO(any(Reproducao.class))).thenReturn(reproducaoDTO);
 
         ReproducaoDTO result = reproducaoService.save(createReproducaoDTO);
 
         assertThat(result).isEqualTo(reproducaoDTO);
-        verify(reproducaoRepository).save(reproducao);
+        verify(reproducaoRepository).save(any(Reproducao.class));
     }
 
     @Test

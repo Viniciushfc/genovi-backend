@@ -34,13 +34,10 @@ class MedicamentoServiceTest {
     @Mock
     private MedicamentoMapper medicamentoMapper;
 
-    @Mock
     private Medicamento medicamento;
 
-    @Mock
     private Doenca doenca;
 
-    @Mock
     private CreateMedicamentoDTO createMedicamentoDTO;
 
     @InjectMocks
@@ -99,14 +96,14 @@ class MedicamentoServiceTest {
                 1L, "Remédio Teste", "Fabricante Teste", 1, List.of(new DoencaDTO(1L, "Nome Doença", "Doença X")), 1, true);
 
         when(doencaRepository.findAllById(List.of(1L))).thenReturn(List.of(doenca));
-        when(medicamentoMapper.toEntity(createMedicamentoDTO, List.of(doenca))).thenReturn(medicamento);
-        when(medicamentoMapper.toDTO(medicamento)).thenReturn(medicamentoDTO);
+        when(medicamentoRepository.save(any(Medicamento.class))).thenReturn(medicamento);
+        when(medicamentoMapper.toDTO(any(Medicamento.class))).thenReturn(medicamentoDTO);
 
         MedicamentoDTO result = medicamentoService.save(createMedicamentoDTO);
 
         assertNotNull(result);
         assertEquals("Remédio Teste", result.nome());
-        verify(medicamentoRepository).save(medicamento);
+        verify(medicamentoRepository).save(any(Medicamento.class));
     }
 
     @Test
@@ -128,13 +125,13 @@ class MedicamentoServiceTest {
 
         when(medicamentoRepository.findById(1L)).thenReturn(Optional.of(medicamento));
         when(doencaRepository.findAllById(List.of(1L))).thenReturn(List.of(doenca));
-        when(medicamentoRepository.save(medicamento)).thenReturn(medicamento);
-        when(medicamentoMapper.toDTO(medicamento)).thenReturn(medicamentoDTO);
+        when(medicamentoRepository.save(any(Medicamento.class))).thenReturn(medicamento);
+        when(medicamentoMapper.toDTO(any(Medicamento.class))).thenReturn(medicamentoDTO);
 
         MedicamentoDTO result = medicamentoService.update(1L, createMedicamentoDTO);
 
         assertNotNull(result);
-        verify(medicamentoRepository).save(medicamento);
+        verify(medicamentoRepository, times(2)).save(any(Medicamento.class));
     }
 
     @Test

@@ -97,8 +97,8 @@ class OvinoServiceTest {
         when(compraRepository.findById(1L)).thenReturn(Optional.of(compra));
         when(partoRepository.findById(1L)).thenReturn(Optional.of(parto));
         when(pesagemRepository.findAllById(List.of(1L))).thenReturn(List.of(pesagem));
-        when(ovinoMapper.toEntity(any(), any(), any(), any(), any(), any())).thenReturn(ovino);
-        when(ovinoMapper.toDTO(ovino)).thenReturn(mock(OvinoDTO.class));
+        when(ovinoRepository.save(any(Ovino.class))).thenReturn(ovino);
+        when(ovinoMapper.toDTO(any(Ovino.class))).thenReturn(mock(OvinoDTO.class));
 
         OvinoDTO result = ovinoService.save(createOvinoDTO);
 

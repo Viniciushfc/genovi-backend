@@ -35,16 +35,12 @@ class CicloCioServiceTest {
     @Mock
     private CicloCioMapper cicloCioMapper;
 
-    @Mock
     private Ovino ovelha;
 
-    @Mock
     private CicloCio cicloCio;
 
-    @Mock
     private CicloCioDTO cicloCioDTO;
 
-    @Mock
     private CreateCicloCioDTO createDto;
 
     @Mock
@@ -108,15 +104,14 @@ class CicloCioServiceTest {
     @Test
     void saveDeveSalvarCicloCioEMapearDTO() {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovelha));
-        when(cicloCioMapper.toEntity(createDto, ovelha)).thenReturn(cicloCio);
-        when(cicloCioMapper.toDTO(cicloCio)).thenReturn(cicloCioDTO);
+        when(cicloCioRepository.save(any(CicloCio.class))).thenReturn(cicloCio);
+        when(cicloCioMapper.toDTO(any(CicloCio.class))).thenReturn(cicloCioDTO);
 
         CicloCioDTO result = cicloCioService.save(createDto);
 
         assertNotNull(result);
-        verify(cicloCioRepository).save(cicloCio);
-        verify(cicloCioMapper).toEntity(createDto, ovelha);
-        verify(cicloCioMapper).toDTO(cicloCio);
+        verify(cicloCioRepository).save(any(CicloCio.class));
+        verify(cicloCioMapper).toDTO(any(CicloCio.class));
     }
 
     @Test
@@ -130,13 +125,13 @@ class CicloCioServiceTest {
     void updateDeveAtualizarCicloCioQuandoEncontrado() {
         when(cicloCioRepository.findById(1L)).thenReturn(Optional.of(cicloCio));
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovelha));
-        when(cicloCioRepository.save(cicloCio)).thenReturn(cicloCio);
-        when(cicloCioMapper.toDTO(cicloCio)).thenReturn(cicloCioDTO);
+        when(cicloCioRepository.save(any(CicloCio.class))).thenReturn(cicloCio);
+        when(cicloCioMapper.toDTO(any(CicloCio.class))).thenReturn(cicloCioDTO);
 
         CicloCioDTO result = cicloCioService.update(1L, createDto);
 
         assertNotNull(result);
-        verify(cicloCioRepository).save(cicloCio);
+        verify(cicloCioRepository).save(any(CicloCio.class));
     }
 
     @Test

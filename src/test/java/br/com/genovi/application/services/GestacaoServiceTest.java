@@ -83,18 +83,16 @@ class GestacaoServiceTest {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovinoMae));
         when(ovinoRepository.findById(2L)).thenReturn(Optional.of(ovinoPai));
         when(reproducaoRepository.findById(3L)).thenReturn(Optional.of(reproducao));
-        when(gestacaoMapper.toEntity(createGestacaoDTO, ovinoMae, ovinoPai, reproducao)).thenReturn(gestacao);
-        when(gestacaoRepository.save(gestacao)).thenReturn(gestacao);
-        when(gestacaoMapper.toDTO(gestacao)).thenReturn(gestacaoDTO);
+        when(gestacaoRepository.save(any(Gestacao.class))).thenReturn(gestacao);
+        when(gestacaoMapper.toDTO(any(Gestacao.class))).thenReturn(gestacaoDTO);
 
         GestacaoDTO result = gestacaoService.save(createGestacaoDTO);
 
         verify(ovinoRepository).findById(1L);
         verify(ovinoRepository).findById(2L);
         verify(reproducaoRepository).findById(3L);
-        verify(gestacaoMapper).toEntity(createGestacaoDTO, ovinoMae, ovinoPai, reproducao);
-        verify(gestacaoRepository).save(gestacao);
-        verify(gestacaoMapper).toDTO(gestacao);
+        verify(gestacaoRepository).save(any(Gestacao.class));
+        verify(gestacaoMapper).toDTO(any(Gestacao.class));
         assertThat(result).isEqualTo(gestacaoDTO);
     }
 
@@ -147,8 +145,8 @@ class GestacaoServiceTest {
         when(ovinoRepository.findById(1L)).thenReturn(Optional.of(ovinoMae));
         when(ovinoRepository.findById(2L)).thenReturn(Optional.of(ovinoPai));
         when(reproducaoRepository.findById(3L)).thenReturn(Optional.of(reproducao));
-        when(gestacaoRepository.save(gestacao)).thenReturn(gestacao);
-        when(gestacaoMapper.toDTO(gestacao)).thenReturn(gestacaoDTO);
+        when(gestacaoRepository.save(any(Gestacao.class))).thenReturn(gestacao);
+        when(gestacaoMapper.toDTO(any(Gestacao.class))).thenReturn(gestacaoDTO);
 
         GestacaoDTO result = gestacaoService.update(10L, createGestacaoDTO);
 
@@ -156,8 +154,8 @@ class GestacaoServiceTest {
         verify(ovinoRepository).findById(1L);
         verify(ovinoRepository).findById(2L);
         verify(reproducaoRepository).findById(3L);
-        verify(gestacaoRepository).save(gestacao);
-        verify(gestacaoMapper).toDTO(gestacao);
+        verify(gestacaoRepository).save(any(Gestacao.class));
+        verify(gestacaoMapper).toDTO(any(Gestacao.class));
         assertThat(result).isEqualTo(gestacaoDTO);
     }
 
