@@ -34,4 +34,13 @@ public class Aplicacao {
 
     @Column(name = "data_proxima_dose")
     private LocalDateTime dataProximaDose;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", ovino: " + ovino +
+                ", dataAplicacao: " + dataAplicacao +
+                ", medicamento: " + medicamento +
+                ", dataProximaDose: " + dataProximaDose;
+    }
 }

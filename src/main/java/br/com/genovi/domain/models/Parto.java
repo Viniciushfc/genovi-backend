@@ -35,4 +35,13 @@ public class Parto {
 
     @Column(name = "data_parto")
     private LocalDateTime dataParto;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", ovinoMae: " + ovinoMae +
+                ", ovinoPai: " + ovinoPai +
+                ", gestacao: " + gestacao +
+                ", dataParto: " + dataParto;
+    }
 }

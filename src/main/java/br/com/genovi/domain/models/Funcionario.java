@@ -38,4 +38,15 @@ public class Funcionario {
 
     @Column(name = "data_recisao")
     private LocalDateTime dataRecisao;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", nome: " + nome +
+                ", cpfCnpj: " + cpfCnpj +
+                ", endereco: " + endereco +
+                ", telefone: " + telefone +
+                ", dataAdmissao: " + dataAdmissao +
+                ", dataRecisao: " + dataRecisao;
+    }
 }

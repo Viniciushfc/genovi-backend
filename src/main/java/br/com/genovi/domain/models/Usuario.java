@@ -43,4 +43,15 @@ public class Usuario {
     @OneToOne
     @JoinColumn(name = "id_funcionario")
     private Funcionario funcionario;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", ativo: " + ativo +
+                ", email: " + email +
+                ", senha: " + senha +
+                ", autenticacao2fa: " + autenticacao2fa +
+                ", enumRoles: " + enumRoles +
+                ", funcionario: " + funcionario;
+    }
 }

@@ -26,4 +26,11 @@ public class Ascendencia {
     @ManyToOne(optional = true)
     @JoinColumn(name = "id_ovino_mae")
     private Ovino mae;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", pai: " + pai +
+                ", mae: " + mae;
+    }
 }

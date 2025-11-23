@@ -37,4 +37,14 @@ public class Amamentacao {
 
     @Column(name = "observacoes")
     private String observacoes;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", ovelhaMae: " + ovelhaMae +
+                ", cordeiroMamando: " + cordeiroMamando +
+                ", dataInicio: " + dataInicio +
+                ", dataFim: " + dataFim +
+                ", observacoes: " + observacoes;
+    }
 }

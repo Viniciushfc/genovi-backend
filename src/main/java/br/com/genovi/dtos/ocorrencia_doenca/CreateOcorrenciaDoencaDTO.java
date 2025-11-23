@@ -6,5 +6,6 @@ public record CreateOcorrenciaDoencaDTO(Long ovinoId,
                                         Long doencaId,
                                         LocalDateTime dataInicio,
                                         LocalDateTime dataFinal,
-                                        Boolean curado) {
+                                        Boolean curado,
+                                        Long idFuncionario) {
 }

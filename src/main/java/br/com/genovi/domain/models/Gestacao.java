@@ -36,4 +36,13 @@ public class Gestacao {
 
     @Column(name = "data_gestacao")
     private LocalDateTime dataGestacao;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", ovelhaMae: " + ovelhaMae +
+                ", ovelhaPai: " + ovelhaPai +
+                ", reproducao: " + reproducao +
+                ", dataGestacao: " + dataGestacao;
+    }
 }

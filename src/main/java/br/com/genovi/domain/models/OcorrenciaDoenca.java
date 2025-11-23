@@ -38,4 +38,14 @@ public class OcorrenciaDoenca {
 
     @Column(name = "is_curada", nullable = true)
     private Boolean curada;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", ovino: " + ovino +
+                ", doenca: " + doenca +
+                ", dataInicio: " + dataInicio +
+                ", dataFinal: " + dataFinal +
+                ", curada: " + curada;
+    }
 }

@@ -36,4 +36,13 @@ public class Reproducao {
 
     @Column(name = "data_reproducao")
     private LocalDateTime dataReproducao;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", carneiroPai: " + carneiroPai +
+                ", ovelhaMae: " + ovelhaMae +
+                ", enumReproducao: " + enumReproducao +
+                ", dataReproducao: " + dataReproducao;
+    }
 }

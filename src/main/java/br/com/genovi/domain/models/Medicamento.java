@@ -43,4 +43,15 @@ public class Medicamento {
 
     @Column(name = "is_vacina")
     private boolean isVacina;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", nome: " + nome +
+                ", fabricante: " + fabricante +
+                ", doencas: " + doencas +
+                ", intervaloDoses: " + intervaloDoses +
+                ", quantidadeDoses: " + quantidadeDoses +
+                ", isVacina: " + isVacina;
+    }
 }

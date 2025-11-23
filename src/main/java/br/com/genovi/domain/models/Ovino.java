@@ -82,4 +82,24 @@ public class Ovino {
 
     @OneToMany(mappedBy = "ovino", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Pesagem> pesagens = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", rfid: " + rfid +
+                ", nome: " + nome +
+                ", raca: " + raca +
+                ", fbb: " + fbb +
+                ", dataNascimento: " + dataNascimento +
+                ", dataCadastro: " + dataCadastro +
+                ", enumGrauPureza: " + enumGrauPureza +
+                ", sexo: " + sexo +
+                ", ovinoMae: " + ovinoMae +
+                ", ovinoPai: " + ovinoPai +
+                ", status: " + status +
+                ", fotoOvino: " + fotoOvino +
+                ", compra: " + compra +
+                ", parto: " + parto +
+                ", pesagens: " + pesagens;
+    }
 }

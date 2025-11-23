@@ -27,31 +27,49 @@ public class Registro {
     @Column(name = "is_sugestao")
     private Boolean isSugestao;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_funcionario", nullable = false)
     private Funcionario funcionario;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_reproducao", nullable = true)
     private Reproducao reproducao;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_gestacao", nullable = true)
     private Gestacao gestacao;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_parto", nullable = true)
     private Parto parto;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_aplicacao", nullable = true)
     private Aplicacao aplicacao;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_ocorrencia_doenca", nullable = true)
     private OcorrenciaDoenca ocorrenciaDoenca;
 
-    @ManyToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_pesagem", nullable = true)
     private Pesagem pesagem;
+
+    @Column(columnDefinition = "TEXT", name = "descricao_registro")
+    private String descricaoRegistro;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", dataRegistro: " + dataRegistro +
+                ", isSugestao: " + isSugestao +
+                ", funcionario: " + funcionario +
+                ", reproducao: " + reproducao +
+                ", gestacao: " + gestacao +
+                ", parto: " + parto +
+                ", aplicacao: " + aplicacao +
+                ", ocorrenciaDoenca: " + ocorrenciaDoenca +
+                ", pesagem: " + pesagem +
+                ", descricaoRegistro: " + descricaoRegistro;
+    }
 }

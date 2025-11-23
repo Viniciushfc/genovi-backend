@@ -30,4 +30,12 @@ public class Pesagem {
 
     @Column(name = "peso")
     private Double peso;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", dataPesagem: " + dataPesagem +
+                ", ovino: " + ovino +
+                ", peso: " + peso;
+    }
 }

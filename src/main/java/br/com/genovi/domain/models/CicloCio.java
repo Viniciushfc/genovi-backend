@@ -33,4 +33,13 @@ public class CicloCio {
 
     @Column(name = "observacoes")
     private String observacoes;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", ovelha: " + ovelha +
+                ", dataInicio: " + dataInicio +
+                ", dataFim: " + dataFim +
+                ", observacoes: " + observacoes;
+    }
 }

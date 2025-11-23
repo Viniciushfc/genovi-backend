@@ -36,7 +36,6 @@ public class AplicacaoMapper {
                 ovinoMapper.toDTO(entity.getOvino()),
                 medicamentoMapper.toDTO(entity.getMedicamento()),
                 entity.getDataProximaDose()
-
         );
     }
 }

@@ -30,4 +30,12 @@ public class Compra {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vendedor_id")
     private Vendedor vendedor;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", dataCompra: " + dataCompra +
+                ", valor: " + valor +
+                ", vendedor: " + vendedor;
+    }
 }

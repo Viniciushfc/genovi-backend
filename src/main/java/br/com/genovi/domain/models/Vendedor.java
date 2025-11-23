@@ -36,4 +36,15 @@ public class Vendedor {
 
     @Column(name = "telefone")
     private String telefone;
+
+    @Override
+    public String toString() {
+        return "id: " + id +
+                ", ativo: " + ativo +
+                ", nome: " + nome +
+                ", cpfCnpj: " + cpfCnpj +
+                ", email: " + email +
+                ", endereco: " + endereco +
+                ", telefone: " + telefone;
+    }
 }

@@ -6,5 +6,6 @@ public record CreateGestacaoDTO(
         Long ovelhaMaeId,
         Long ovelhaPaiId,
         Long reproducaoId,
-        LocalDateTime dataGestacao) {
+        LocalDateTime dataGestacao,
+        Long idFuncionario) {
 }
