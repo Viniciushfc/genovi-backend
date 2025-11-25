@@ -91,7 +91,8 @@ class AplicacaoServiceTest {
                 1L, // ovinoId
                 2L, // medicamentoId
                 LocalDateTime.of(2024, 1, 1, 10, 0),
-                3L // usuarioId
+                3L, // usuarioId
+                false // isSugestao
         );
     }
 

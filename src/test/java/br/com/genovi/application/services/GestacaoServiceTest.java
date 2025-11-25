@@ -73,7 +73,7 @@ class GestacaoServiceTest {
         gestacao = new Gestacao();
         gestacao.setId(10L);
 
-        createGestacaoDTO = new CreateGestacaoDTO(1L, 2L, 3L, LocalDateTime.now(), 3L);
+        createGestacaoDTO = new CreateGestacaoDTO(1L, 2L, 3L, LocalDateTime.now(), 3L, false);
 
         OvinoResumeDTO maeResumo = new OvinoResumeDTO(1L, 101L, "Mae", "fbb1");
         OvinoResumeDTO paiResumo = new OvinoResumeDTO(2L, 102L, "Pai", "fbb2");

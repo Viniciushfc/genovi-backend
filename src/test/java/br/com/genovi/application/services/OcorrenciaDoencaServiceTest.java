@@ -79,7 +79,8 @@ class OcorrenciaDoencaServiceTest {
                 LocalDateTime.now(),
                 LocalDateTime.now().plusDays(5),
                 true,
-                null
+                3L,
+                false
         );
 
         ocorrencia = new OcorrenciaDoenca(

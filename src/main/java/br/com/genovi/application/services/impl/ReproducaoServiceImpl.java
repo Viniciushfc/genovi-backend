@@ -58,7 +58,7 @@ public class ReproducaoServiceImpl implements ReproducaoService {
         entity.setEnumReproducao(dto.enumReproducao());
 
         reproducaoRepository.save(entity);
-        registroService.createReproducaoRegistro(entity, dto.idFuncionario());
+        registroService.createReproducaoRegistro(entity, dto.idFuncionario(), dto.isSugestao());
 
         return reproducaoMapper.toDTO(entity);
     }
