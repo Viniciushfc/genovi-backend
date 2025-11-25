@@ -70,7 +70,7 @@ public class AplicacaoServiceImpl implements AplicacaoService {
         entity.setDataProximaDose(dto.dataProximaDose());
 
         aplicacaoRepository.save(entity);
-        registroService.createAplicacaoRegistro(entity, dto.idFuncionario());
+        registroService.createAplicacaoRegistro(entity, dto.idFuncionario(), dto.isSugestao());
 
         return aplicacaoMapper.toDTO(entity);
     }
@@ -87,7 +87,7 @@ public class AplicacaoServiceImpl implements AplicacaoService {
         entity.setDataProximaDose(dto.dataProximaDose());
 
         aplicacaoRepository.save(entity);
-        
+
         return aplicacaoMapper.toDTO(entity);
     }
 

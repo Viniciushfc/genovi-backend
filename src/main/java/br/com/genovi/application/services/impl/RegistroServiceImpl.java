@@ -99,7 +99,7 @@ public class RegistroServiceImpl implements RegistroService {
 
         Registro entity = new Registro();
         entity.setDataRegistro(dto.dataRegistro());
-        entity.setIsSugestao(dto.isSugestao());
+        entity.setSugestao(dto.isSugestao());
         entity.setFuncionario(funcionario);
         entity.setReproducao(reproducao);
         entity.setGestacao(gestacao);
@@ -125,7 +125,7 @@ public class RegistroServiceImpl implements RegistroService {
         Pesagem pesagem = findPesagemById(dto.idPessagem());
 
         entity.setDataRegistro(dto.dataRegistro());
-        entity.setIsSugestao(dto.isSugestao());
+        entity.setSugestao(dto.isSugestao());
         entity.setFuncionario(funcionario);
         entity.setReproducao(reproducao);
         entity.setGestacao(gestacao);
@@ -148,7 +148,7 @@ public class RegistroServiceImpl implements RegistroService {
     @Override
     public RegistroDTO sugestaoParaRegistro(Long id, Boolean isSugestao) {
         Registro registro = findRegistroById(id);
-        registro.setIsSugestao(isSugestao);
+        registro.setSugestao(isSugestao);
         registroRepository.save(registro);
 
         return registroMapper.toDTO(registro);
@@ -156,11 +156,12 @@ public class RegistroServiceImpl implements RegistroService {
 
     @Override
     @Transactional
-    public void createReproducaoRegistro(Reproducao reproducao, Long idFuncionario) {
+    public void createReproducaoRegistro(Reproducao reproducao, Long idFuncionario, boolean isSugestao) {
         Funcionario funcionario = findFuncionarioById(idFuncionario);
 
         Registro entity = new Registro();
         entity.setDataRegistro(LocalDateTime.now());
+        entity.setSugestao(isSugestao);
         entity.setFuncionario(funcionario);
         entity.setReproducao(reproducao);
 
@@ -182,11 +183,12 @@ public class RegistroServiceImpl implements RegistroService {
 
     @Override
     @Transactional
-    public void createGestacaoRegistro(Gestacao gestacao, Long idFuncionario) {
+    public void createGestacaoRegistro(Gestacao gestacao, Long idFuncionario, boolean isSugestao) {
         Funcionario funcionario = findFuncionarioById(idFuncionario);
 
         Registro entity = new Registro();
         entity.setDataRegistro(LocalDateTime.now());
+        entity.setSugestao(isSugestao);
         entity.setFuncionario(funcionario);
         entity.setGestacao(gestacao);
 
@@ -207,11 +209,12 @@ public class RegistroServiceImpl implements RegistroService {
 
     @Override
     @Transactional
-    public void createPartoRegistro(Parto parto, Long idFuncionario) {
+    public void createPartoRegistro(Parto parto, Long idFuncionario, boolean isSugestao) {
         Funcionario funcionario = findFuncionarioById(idFuncionario);
 
         Registro entity = new Registro();
         entity.setDataRegistro(LocalDateTime.now());
+        entity.setSugestao(isSugestao);
         entity.setFuncionario(funcionario);
         entity.setParto(parto);
 
@@ -232,11 +235,12 @@ public class RegistroServiceImpl implements RegistroService {
 
     @Override
     @Transactional
-    public void createAplicacaoRegistro(Aplicacao aplicacao, Long idFuncionario) {
+    public void createAplicacaoRegistro(Aplicacao aplicacao, Long idFuncionario, boolean isSugestao) {
         Funcionario funcionario = findFuncionarioById(idFuncionario);
 
         Registro entity = new Registro();
         entity.setDataRegistro(LocalDateTime.now());
+        entity.setSugestao(isSugestao);
         entity.setFuncionario(funcionario);
         entity.setAplicacao(aplicacao);
 
@@ -256,11 +260,12 @@ public class RegistroServiceImpl implements RegistroService {
 
     @Override
     @Transactional
-    public void createOcorrenciaDoencaRegistro(OcorrenciaDoenca ocorrenciaDoenca, Long idFuncionario) {
+    public void createOcorrenciaDoencaRegistro(OcorrenciaDoenca ocorrenciaDoenca, Long idFuncionario, boolean isSugestao) {
         Funcionario funcionario = findFuncionarioById(idFuncionario);
 
         Registro entity = new Registro();
         entity.setDataRegistro(LocalDateTime.now());
+        entity.setSugestao(isSugestao);
         entity.setFuncionario(funcionario);
         entity.setOcorrenciaDoenca(ocorrenciaDoenca);
 
@@ -280,11 +285,12 @@ public class RegistroServiceImpl implements RegistroService {
 
     @Override
     @Transactional
-    public void createPesagemRegistro(Pesagem pesagem, Long idFuncionario) {
+    public void createPesagemRegistro(Pesagem pesagem, Long idFuncionario, boolean isSugestao) {
         Funcionario funcionario = findFuncionarioById(idFuncionario);
 
         Registro entity = new Registro();
         entity.setDataRegistro(LocalDateTime.now());
+        entity.setSugestao(isSugestao);
         entity.setFuncionario(funcionario);
         entity.setPesagem(pesagem);
 

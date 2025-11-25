@@ -295,7 +295,7 @@ CREATE TABLE registro
 id                   bigint                      NOT NULL DEFAULT nextval('gen_id_registro'),
 id_funcionario       bigint                      NOT NULL,
 data_registro        timestamp without time zone NOT NULL,
-is_sugestao          boolean,
+is_sugestao          boolean                     NOT NULL DEFAULT false,
 id_pesagem           bigint,
 id_aplicacao         bigint,
 id_ocorrencia_doenca bigint,
@@ -310,35 +310,35 @@ descricao_registro   TEXT,
     -- Foreign keys
     CONSTRAINT registro_funcionario_fkey
         FOREIGN KEY (id_funcionario)
-        REFERENCES funcionario(id),
+            REFERENCES funcionario (id),
 
     CONSTRAINT registro_pesagem_fkey
         FOREIGN KEY (id_pesagem)
-        REFERENCES pesagem(id)
-        ON DELETE SET NULL,
+            REFERENCES pesagem (id)
+            ON DELETE SET NULL,
 
     CONSTRAINT registro_aplicacao_fkey
         FOREIGN KEY (id_aplicacao)
-        REFERENCES aplicacao(id)
-        ON DELETE SET NULL,
+            REFERENCES aplicacao (id)
+            ON DELETE SET NULL,
 
     CONSTRAINT registro_ocorrencia_doenca_fkey
         FOREIGN KEY (id_ocorrencia_doenca)
-        REFERENCES ocorrencia_doenca(id)
-        ON DELETE SET NULL,
+            REFERENCES ocorrencia_doenca (id)
+            ON DELETE SET NULL,
 
     CONSTRAINT registro_reproducao_fkey
         FOREIGN KEY (id_reproducao)
-        REFERENCES reproducao(id)
-        ON DELETE SET NULL,
+            REFERENCES reproducao (id)
+            ON DELETE SET NULL,
 
     CONSTRAINT registro_gestacao_fkey
         FOREIGN KEY (id_gestacao)
-        REFERENCES gestacao(id)
-        ON DELETE SET NULL,
+            REFERENCES gestacao (id)
+            ON DELETE SET NULL,
 
     CONSTRAINT registro_parto_fkey
         FOREIGN KEY (id_parto)
-        REFERENCES parto(id)
-        ON DELETE SET NULL
+            REFERENCES parto (id)
+            ON DELETE SET NULL
 );

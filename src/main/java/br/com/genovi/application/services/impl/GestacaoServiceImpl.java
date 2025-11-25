@@ -69,7 +69,7 @@ public class GestacaoServiceImpl implements GestacaoService {
         entity.setDataGestacao(dto.dataGestacao());
 
         gestacaoRepository.save(entity);
-        registroService.createGestacaoRegistro(entity, dto.idFuncionario());
+        registroService.createGestacaoRegistro(entity, dto.idFuncionario(), dto.isSugestao());
 
         return gestacaoMapper.toDTO(entity);
     }

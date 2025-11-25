@@ -84,7 +84,7 @@ public class OcorrenciaDoencaServiceImpl implements OcorrenciaDoencaService {
         entity.setCurada(dto.curado());
 
         ocorrenciaDoencaRepository.save(entity);
-        registroService.createOcorrenciaDoencaRegistro(entity, dto.idFuncionario());
+        registroService.createOcorrenciaDoencaRegistro(entity, dto.idFuncionario(), dto.isSugestao());
 
         return ocorrenciaDoencaMapper.toDTO(entity);
     }

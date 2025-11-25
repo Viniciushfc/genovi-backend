@@ -6,5 +6,6 @@ public record CreateAplicacaoDTO(LocalDateTime dataAplicacao,
                                  Long ovinoId,
                                  Long medicamentoId,
                                  LocalDateTime dataProximaDose,
-                                 Long idFuncionario) {
+                                 Long idFuncionario,
+                                 boolean isSugestao) {
 }

@@ -69,7 +69,7 @@ public class PartoServiceImpl implements PartoService {
         entity.setDataParto(dto.dataParto());
 
         partoRepository.save(entity);
-        registroService.createPartoRegistro(entity, dto.idFuncionario());
+        registroService.createPartoRegistro(entity, dto.idFuncionario(), dto.isSugestao());
 
         return partoMapper.toDTO(entity);
     }

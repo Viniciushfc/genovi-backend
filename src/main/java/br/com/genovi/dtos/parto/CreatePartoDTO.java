@@ -7,5 +7,6 @@ public record CreatePartoDTO(Long ovelhaMaeId,
                              Long ovelhaPaiId,
                              Long gestacaoId,
                              LocalDateTime dataParto,
-                             Long idFuncionario) {
+                             Long idFuncionario,
+                             boolean isSugestao) {
 }

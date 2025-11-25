@@ -6,5 +6,6 @@ public record CreatePesagemDTO(
         LocalDateTime dataPesagem,
         Long idOvino,
         Double pesagem,
-        Long idFuncionario) {
+        Long idFuncionario,
+        boolean isSugestao) {
 }

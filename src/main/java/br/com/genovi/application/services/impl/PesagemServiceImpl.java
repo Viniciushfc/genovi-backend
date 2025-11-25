@@ -57,7 +57,7 @@ public class PesagemServiceImpl implements PesagemService {
         entity.setPeso(dto.pesagem());
 
         pesagemRepository.save(entity);
-        registroService.createPesagemRegistro(entity, dto.idFuncionario());
+        registroService.createPesagemRegistro(entity, dto.idFuncionario(), dto.isSugestao());
 
         return pesagemMapper.toDTO(entity);
     }

@@ -25,7 +25,7 @@ public class Registro {
     private LocalDateTime dataRegistro;
 
     @Column(name = "is_sugestao")
-    private Boolean isSugestao;
+    private boolean isSugestao;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_funcionario", nullable = false)

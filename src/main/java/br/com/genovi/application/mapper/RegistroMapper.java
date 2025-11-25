@@ -23,7 +23,7 @@ public class RegistroMapper {
         return new RegistroDTO(
                 registro.getId(),
                 registro.getDataRegistro(),
-                registro.getIsSugestao(),
+                registro.isSugestao(),
                 funcionarioMapper.toDTO(registro.getFuncionario()),
                 reproducaoMapper.toDTO(registro.getReproducao()),
                 gestacaoMapper.toDTO(registro.getGestacao()),
@@ -45,7 +45,7 @@ public class RegistroMapper {
 
         Registro registro = new Registro();
         registro.setDataRegistro(dto.dataRegistro());
-        registro.setIsSugestao(dto.isSugestao());
+        registro.setSugestao(dto.isSugestao());
         registro.setFuncionario(funcionario);
         registro.setReproducao(reproducao);
         registro.setGestacao(gestacao);

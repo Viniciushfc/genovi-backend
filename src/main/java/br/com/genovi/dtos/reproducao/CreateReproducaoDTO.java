@@ -8,5 +8,6 @@ public record CreateReproducaoDTO(LocalDateTime dataReproducao,
                                   Long carneiroId,
                                   Long ovelhaId,
                                   EnumReproducao enumReproducao,
-                                  Long idFuncionario) {
+                                  Long idFuncionario,
+                                  boolean isSugestao) {
 }

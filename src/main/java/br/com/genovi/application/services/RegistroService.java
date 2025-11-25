@@ -19,16 +19,16 @@ public interface RegistroService {
 
     RegistroDTO sugestaoParaRegistro(Long id, Boolean isSugestao);
 
-    void createReproducaoRegistro(Reproducao reproducao, Long idFuncionario);
+    void createReproducaoRegistro(Reproducao reproducao, Long idFuncionario, boolean isSugestao);
 
-    void createGestacaoRegistro(Gestacao gestacao, Long idFuncionario);
+    void createGestacaoRegistro(Gestacao gestacao, Long idFuncionario, boolean isSugestao);
 
-    void createPartoRegistro(Parto parto, Long idFuncionario);
+    void createPartoRegistro(Parto parto, Long idFuncionario, boolean isSugestao);
 
-    void createAplicacaoRegistro(Aplicacao aplicacao, Long idFuncionario);
+    void createAplicacaoRegistro(Aplicacao aplicacao, Long idFuncionario, boolean isSugestao);
 
-    void createOcorrenciaDoencaRegistro(OcorrenciaDoenca ocorrenciaDoenca, Long idFuncionario);
+    void createOcorrenciaDoencaRegistro(OcorrenciaDoenca ocorrenciaDoenca, Long idFuncionario, boolean isSugestao);
 
-    void createPesagemRegistro(Pesagem pesagem, Long idFuncionario);
+    void createPesagemRegistro(Pesagem pesagem, Long idFuncionario, boolean isSugestao);
 
 }

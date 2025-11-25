@@ -7,5 +7,6 @@ public record CreateGestacaoDTO(
         Long ovelhaPaiId,
         Long reproducaoId,
         LocalDateTime dataGestacao,
-        Long idFuncionario) {
+        Long idFuncionario,
+        boolean isSugestao) {
 }
