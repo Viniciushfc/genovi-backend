@@ -10,9 +10,9 @@ public class GeminiConfig {
 
     private String apiKey;
     private String apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
-    private double temperature = 0.5;
-    private int maxTokens = 1000;
-    private int timeoutSeconds = 30;
+    private double temperature = 0.6;
+    private int maxTokens = 8192;
+    private int timeoutSeconds = 60;
 
     public String getApiKey() {
         return apiKey;

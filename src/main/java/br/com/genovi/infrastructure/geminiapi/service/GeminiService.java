@@ -47,36 +47,28 @@ public class GeminiService {
         this.systemPrompt = """
                 Você é um especialista em ovinos e ovinocultura que trabalha dentro do Sistema Genovi.
                 
-                O Genovi é um sistema de monitoramento para ovinos que usa chips individuais em cada animal para registrar histórico de saúde, facilitar diagnósticos, acompanhar tratamentos, rastrear em tempo real, avaliar carcaças e registrar a ascendência para apoiar o melhoramento genético do rebanho.
-                Apesar de existirem tecnologias parecidas para bovinos, o Genovi é exclusivo para ovinos.
-                
-                Seu papel:
-                Responder perguntas sobre ovinos e assuntos relacionados, mesmo quando o usuário escrever de forma incorreta. Sempre tente entender a intenção da pergunta.
-                
-                Importante:
-                Antes de responder perguntas que envolvam dados específicos de animais (como RFID, raça, histórico, saúde etc.), USE PRIMEIRO AS FERRAMENTAS DO GENOVI.
-                Não peça ao usuário informações que o sistema pode fornecer.
+                O Genovi é um sistema de monitoramento para ovinos que usa chips individuais em cada animal para registrar histórico de saúde, facilitar diagnósticos, acompanhar tratamentos, rastrear em tempo real, avaliar carcaças e registrar a ascendência para apoiar o melhoramento genético do rebanho. O Genovi é exclusivo para ovinos.
+                Seu papel é responder perguntas sobre ovinos e assuntos relacionados, mesmo quando o usuário escrever de forma incorreta. Sempre tente entender a intenção da pergunta.
+                Antes de responder perguntas que envolvam dados específicos de animais, como RFID, raça, peso, histórico, saúde ou reprodução, você deve usar primeiro as ferramentas do Genovi. Não peça ao usuário informações que o sistema pode fornecer. As funções disponíveis incluem:
                 
                 Assuntos permitidos:
-                
                 Raças de ovinos
                 Manejo e cuidados
                 Alimentação
                 Reprodução
                 Doenças e saúde
-                Tosquia e lã
-                Produtos (carne, leite, lã)
+                Lã e tosquia
+                Carne, leite e derivados
                 Genética e melhoramento
-                Curiosidades sobre ovinos
-                
-                Se a pergunta não tiver relação com ovinos, responda:
+                Comportamento e curiosidades sobre ovinos
+                Se a pergunta não tiver relação com ovinos, você deverá responder:
                 "Desculpe, eu só respondo perguntas sobre ovinos e o sistema Genovi! 🐑"
-                
-                - Estilo das respostas:
-                - Curto, direto e prático
-                - Linguagem simples
-                - Amigável
-                - Use emojis de 🐑 quando fizer sentido
+                Estilo das respostas:
+                Curto, direto e prático
+                Linguagem simples
+                Amigável
+                Usar emojis de 🐑 quando fizer sentido
+                Sempre que a resposta depender de dados do sistema, chame a função apropriada antes de responder. Sempre tente interpretar corretamente a intenção do usuário, mesmo com erros de digitação.
                 """;
     }
 
@@ -85,41 +77,73 @@ public class GeminiService {
             return new ChatResponse("Por favor, faça uma pergunta sobre ovinos ou o sistema Genovi! 🐑", true);
         }
 
-        List<ChatMessage> messagesWithRoles = request.getContents();
+        JsonArray contents = new JsonArray();
+        for (ChatMessage message : request.getContents()) {
+            JsonObject content = new JsonObject();
+            content.addProperty("role", message.getRole());
+            JsonArray parts = new JsonArray();
+            JsonObject part = new JsonObject();
+            part.addProperty("text", message.getText());
+            parts.add(part);
+            content.add("parts", parts);
+            contents.add(content);
+        }
 
 
         try {
-            logger.info("Iniciando a requisição para o Gemini com histórico de {} mensagens", messagesWithRoles.size());
+            logger.info("Iniciando a requisição para o Gemini com histórico de {} mensagens", contents.size());
 
             JsonArray functionDeclarations = new JsonArray();
             functionDeclarations.add(GenoviFunctions.getAnimalDataSchema());
             functionDeclarations.add(GenoviFunctions.getAnaliseReprodutiva());
             functionDeclarations.add(GenoviFunctions.getPesoIdeal());
 
-            JsonObject payload = createPayload(messagesWithRoles, functionDeclarations);
+            while (true) {
+                JsonObject payload = createPayload(contents, functionDeclarations);
+                HttpResponse<String> response = sendRequest(payload);
+                logger.info("Resposta recebida do Gemini: {}", response.body());
 
-            HttpResponse<String> response = sendRequest(payload);
-            logger.info("Resposta recebida do Gemini: {}", response.body());
-            JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
+                if (response.statusCode() != 200) {
+                    return handleResponse(response);
+                }
 
-            JsonObject functionCall = extractFunctionCall(jsonResponse);
-            if (functionCall != null) {
-                logger.info("Chamada de função detectada: {}", functionCall.get("name").getAsString());
+                JsonObject jsonResponse = gson.fromJson(response.body(), JsonObject.class);
+                JsonObject functionCall = extractFunctionCall(jsonResponse);
 
-                JsonObject functionResult = executeFunction(functionCall);
+                if (functionCall != null) {
+                    logger.info("Chamada de função detectada: {}", functionCall.get("name").getAsString());
 
-                JsonObject secondPayload = createFunctionResponsePayload(
-                        messagesWithRoles,
-                        functionCall,
-                        functionResult,
-                        functionDeclarations
-                );
+                    // Add the function call to the conversation history
+                    JsonObject modelFunctionCallMessage = new JsonObject();
+                    modelFunctionCallMessage.addProperty("role", "model");
+                    JsonArray modelParts = new JsonArray();
+                    JsonObject modelPart = new JsonObject();
+                    modelPart.add("functionCall", functionCall);
+                    modelParts.add(modelPart);
+                    modelFunctionCallMessage.add("parts", modelParts);
+                    contents.add(modelFunctionCallMessage);
 
-                HttpResponse<String> finalResponse = sendRequest(secondPayload);
-                return handleResponse(finalResponse);
+                    // Execute the function
+                    JsonObject functionResult = executeFunction(functionCall);
 
-            } else {
-                return handleResponse(response);
+                    // Add the function response to the conversation history
+                    JsonObject functionResponseMessage = new JsonObject();
+                    functionResponseMessage.addProperty("role", "tool");
+                    JsonArray toolParts = new JsonArray();
+                    JsonObject toolPart = new JsonObject();
+                    JsonObject functionResponseContent = new JsonObject();
+                    functionResponseContent.addProperty("name", functionCall.get("name").getAsString());
+                    functionResponseContent.add("response", functionResult);
+                    toolPart.add("functionResponse", functionResponseContent);
+                    toolParts.add(toolPart);
+                    functionResponseMessage.add("parts", toolParts);
+                    contents.add(functionResponseMessage);
+
+                    // Continue the loop to send the updated history back to the model
+                } else {
+                    // No more function calls, handle the final text response
+                    return handleResponse(response);
+                }
             }
 
         } catch (IOException e) {
@@ -147,21 +171,8 @@ public class GeminiService {
         return httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
     }
 
-    private JsonObject createPayload(List<ChatMessage> messages, JsonArray functionDeclarations) {
+    private JsonObject createPayload(JsonArray contents, JsonArray functionDeclarations) {
         JsonObject payload = new JsonObject();
-        JsonArray contents = new JsonArray();
-
-        for (ChatMessage message : messages) {
-            JsonObject content = new JsonObject();
-            content.addProperty("role", message.getRole());
-            JsonArray parts = new JsonArray();
-            JsonObject part = new JsonObject();
-            part.addProperty("text", message.getText());
-            parts.add(part);
-            content.add("parts", parts);
-            contents.add(content);
-        }
-
         payload.add("contents", contents);
 
         JsonObject systemInstruction = new JsonObject();
@@ -192,69 +203,6 @@ public class GeminiService {
         return payload;
     }
 
-    private JsonObject createFunctionResponsePayload(List<ChatMessage> history, JsonObject functionCall, JsonObject functionResult, JsonArray functionDeclarations) {
-        JsonObject payload = new JsonObject();
-        JsonArray contents = new JsonArray();
-
-        for (ChatMessage message : history) {
-            JsonObject content = new JsonObject();
-            content.addProperty("role", message.getRole());
-            JsonArray parts = new JsonArray();
-            JsonObject part = new JsonObject();
-            part.addProperty("text", message.getText());
-            parts.add(part);
-            content.add("parts", parts);
-            contents.add(content);
-        }
-
-        JsonObject modelFunctionCallMessage = new JsonObject();
-        modelFunctionCallMessage.addProperty("role", "model");
-        JsonArray modelParts = new JsonArray();
-        JsonObject modelPart = new JsonObject();
-        modelPart.add("functionCall", functionCall);
-        modelParts.add(modelPart);
-        modelFunctionCallMessage.add("parts", modelParts);
-        contents.add(modelFunctionCallMessage);
-
-        JsonObject functionResponseMessage = new JsonObject();
-        functionResponseMessage.addProperty("role", "tool");
-        JsonArray toolParts = new JsonArray();
-        JsonObject toolPart = new JsonObject();
-        JsonObject functionResponseContent = new JsonObject();
-        functionResponseContent.addProperty("name", functionCall.get("name").getAsString());
-        functionResponseContent.add("response", functionResult);
-        toolPart.add("functionResponse", functionResponseContent);
-        toolParts.add(toolPart);
-        functionResponseMessage.add("parts", toolParts);
-        contents.add(functionResponseMessage);
-
-        payload.add("contents", contents);
-
-        JsonObject systemInstruction = new JsonObject();
-        JsonArray systemParts = new JsonArray();
-        JsonObject systemPart = new JsonObject();
-        systemPart.addProperty("text", systemPrompt);
-        systemParts.add(systemPart);
-        systemInstruction.add("parts", systemParts);
-        payload.add("systemInstruction", systemInstruction);
-
-        JsonArray tools = new JsonArray();
-        JsonObject tool = new JsonObject();
-        tool.add("functionDeclarations", functionDeclarations);
-        tools.add(tool);
-        payload.add("tools", tools);
-
-        JsonObject generationConfig = new JsonObject();
-        generationConfig.addProperty("temperature", config.getTemperature());
-        generationConfig.addProperty("maxOutputTokens", config.getMaxTokens());
-        payload.add("generationConfig", generationConfig);
-
-
-        logger.info("Segundo payload (com histórico) enviado para o Gemini: {}", payload.toString());
-
-        return payload;
-    }
-	
     private JsonObject extractFunctionCall(JsonObject jsonResponse) {
         if (jsonResponse.has("candidates")) {
             JsonArray candidates = jsonResponse.getAsJsonArray("candidates");
